@@ -10,7 +10,7 @@
 {%block main%}
 <main>
     <div style="display: flex; justify-content: space-between; margin: 12px;">
-        <button class = "black-button" type="submit">Generate WP</button>
+        <button class = "black-button" type="submit" onclick="myFunction()">Save WP</button>
         <button class = "white-button" type="submit">Cancel</button>
     </div>
 
@@ -103,11 +103,19 @@
                 <p>Click here to add new task...</p>
             </button>
         </div>
-
-
-
-
     </form>
+
+    <div id = "popup" class="pop-window">
+        input Hola
+    </div>
+
+    <script>
+        function myFunction() {
+            var popup = document.getElementById("popup");
+            popup.style.visibility = "visible"
+            document.getElementsByTagName('main').style.filter
+        }
+    </script>
     <div class="border"></div>
 </main>
 {%endblock%}

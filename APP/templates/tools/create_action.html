@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style/tools/action.css')}}"/>
+{% endblock %}
+
+{% block title %}PMS | WP{% endblock %}
+
+
+{%block main%}
+<main>
+    <div style="display: flex; justify-content: space-between; margin: 12px;">
+        <button class = "black-button" type="submit">Save WP</button>
+        <button class = "white-button" type="submit">Cancel</button>
+    </div>
+
+    <div class="border"></div>
+
+    <form method="post" name="project_atributes" autocomplete="off">
+        <div class="group">
+            <div>
+                <label class = "label-title">Project</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class = "label-field">Agresso Code</label><br>
+                    <input class = "input-3" id = "project_code">
+                </div>
+            </div>
+        </div>
+
+        <div class="border"></div>
+
+        <div class="group">
+            <div>
+                <label class = "label-title">Customer</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class = "label-field">Customer code</label><br>
+                    <input class = "input-3" type="text" id = "customer_code">
+                </div>
+                <div>
+                    <label class = "label-field">Type</label><br>
+                    <input class = "input-3" type="text" id = "type_code">
+                </div>
+                <div>
+                    <label class = "label-field">Date</label><br>
+                    <input class = "input-3" type="date" id = "date_code">
+                </div>
+            </div>
+        </div>
+
+        <div class="group">
+            <div>
+                <label class = "label-title">Situation</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class = "label-field">Discipline</label><br>
+                    <input class = "input-2" id = "discipline_code">
+                </div>
+                <div>
+                    <label class = "label-field">Phase</label><br>
+                    <input class = "input-2" id = "phase_code">
+                </div>
+            </div>
+        </div>
+
+        <div class="border"></div>
+
+        <div class="group align-top">
+            <div>
+                <label class = "label-title">Action</label>
+            </div>
+
+                <div>
+                    <label class = "label-field">Description</label><br>
+                    <textarea class = "input-text" id = "description_text"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="border"></div>
+
+        <div class="group">
+            <div>
+                <label class = "label-title">Subactions</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class = "label-field">Code</label><br>
+                    <input class = "input-4" id = "internal_code">
+                </div>
+                <div>
+                    <label class = "label-field">Zone</label><br>
+                    <input class = "input-4" id = "zone_code">
+                </div>
+                <div>
+                    <label class = "label-field">Area</label><br>
+                    <input class = "input-4" type="text" id = "area_code">
+                </div>
+                <div>
+                    <label class = "label-field">Time</label><br>
+                    <input class = "input-4" type="number" id = "time">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="group">
+            <button type="button" id = "more_button" class="more-tasks">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus"
+                width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <line x1="9" y1="12" x2="15" y2="12"></line>
+                    <line x1="12" y1="9" x2="12" y2="15"></line>
+                </svg>
+                <p>Click here to add new action...</p>
+            </button>
+        </div>
+    </form>
+    <div class="border"></div>
+</main>
+{%endblock%}
