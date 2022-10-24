@@ -4,18 +4,18 @@
     font-weight: 100;
 }
 
-input, textarea{
+input, textarea, button{
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
 }
 
 body{
-    min-height: 1000px;
     padding: 0;
     margin: 0;
-    min-height: 1000px;
     display: flex; 
     flex-direction: column;
+    min-width: 1000px;
+    min-height: 1000px;
 }
 
 nav{
@@ -102,4 +102,10 @@ footer{
     background-color: #EEEEEE;
     opacity: 70%;
     cursor: pointer;
+}
+
+.top-buttons{
+    display: flex;
+    justify-content: space-between; 
+    margin: 12px;
 }

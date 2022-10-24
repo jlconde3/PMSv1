@@ -51,7 +51,7 @@ input{
 }
 
 .input-2{
-    width: 300px;
+    min-width: 300px;
 }
 
 .input_field{
@@ -77,10 +77,12 @@ input{
 }
 
 .pop-window{
-    width: 400px;
+    width: 60%;
     height: 400px;
-    background-color: #57647E;
+    background-color: white;
+    border: #EAEAEA solid 1px;
     position: absolute;
+    left: 20%;
     top: 20%;
     visibility: hidden;
 }

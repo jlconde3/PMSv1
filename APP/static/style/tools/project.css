@@ -69,9 +69,3 @@ input{
     margin-bottom: 24px;
     border-bottom: #EAEAEA solid 1px;
 }
-
-.top-buttons{
-    display: flex;
-    justify-content: space-between; 
-    margin: 12px;
-}
