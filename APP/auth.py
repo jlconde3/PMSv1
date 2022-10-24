@@ -35,7 +35,7 @@ def login_user ():
         else:
             return error
 
-    return render_template('login/login.html')
+    return render_template('public/login.html')
 
 @bp.route('/logout', methods=('GET', 'POST'))
 def logout ():
