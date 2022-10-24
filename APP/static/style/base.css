@@ -1,0 +1,100 @@
+:root{
+    background-color: #fafafa;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+}
+
+body{
+    min-height: 1000px;
+    padding: 0;
+    margin: 0;
+    min-height: 1000px;
+    display: flex; 
+    flex-direction: column;
+}
+
+nav{
+    height: 60px;
+    background-color: #ffffff;
+    border-bottom: #EAEAEA solid 1px;
+}
+
+main{
+    margin-left: 3%;
+    margin-right: 3%;
+    min-height: 800px;
+}
+
+footer{
+    height:100px;
+    margin-top: auto;
+    text-align: center; 
+    color: #222222; 
+    font-size: 12px;
+}
+
+.footer-text{
+    padding-top:50px
+}
+
+.nav-elements{
+    padding-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.nav-elements-buttons{
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pms-logo{
+    height:50px;
+}
+
+.pms-logo:hover{
+    opacity:50% ;
+}
+
+.tools-button{
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.tools-button:hover{
+    opacity: 50%;
+}
+
+.black-button{
+    border :black solid 1px ;
+    background-color: black;
+    color: white;
+    width: 120px;
+    height: 40px;
+}
+
+.black-button:hover{
+    opacity: 70%;
+    color: #EAEAEA;
+    cursor: pointer;
+}
+
+.white-button{
+    border:black solid 1px ;
+    background-color: white;
+    color: black;
+    width: 120px;
+    height: 40px;
+}
+
+.white-button:hover{
+    background-color: #EEEEEE;
+    opacity: 70%;
+    cursor: pointer;
+}
