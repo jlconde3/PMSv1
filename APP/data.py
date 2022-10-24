@@ -8,4 +8,4 @@ bp = Blueprint('data', __name__, url_prefix='/data')
 @bp.route('/', methods=['GET'])
 @login_required
 def main():
-    return render_template('data.html')
+    return render_template('/data/home.html')
