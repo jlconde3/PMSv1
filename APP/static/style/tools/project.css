@@ -61,14 +61,17 @@ input{
 .input_field{
     padding-right: 10px;
 }
-.black-button{
-    width: 400px;
-    margin: auto;
-}
+
 
 .border{
     margin: 12px;
     margin-top: 24px;
     margin-bottom: 24px;
     border-bottom: #EAEAEA solid 1px;
+}
+
+.top-buttons{
+    display: flex;
+    justify-content: space-between; 
+    margin: 12px;
 }
