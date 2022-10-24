@@ -18,7 +18,7 @@ main{
     margin-top: 100px;
     width: 350px;
     height: 400px;
-    background-color:black;
+    background-color:white;
     border: #dbdbdb solid 1px;
     display: flex;
     flex-direction: column;
@@ -35,30 +35,29 @@ form{
 }
 
 input{
-    color: white;
     margin: auto;
-    font-size: 15px;
+    font-size: 14px;
     margin-bottom: 15px;
     outline: none;
     border: none;
-    border-bottom: white solid 1px;
+    border-bottom: black solid 1px;
     background-color: transparent;
     width: 260px;
     height: 40px;
 }
 
 ::placeholder{
-    color: white;
+    color: black;
 }
 
 button{
     cursor: pointer;
     margin: auto;
     border: none;
-    color: black;
+    color: white;
     width: 264px;
     height: 30px;
-    background-color: white;
+    background-color: black;
 }
 
 button:hover{

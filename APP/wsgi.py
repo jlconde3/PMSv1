@@ -28,7 +28,7 @@ def create_app(test_config=None):
     app.register_blueprint(main.bp)
     import data
     app.register_blueprint(data.bp)
-    import wp
-    app.register_blueprint(wp.bp)
+    import tools
+    app.register_blueprint(tools.bp)
 
     return app
