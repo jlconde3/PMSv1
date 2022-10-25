@@ -1,11 +1,12 @@
 main{
-    margin: 3%;
     display: flex;
+    width: 100%;
+    min-width: 800px;
     justify-content: space-around;
 }
 
 .tool-card{
-    max-height: 400px;
+    min-height: 400px;
     padding: 2%;
     border: #dbdbdb solid 1px;
     background-color: white;

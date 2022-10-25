@@ -1,0 +1,18 @@
+main{
+    max-width: 50%;
+    min-width: 1000px;
+    margin: auto;
+}
+
+.group{
+    margin: auto;
+    display: flex;
+    width: 800px;
+    border: #dbdbdb solid 1px;
+    background-color: white;
+    min-height: 300px;
+}
+h2{
+    font-size:28px;
+    font-weight: 300;   
+}
