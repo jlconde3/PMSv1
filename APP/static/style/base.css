@@ -10,6 +10,7 @@ body{
     margin-top: 80px;
     display: flex;
     flex-direction: column;
+    min-height: 1000px;
 }
 
 main{
@@ -83,13 +84,13 @@ footer{
     color: #222222; 
     font-size: 12px;
     padding: 10px;
-
 }
 
 .top-buttons{
     display: flex;
     justify-content: space-between; 
     margin: 12px;
+    margin-top: 20px;
 }
 
 .black-button{

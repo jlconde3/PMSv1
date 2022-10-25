@@ -89,21 +89,6 @@ textarea{
     align-items: baseline;
 }
 
-.remove_button{
-    margin-top: 25px;
-    border: none;
-    background-color:white;
-    cursor: pointer;
-    color: black;
-}
-
-.remove_button:hover{
-    color: black;
-    background-color: #EEEEEE;
-    opacity: 70%;
-    cursor: pointer;
-    border-radius: 5px;
-}
 
 .validate-window{
     width: 50%;
