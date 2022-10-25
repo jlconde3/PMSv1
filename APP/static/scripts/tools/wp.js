@@ -1,8 +1,28 @@
-document.getElementById('more_button').addEventListener('click',() => {
-    
-});
+//Var for number the tasks
+let n = 1; 
 
-document.getElementById('generate_button').addEventListener('click',() => {
-    document.getElementById('main').setAttribute('style', 'filter:blur(3px)');
-    document.getElementById('validate-window').style.visibility = 'visible';
-});
+//Template for tasks
+let task_template = ` 
+    <div>
+        <label class = "label-title">Task</label>
+        </div>
+        <div class="fields-group">
+        <div>
+            <label class = "label-field">Action</label><br>
+            <input class = "input-3" id = "zone_code">
+        </div>
+        <div>
+            <label class = "label-field">Area</label><br>
+            <input class = "input-3" type="text" id = "phase_code">
+        </div>
+        <div>
+            <label class = "label-field">Task</label><br>
+            <input class = "input-3" id = "zone_code">
+        </div>
+    </div>
+`;
+
+document.getElementById('more_button').addEventListener('click',() => 
+    add_more( 'tasks',`task_${n}`,task_template)
+);
+

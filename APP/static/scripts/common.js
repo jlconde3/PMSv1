@@ -41,3 +41,21 @@ function hide_table (){
     document.getElementById('intro-text').style.display = "none"
     tables_array.forEach((item)=>{item.setAttribute('style', 'display:none')})
 }
+
+function delete_element(element_id){
+    let list = document.getElementById(element_id);
+    while (list.hasChildNodes()){
+        list.removeChild(list.firstChild)
+    }
+}
+
+
+function add_more(parente_element, id_name,content){
+    const container = document.getElementById(parente_element);
+    let div = document.createElement('div');
+    div.setAttribute('id',id_name);
+    div.setAttribute('class','group');
+    div.innerHTML = content;
+    container.appendChild(div);
+    return n++;
+}

@@ -56,7 +56,7 @@ input{
     cursor: pointer;
 }
 .input-4{
-    width: 150px;
+    width: 130px;
 }
 
 .input-3{
@@ -80,12 +80,27 @@ textarea{
     border: #EAEAEA solid 1px;
     padding-left: 5px;
     color:  #57647E;
-    margin-right: 12px;
     height: 100px;
-    width: 690px;
+    width: 675px;
     resize: none;
 }
 
 .align-top{
     align-items: baseline;
+}
+
+.remove_button{
+    margin-top: 25px;
+    border: none;
+    background-color:white;
+    cursor: pointer;
+    color: black;
+}
+
+.remove_button:hover{
+    color: black;
+    background-color: #EEEEEE;
+    opacity: 70%;
+    cursor: pointer;
+    border-radius: 5px;
 }
