@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='style/tools/action.css')}}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='style/tools/tools.css')}}"/>
 {% endblock %}
 
 {% block title %}PMS | WP{% endblock %}
 
-
+    
 {%block main%}
 <main>
     <div class="top-buttons">
@@ -122,6 +122,5 @@
             </button>
         </div>
     </form>
-    <div class="border"></div>
 </main>
 {%endblock%}
