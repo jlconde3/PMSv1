@@ -7,6 +7,9 @@ main{
     padding-right: 10px;
     padding-left: 10px;
 }
+.tool-element{
+    display: flex;
+}
 
 .group{
     display: flex;

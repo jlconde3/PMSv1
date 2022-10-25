@@ -18,5 +18,7 @@ class User(View):
 
 
 bp.add_url_rule('/', view_func=User.as_view('/', 'home'))
+bp.add_url_rule('/settings', view_func=User.as_view('/settings', 'settings'))
+bp.add_url_rule('/report', view_func=User.as_view('/report', 'report'))
 
 

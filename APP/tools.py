@@ -23,4 +23,6 @@ bp.add_url_rule('/create_action', view_func=Tools.as_view('/create_action', 'cre
 bp.add_url_rule('/modify_action', view_func=Tools.as_view('/modify_action', 'modify_action'))
 bp.add_url_rule('/create_wp', view_func=Tools.as_view('/create_wp', 'create_wp'))
 bp.add_url_rule('/modify_wp', view_func=Tools.as_view('/modify_wp', 'modify_wp'))
+bp.add_url_rule('/modify_workspace', view_func=Tools.as_view('/modify_worksace', 'modify_workspace'))
+bp.add_url_rule('/modify_task', view_func=Tools.as_view('/modify_task', 'modify_task'))
 

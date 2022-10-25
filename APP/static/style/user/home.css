@@ -4,15 +4,61 @@ main{
     margin: auto;
 }
 
-.group{
+.group-1, .group{
     margin: auto;
-    display: flex;
+    padding: 22px;
+    padding-top: 0;
     width: 800px;
     border: #dbdbdb solid 1px;
     background-color: white;
     min-height: 300px;
 }
+
+.group{
+    margin-top: 20px;
+}
+
 h2{
     font-size:28px;
     font-weight: 300;   
+}
+
+.flex{
+    display: flex;
+    flex-direction: column;
+}
+
+.options{
+    margin-top: 100px;
+    margin-left: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-icons{
+    padding-right: 10px;
+}
+.profile-links{
+    margin: 5px;
+    display: flex;
+    align-items: center;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+th{
+    font-weight: bold;;
+}
+
+td,tr{
+    width: 20%;
+    height: 50px;
+    border-bottom:  #d5d5d5 solid 1px;
+    text-align: left;
 }

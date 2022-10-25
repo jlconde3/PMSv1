@@ -22,7 +22,7 @@
             <div class="nav-elements-buttons">
                 <button type ="button" class="tools-button"  onclick="location.href='https://www.notion.so/'">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-notion"
-                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor"
+                    width="27" height="27" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor"
                     fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <rect x="4" y="4" width="16" height="16" rx="2"></rect>
@@ -75,7 +75,13 @@
     </nav>
     {% block main %}{% endblock %}
     <footer>
-        <p class="footer-text">&#169 PMS Project</p>
+        <div class="footer-group">
+            <p class = "footer-text">&#169 2022 PMS</p>
+            <a href="" >
+                <p class = "footer-text">Privacy policy</p> 
+            </a>
+            <p class = "footer-text">Version 0.0.1</p>
+        </div>
     </footer>
 </body>
 </html>
