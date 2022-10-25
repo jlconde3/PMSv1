@@ -1,0 +1,33 @@
+:root{
+    background-color: #fafafa;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+}
+
+a{
+    margin: auto;
+}
+.pms-logo{
+    height:auto;
+    width: 200px;
+    margin-top: 50px;
+}
+div{
+    display: flex;
+    flex-direction: column;
+}
+
+p{
+    margin: auto;
+    margin-top: 25px;
+}
+
+h1{ 
+    margin: auto;
+    margin-top: 50px;
+}

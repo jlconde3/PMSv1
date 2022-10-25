@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/wip.css')}}"/>
+    {% block css %}{% endblock %}
+    {% block scripts %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title> 
+</head>
+<body>
+    <div>
+        <a href="/main">
+            <img class="pms-logo" src="/static/images/pms-logo-transparent-black.png" alt="pms-logo"></a>
+        </a>
+
+        <H1>Work in progress...</H1>
+        <p>Our website is currently under development. This feature will be delivered with the new version.</p>
+    </div>
+
+</body>
+</html>
