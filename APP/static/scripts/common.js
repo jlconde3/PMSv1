@@ -59,3 +59,4 @@ function add_more(parente_element, id_name,content){
     container.appendChild(div);
     return n++;
 }
+

@@ -30,5 +30,7 @@ def create_app(test_config=None):
     app.register_blueprint(data.bp)
     import tools
     app.register_blueprint(tools.bp)
+    import user
+    app.register_blueprint(user.bp)
 
     return app

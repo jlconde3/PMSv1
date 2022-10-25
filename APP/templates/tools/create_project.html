@@ -4,14 +4,19 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style/tools/tools.css')}}"/>
 {% endblock %}
 
+{% block scripts %}
+<script src="/static/scripts/tools/project.js" defer></script>
+{% endblock %}
+
+
 {% block title%}PMS | Project{% endblock %}
 
 
 {%block main%}
 <main>
     <div class="top-buttons">
-        <button class = "black-button" type="submit">Submit</button>
-        <button class = "white-button" type="submit">Cancel</button>
+        <button class = "black-button" type="submit" id = "submit_button">Submit</button>
+        <button class = "white-button" type="submit" id = "cancel_button">Cancel</button>
     </div>
     <div class="border"></div>
 
@@ -68,7 +73,6 @@
                     <label class = "label-field">Project budget</label><br>
                     <input class = "input-2"  id = "project_budget" type="number">
                 </div>
-
                 <div>
                     <label class = "label-field">Profit margin</label><br>
                     <input class = "input-2"  id = "profit_margin" type="number">

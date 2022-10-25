@@ -26,3 +26,23 @@ document.getElementById('more_button').addEventListener('click',() =>
     add_more( 'tasks',`task_${n}`,task_template)
 );
 
+document.getElementById('submit_button').addEventListener('click',() => {
+    document.getElementById('main').setAttribute('style','filter:blur(4px)')
+    document.getElementById('validate_window').showModal();
+});
+
+document.getElementById('cancel_button').addEventListener('click',() => {
+    window.location.replace("/tools")
+});
+
+document.getElementById('validate_button').addEventListener('click',() => {
+    window.location.replace("/tools")
+});
+
+document.getElementById('cancel_validate_button').addEventListener('click',() => {
+    document.getElementById('main').setAttribute('style','filter:none')
+    document.getElementById('validate-window').close(); 
+});
+
+
+

@@ -30,5 +30,9 @@ document.getElementById('more_button').addEventListener('click',() =>
     add_more( 'subactions',`action_${n}`,action_template)
 );
 
+document.getElementById('cancel_button').addEventListener('click',() => {
+    window.location.replace("/tools")
+});
+
 
 

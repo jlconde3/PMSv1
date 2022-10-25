@@ -15,8 +15,8 @@
 <main>
     <div id = "main">
         <div class="top-buttons">
-            <button class = "black-button" type="button" id="generate_button" >Generate WP</button>
-            <button class = "white-button" type="button" id="cancel_button" >Cancel</button>
+            <button class = "black-button" type="button" id="submit_button" >Generate WP</button>
+            <button class = "white-button" type="button" id="cancel_button">Cancel</button>
         </div>
         <div class="border"></div>
     
@@ -112,67 +112,81 @@
         <div class="border"></div>
     </div>
 
-
-    <div id = "validate-window" class="pop-window">
-        <div class="top-buttons">
-            <button class = "black-button" type="button" id="validate_button" >Validate WP</button>
-            <button class = "white-button" type="button" id="cancel_button" >Cancel</button>
+    
+    <dialog id = "validate_window" class="validate-window">
+            <div class="top-buttons">
+                <button class = "black-button" type="button" id="validate_button" >Validate WP</button>
+                <button class = "white-button" type="button" id="cancel_validate_button" >Cancel</button>
+            </div>
+            <div class="border"></div>
+            <div class="group">
+                <div>
+                    <label class = "label-title">WP</label>
+                </div>
+                <div class="fields-group">
+                    <div>
+                        <label class = "label-field">Code</label><br>
+                        <input id = "wp_code" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="border"></div>
+            <div class="group">
+                <div>
+                    <label class = "label-title">Attributes</label>
+                </div>
+                <div class="fields-group">
+                    <div>
+                        <label class = "label-field">Difficulty</label><br>
+                        <input type="number" id = "wp_dif">
+                    </div>
+                    <div>
+                        <label class = "label-field">Volume</label><br>
+                        <input type="number" id = "wp_volum">
+                    </div>
+                    <div>
+                        <label class = "label-field">Complexity</label><br>
+                        <input type="number" id = "wp_complex">
+                    </div>
+                </div>
+            </div>
+            <div class="group">
+                <div>
+                    <label class = "label-title">Time</label>
+                </div>
+                <div class="fields-group">
+                    <div>
+                        <label class = "label-field">Contract</label><br>
+                        <input type="number" id = "wp_contract_time">
+                    </div>
+                    <div>
+                        <label class = "label-field">Planned</label><br>
+                        <input type="number" id = "wp_plan_time">
+                    </div>
+                    <div>
+                        <label class = "label-field">Scheduled</label><br>
+                        <input type="number" id = "wp_schedule_time">
+                    </div>
+                </div>
+            </div>
+            <div class="border"></div>
+            <div class="group">
+                <div>
+                    <label class = "label-title">Resources</label>
+                </div>
+                <div class="fields-group">
+                    <div>
+                        <label class = "label-field">Users</label><br>
+                        <input type="text" id = "wp_contract_time">
+                    </div>
+                    <div>
+                        <label class = "label-field">Level</label><br>
+                        <input type="number" id = "wp_plan_time">
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="group">
-            <div>
-                <label class = "label-title">WP</label>
-            </div>
-            <div class="fields-group">
-                <div>
-                    <label class = "label-field">Code</label><br>
-                    <input id = "wp_code" type="text">
-                </div>
-            </div>
-        </div>
-
-        <div class="group">
-            <div>
-                <label class = "label-title">Attributes</label>
-            </div>
-            <div class="fields-group">
-                <div>
-                    <label class = "label-field">Difficulty</label><br>
-                    <input type="number" id = "wp_dif">
-                </div>
-                <div>
-                    <label class = "label-field">Volume</label><br>
-                    <input type="number" id = "wp_volum">
-                </div>
-                <div>
-                    <label class = "label-field">Complexity</label><br>
-                    <input type="number" id = "wp_complex">
-                </div>
-            </div>
-        </div>
-
-        <div class="group">
-            <div>
-                <label class = "label-title">Time</label>
-            </div>
-            <div class="fields-group">
-                <div>
-                    <label class = "label-field">Contract</label><br>
-                    <input type="number" id = "wp_dif">
-                </div>
-                <div>
-                    <label class = "label-field">Planned</label><br>
-                    <input type="number" id = "wp_volum">
-                </div>
-                <div>
-                    <label class = "label-field">Scheduled</label><br>
-                    <input type="number" id = "wp_complex">
-                </div>
-            </div>
-        </div>
-
-
-    </div>
+    </dialog>
 
 
 </main>
