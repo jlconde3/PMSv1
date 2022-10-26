@@ -12,6 +12,17 @@
 
 
 {%block main%}
+<datalist id="projects"></datalist>
+<datalist id="disciplines"></datalist>
+<datalist id="phases"></datalist>
+<datalist id="types"></datalist>
+<datalist id="stations"></datalist>
+<datalist id="zones"></datalist>
+<datalist id="actions"></datalist>
+<datalist id="areas"></datalist>
+<datalist id="tasks_list"></datalist>
+<datalist id="users_list"></datalist>
+
 <main>
     <div id = "main">
         <div class="top-buttons">
@@ -27,7 +38,7 @@
                 <div class="fields-group">
                     <div>
                         <label class = "label-field">Agresso Code</label><br>
-                        <input class = "input-3" id = "project_code">
+                        <input class = "input-3" id = "project_code" list = "projects">
                     </div>
                 </div>
             </div>
@@ -39,11 +50,11 @@
                 <div class="fields-group">
                     <div>
                         <label class = "label-field">Discipline</label><br>
-                        <input class = "input-2" id = "discipline_code">
+                        <input class = "input-2" id = "discipline_code" list = "disciplines">
                     </div>
                     <div>
                         <label class = "label-field">Phase</label><br>
-                        <input class = "input-2" id = "phase_code">
+                        <input class = "input-2" id = "phase_code" list = "phases">
                     </div>
                 </div>
             </div>
@@ -59,11 +70,11 @@
                     </div>
                     <div>
                         <label class = "label-field">Station</label><br>
-                        <input class = "input-3" type="text" id = "wp_station">
+                        <input class = "input-3" type="text" id = "wp_station" list = "stations">
                     </div>
                     <div>
                         <label class = "label-field">Zone</label><br>
-                        <input class = "input-3" id = "wp_zone">
+                        <input class = "input-3" id = "wp_zone" list = "zones">
                     </div>
                 </div>
             </div>
@@ -76,15 +87,15 @@
                     <div class="fields-group">
                         <div>
                             <label class = "label-field">Action</label><br>
-                            <input class = "input-3" name = "task_action">
+                            <input class = "input-3" name = "task_action" list="actions">
                         </div>
                         <div>
                             <label class = "label-field">Area</label><br>
-                            <input class = "input-3" type="text" name = "task_area">
+                            <input class = "input-3" type="text" name = "task_area" list="areas">
                         </div>
                         <div>
                             <label class = "label-field">Task</label><br>
-                            <input class = "input-3" name = "task_code">
+                            <input class = "input-3" name = "task_code" list ="tasks_list">
                         </div>
                     </div>
                 </div>
@@ -105,7 +116,6 @@
         </form>
         <div class="border"></div>
     </div>
-
     
     <dialog id = "validate_window" class="validate-window">
             <div class="top-buttons">
@@ -167,12 +177,12 @@
             <div id = "users">
                 <div class="group">
                     <div>
-                        <label class = "label-title">Resource</label>
+                        <label class = "label-title">In charge</label>
                     </div>
                     <div class="fields-group">
                         <div>
                             <label class = "label-field">User</label><br>
-                            <input type="text" name = "username">
+                            <input type="text" name = "username" list = "users_list">
                         </div>
                         <div>
                             <label class = "label-field">Level</label><br>

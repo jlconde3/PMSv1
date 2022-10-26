@@ -1,6 +1,3 @@
-//Var for number the tasks
-let n = 1; 
-
 //Template for tasks
 const task_template = ` 
     <div>
@@ -9,50 +6,51 @@ const task_template = `
     <div class="fields-group">
         <div>
             <label class = "label-field">Action</label><br>
-            <input class = "input-3" name = "task_action">
+            <input class = "input-3" name = "task_action" list="actions">
         </div>
         <div>
             <label class = "label-field">Area</label><br>
-            <input class = "input-3" type="text" name = "task_area">
+            <input class = "input-3" type="text" name = "task_area" list="areas">
         </div>
         <div>
             <label class = "label-field">Task</label><br>
-            <input class = "input-3" name = "task_code">
+            <input class = "input-3" name = "task_code" list ="tasks_list">
         </div>
     </div>
 `;
 
 const user_template =`
     <div>
-        <label class = "label-title">Resource</label>
+        <label class = "label-title">In charge</label>
     </div>
     <div class="fields-group">
         <div>
             <label class = "label-field">User</label><br>
-            <input type="text" name = "username">
+            <input type="text" name = "username" list = "users_list">
         </div>
         <div>
             <label class = "label-field">Level</label><br>
             <input type="number" name = "user_level">
         </div>
     </div>
-`
+`;
 
+document.getElementById('more_button').addEventListener('click',() => {
+    add_more( 'tasks',task_template);
+});
 
-document.getElementById('more_button').addEventListener('click',() => 
-    add_more( 'tasks',`task_${n}`,task_template)
-);
 document.getElementById('submit_button').addEventListener('click',() => {
     document.body.style.overflow = "hidden"
     document.getElementById('validate_window').showModal();
 });
+
 document.getElementById('cancel_button').addEventListener('click',() => {
-    window.location.replace("/tools")
+    window.location.replace("/tools");
 });
 
-document.getElementById('more_users_button').addEventListener('click',() => 
-    add_more( 'users',`user`,user_template)
-);
+document.getElementById('more_users_button').addEventListener('click',() => {
+    add_more( 'users',user_template);
+});
 
 document.getElementById('validate_button').addEventListener('click',() => {
     let data = {
@@ -83,7 +81,7 @@ document.getElementById('validate_button').addEventListener('click',() => {
         headers:{
             'Content-Type': 'application/json'
         }
-    }).then(window.location.replace("/tools"))
+    }).then(window.location.replace("/tools"));
 });
 
 document.getElementById('cancel_validate_button').addEventListener('click',() => {

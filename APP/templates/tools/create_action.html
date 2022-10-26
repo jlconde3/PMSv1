@@ -12,6 +12,15 @@
 
     
 {%block main%}
+
+<datalist id="projects"></datalist>
+<datalist id="types"></datalist>
+<datalist id="disciplines"></datalist>
+<datalist id="phases"></datalist>
+<datalist id="zones"></datalist>
+<datalist id="areas"></datalist>
+
+
 <main>
     <div class="top-buttons">
         <button class = "black-button" type="submit" id = "submit_button">Submit</button>
@@ -28,7 +37,7 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Agresso Code</label><br>
-                    <input class = "input-3" type="text" id = "project_code">
+                    <input class = "input-3" type="text" id = "project_code" list="projects">
                 </div>
             </div>
         </div>
@@ -46,7 +55,7 @@
                 </div>
                 <div>
                     <label class = "label-field">Type</label><br>
-                    <input class = "input-3" type="text" id = "action_type">
+                    <input class = "input-3" type="text" id = "action_type" list="types">
                 </div>
                 <div>
                     <label class = "label-field">Date</label><br>
@@ -62,11 +71,11 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Discipline</label><br>
-                    <input class = "input-2" type="text" id = "discipline_code">
+                    <input class = "input-2" type="text" id = "discipline_code" list="disciplines">
                 </div>
                 <div>
                     <label class = "label-field">Phase</label><br>
-                    <input class = "input-2" type="text" id = "phase_code">
+                    <input class = "input-2" type="text" id = "phase_code" list="phases">
                 </div>
             </div>
         </div>
@@ -88,7 +97,7 @@
         <div class="border"></div>
 
         <div id = "subactions">
-            <div id = "subaction_0" class="group">
+            <div class="group">
                 <div>
                     <label class = "label-title">Subaction</label>
                 </div>
@@ -99,11 +108,11 @@
                     </div>
                     <div>
                         <label class = "label-field">Zone</label><br>
-                        <input class = "input-4" type="text" name = "subaction_zone">
+                        <input class = "input-4" type="text" name = "subaction_zone" list="zones">
                     </div>
                     <div>
                         <label class = "label-field">Area</label><br>
-                        <input class = "input-4" type="text" name = "subaction_area">
+                        <input class = "input-4" type="text" name = "subaction_area" list="areas">
                     </div>
                     <div>
                         <label class = "label-field">Time</label><br>

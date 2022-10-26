@@ -1,6 +1,3 @@
-//Var for actions id numbers
-let n = 1;
-
 //Template for actions
 let action_template = `
     <div>
@@ -13,21 +10,22 @@ let action_template = `
         </div>
         <div>
             <label class = "label-field">Zone</label><br>
-            <input class = "input-4" type="text" name = "subaction_zone">
+            <input class = "input-4" type="text" name = "subaction_zone" list="zones">
         </div>
         <div>
             <label class = "label-field">Area</label><br>
-            <input class = "input-4" type="text" name = "subaction_area">
+            <input class = "input-4" type="text" name = "subaction_area" list="areas">
         </div>
         <div>
             <label class = "label-field">Time</label><br>
             <input class = "input-4" type="number" name = "subaction_time">
         </div>
     </div>
+</div>
 `
 
 document.getElementById('more_button').addEventListener('click',() => 
-    add_more( 'subactions',`subaction_${n}`,action_template)
+    add_more( 'subactions',action_template)
 );
 
 document.getElementById('submit_button').addEventListener('click',() => {

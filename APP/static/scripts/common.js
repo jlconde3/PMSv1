@@ -50,14 +50,12 @@ function delete_element(element_id){
 }
 
 
-function add_more(parente_element, id_name,content){
+function add_more(parente_element,content){
     const container = document.getElementById(parente_element);
     let div = document.createElement('div');
-    div.setAttribute('id',id_name);
     div.setAttribute('class','group');
     div.innerHTML = content;
     container.appendChild(div);
-    return n++;
 }
 
 function element_id_value(element_id){
