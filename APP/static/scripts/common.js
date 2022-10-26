@@ -42,13 +42,12 @@ function hide_table (){
     tables_array.forEach((item)=>{item.setAttribute('style', 'display:none')})
 }
 
-function delete_element(element_id){
-    let list = document.getElementById(element_id);
+function delete_list(element_id){
+    const list = document.getElementById(element_id);
     while (list.hasChildNodes()){
         list.removeChild(list.firstChild);
     }
 }
-
 
 function add_more(parente_element,content){
     const container = document.getElementById(parente_element);
@@ -63,9 +62,17 @@ function element_id_value(element_id){
 }
 
 function element_name_value(element_name){
-    let list_values = [];
+    const list_values = [];
     for (let i of document.getElementsByName(element_name)){   
         list_values.push(i.value);
     }
     return list_values;
+}
+
+function html_lists (response,html_list){
+    const container = document.getElementById(html_list);
+    for (let i in response){
+        let content = document.createElement('option').value = i;
+        container.appendChild(content);
+    }
 }
