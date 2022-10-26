@@ -14,13 +14,12 @@
 
 {%block main%}
 <main>
-    <div class="top-buttons">
-        <button class = "black-button" type="submit" id = "submit_button">Submit</button>
-        <button class = "white-button" type="submit" id = "cancel_button">Cancel</button>
-    </div>
-    <div class="border"></div>
-
-    <form method="post" name="project_atributes" autocomplete="off">
+    <form autocomplete="off">
+        <div class="top-buttons">
+            <button class = "black-button" type="button" id = "submit_button">Submit</button>
+            <button class = "white-button" type="button" id = "cancel_button">Cancel</button>
+        </div>
+        <div class="border"></div>
         <div class="group">
             <div>
                 <label class = "label-title">Project</label>
@@ -29,21 +28,20 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Agresso Code</label><br>
-                    <input class = "input-3" id = "project_code">
+                    <input class = "input-3" id = "project_code" required>
                 </div>
 
                 <div>
                     <label class = "label-field">Name</label><br>
-                    <input class = "input-3" id = "project_name">
+                    <input class = "input-3" id = "project_name" required>
                 </div>
 
                 <div>
                     <label class = "label-field">Client</label><br>
-                    <input class = "input-3" id = "client">
+                    <input class = "input-3" id = "project_client" required>
                 </div>
             </div>
         </div>
-
         <div class="group">
             <div>
                 <label class = "label-title">Ghenova</label>
@@ -52,11 +50,11 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Section</label><br>
-                    <input class = "input-2" type="text" id = "ghenova_section">
+                    <input class = "input-2" type="text" id = "project_section">
                 </div>
                 <div>
                     <label class = "label-field">Division</label><br>
-                    <input class = "input-2" id = "ghenova_division">
+                    <input class = "input-2" id = "project_division">
                 </div>
             </div>
         </div>
@@ -71,16 +69,14 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Project budget</label><br>
-                    <input class = "input-2"  id = "project_budget" type="number">
+                    <input class = "input-2"  id = "project_budget" type="number" required>
                 </div>
                 <div>
                     <label class = "label-field">Profit margin</label><br>
-                    <input class = "input-2"  id = "profit_margin" type="number">
+                    <input class = "input-2"  id = "project_profit_margin" type="number" required>
                 </div>
             </div>
         </div>
-
-
         <div class="group">
             <div>
                 <label class = "label-title">CPT</label>
@@ -89,15 +85,14 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Default</label><br>
-                    <input class = "input-2"  id = "project_cpt" type="number">
+                    <input class = "input-2"  id = "project_cpt" type="number" required>
                 </div>
                 <div>
                     <label class = "label-field">Actions</label><br>
-                    <input class = "input-2"  id = "project_cpt_act" type="number">
+                    <input class = "input-2"  id = "project_cpt_actions" type="number" required>
                 </div>
             </div>
         </div>
-
         <div class="group">
             <div>
                 <label class = "label-title">Costs</label>
@@ -106,13 +101,13 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Management</label><br>
-                    <input class = "input-2" id = "management_cost" type="number">
+                    <input class = "input-2" id = "project_management_cost" type="number" required>
                 </div>
                 <div>
                     <label class = "label-field">Extra</label><br>
-                    <input class = "input-2"  id = "extra_cost" type="number">
+                    <input class = "input-2"  id = "project_extra_cost" type="number" required>
                 </div>
-            </div>
+            </div>  
         </div>
     </form>
 

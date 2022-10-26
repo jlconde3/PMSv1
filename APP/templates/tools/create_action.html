@@ -28,7 +28,7 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Agresso Code</label><br>
-                    <input class = "input-3" id = "project_code">
+                    <input class = "input-3" type="text" id = "project_code">
                 </div>
             </div>
         </div>
@@ -46,11 +46,11 @@
                 </div>
                 <div>
                     <label class = "label-field">Type</label><br>
-                    <input class = "input-3" type="text" id = "type_code">
+                    <input class = "input-3" type="text" id = "action_type">
                 </div>
                 <div>
                     <label class = "label-field">Date</label><br>
-                    <input class = "input-3" type="date" id = "date_code">
+                    <input class = "input-3" type="date" id = "action_date">
                 </div>
             </div>
         </div>
@@ -62,11 +62,11 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Discipline</label><br>
-                    <input class = "input-2" id = "discipline_code">
+                    <input class = "input-2" type="text" id = "discipline_code">
                 </div>
                 <div>
                     <label class = "label-field">Phase</label><br>
-                    <input class = "input-2" id = "phase_code">
+                    <input class = "input-2" type="text" id = "phase_code">
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
 
                 <div>
                     <label class = "label-field">Description</label><br>
-                    <textarea class = "input-text" id = "description_text"></textarea>
+                    <textarea class = "input-text"  type="text" id = "action_description"></textarea>
                 </div>
             </div>
         </div>
@@ -88,26 +88,26 @@
         <div class="border"></div>
 
         <div id = "subactions">
-            <div id = "action_0" class="group">
+            <div id = "subaction_0" class="group">
                 <div>
                     <label class = "label-title">Subaction</label>
                 </div>
                 <div class="fields-group">
                     <div>
-                        <label class = "label-field">Code</label><br>
-                        <input class = "input-4" id = "internal_code">
+                        <label class = "label-field">Custom code</label><br>
+                        <input class = "input-4" type="text" name = "custom_code">
                     </div>
                     <div>
                         <label class = "label-field">Zone</label><br>
-                        <input class = "input-4" id = "zone_code">
+                        <input class = "input-4" type="text" name = "subaction_zone">
                     </div>
                     <div>
                         <label class = "label-field">Area</label><br>
-                        <input class = "input-4" type="text" id = "area_code">
+                        <input class = "input-4" type="text" name = "subaction_area">
                     </div>
                     <div>
                         <label class = "label-field">Time</label><br>
-                        <input class = "input-4" type="number" id = "time">
+                        <input class = "input-4" type="number" name = "subaction_time">
                     </div>
                 </div>
             </div>

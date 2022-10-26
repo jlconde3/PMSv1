@@ -5,7 +5,7 @@ from flask.views import View
 bp = Blueprint('tools', __name__, url_prefix='/tools')
 
 class Tools(View):
-    methods = ["GET", "POST"]
+    methods = ["GET"]
     decorators = [login_required]
 
     def __init__(self,model) -> None:
@@ -15,6 +15,7 @@ class Tools(View):
     def dispatch_request(self):
         if request.method == "GET":
             return render_template(self.template)
+
 
 bp.add_url_rule('/', view_func=Tools.as_view('/', 'home'))
 bp.add_url_rule('/create_project', view_func=Tools.as_view('/create_project', 'create_project'))
@@ -26,3 +27,21 @@ bp.add_url_rule('/modify_wp', view_func=Tools.as_view('/modify_wp', 'modify_wp')
 bp.add_url_rule('/modify_workspace', view_func=Tools.as_view('/modify_worksace', 'modify_workspace'))
 bp.add_url_rule('/modify_task', view_func=Tools.as_view('/modify_task', 'modify_task'))
 
+
+@bp.route('/create_project', methods=['POST'])
+def create_project():
+    data = request.get_json()
+    print(data)
+    return "Hola"
+
+@bp.route('/create_action', methods=['POST'])
+def create_action():
+    data = request.get_json()
+    print(data)
+    return "Hola"
+
+@bp.route('/create_wp', methods=['POST'])
+def create_wp():
+    data = request.get_json()
+    print(data)
+    return "Hola"
