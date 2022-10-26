@@ -20,12 +20,10 @@ def create_app(test_config=None):
 
     @app.route("/")
     def init ():
-        return redirect(url_for('main.main'))
+        return redirect(url_for('tools./'))
 
     import auth
     app.register_blueprint(auth.bp)
-    import main
-    app.register_blueprint(main.bp)
     import data
     app.register_blueprint(data.bp)
     import tools

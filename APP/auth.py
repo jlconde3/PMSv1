@@ -31,7 +31,7 @@ def login_user ():
         if error is None:
             session.clear()
             session['user_id'] = user[1]
-            return redirect(url_for('main.main'))
+            return redirect(url_for('tools./'))
         else:
             return error
 
