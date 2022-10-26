@@ -19,7 +19,6 @@
             <button class = "white-button" type="button" id="cancel_button">Cancel</button>
         </div>
         <div class="border"></div>
-    
         <form method="post" name="project_atributes" autocomplete="off">
             <div class="group">
                 <div>
@@ -32,9 +31,7 @@
                     </div>
                 </div>
             </div>
-    
             <div class="border"></div>
-    
             <div class="group">
                 <div>
                     <label class = "label-title">Situation</label>
@@ -91,10 +88,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-    
-    
+            </div>    
             <div class="group">
                 <button type="button" id = "more_button" class="more-tasks">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus"
@@ -170,20 +164,38 @@
                 </div>
             </div>
             <div class="border"></div>
+            <div id = "users">
+                <div class="group">
+                    <div>
+                        <label class = "label-title">Resource</label>
+                    </div>
+                    <div class="fields-group">
+                        <div>
+                            <label class = "label-field">User</label><br>
+                            <input type="text" name = "username">
+                        </div>
+                        <div>
+                            <label class = "label-field">Level</label><br>
+                            <input type="number" name = "user_level">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            
             <div class="group">
-                <div>
-                    <label class = "label-title">Resources</label>
-                </div>
-                <div class="fields-group">
-                    <div>
-                        <label class = "label-field">Users</label><br>
-                        <input type="text" name = "user">
-                    </div>
-                    <div>
-                        <label class = "label-field">Level</label><br>
-                        <input type="number" name = "level>
-                    </div>
-                </div>
+                <button type="button" id = "more_users_button" class="more-tasks">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus"
+                    width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <line x1="9" y1="12" x2="15" y2="12"></line>
+                        <line x1="12" y1="9" x2="12" y2="15"></line>
+                    </svg>
+                    <p>Click here to add more resources...</p>
+                </button>
             </div>
         </div>
     </dialog>

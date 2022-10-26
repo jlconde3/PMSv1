@@ -2,35 +2,57 @@
 let n = 1; 
 
 //Template for tasks
-let task_template = ` 
+const task_template = ` 
     <div>
         <label class = "label-title">Task</label>
-        </div>
-        <div class="fields-group">
+    </div>
+    <div class="fields-group">
         <div>
             <label class = "label-field">Action</label><br>
-            <input class = "input-3" id = "zone_code">
+            <input class = "input-3" name = "task_action">
         </div>
         <div>
             <label class = "label-field">Area</label><br>
-            <input class = "input-3" type="text" id = "phase_code">
+            <input class = "input-3" type="text" name = "task_area">
         </div>
         <div>
             <label class = "label-field">Task</label><br>
-            <input class = "input-3" id = "zone_code">
+            <input class = "input-3" name = "task_code">
         </div>
     </div>
 `;
+
+const user_template =`
+    <div>
+        <label class = "label-title">Resource</label>
+    </div>
+    <div class="fields-group">
+        <div>
+            <label class = "label-field">User</label><br>
+            <input type="text" name = "username">
+        </div>
+        <div>
+            <label class = "label-field">Level</label><br>
+            <input type="number" name = "user_level">
+        </div>
+    </div>
+`
+
 
 document.getElementById('more_button').addEventListener('click',() => 
     add_more( 'tasks',`task_${n}`,task_template)
 );
 document.getElementById('submit_button').addEventListener('click',() => {
+    document.body.style.overflow = "hidden"
     document.getElementById('validate_window').showModal();
 });
 document.getElementById('cancel_button').addEventListener('click',() => {
     window.location.replace("/tools")
 });
+
+document.getElementById('more_users_button').addEventListener('click',() => 
+    add_more( 'users',`user`,user_template)
+);
 
 document.getElementById('validate_button').addEventListener('click',() => {
     let data = {
@@ -50,6 +72,8 @@ document.getElementById('validate_button').addEventListener('click',() => {
         wp_contracted_time: element_id_value('wp_contracted_time'),
         wp_planned_time: element_id_value('wp_planned_time'),
         wp_scheduled_time:  element_id_value('wp_scheduled_time'),
+        username: element_name_value('username'),
+        user_level: element_name_value('user_level')
     };
     
     fetch('/tools/create_wp', {
@@ -63,6 +87,7 @@ document.getElementById('validate_button').addEventListener('click',() => {
 });
 
 document.getElementById('cancel_validate_button').addEventListener('click',() => {
+    document.body.style.overflow = "visible"
     document.getElementById('validate_window').close(); 
 });
 

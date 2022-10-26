@@ -93,7 +93,7 @@ textarea{
 .validate-window{
     width: 50%;
     min-width: 700px;
-    border: black solid 1px;
+    border: #d1d1d1  solid 1px;
 }
 
 .loader {
