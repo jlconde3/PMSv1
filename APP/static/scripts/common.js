@@ -69,10 +69,33 @@ function element_name_value(element_name){
     return list_values;
 }
 
-function html_lists (response,html_list){
+
+function html_list(response,html_list){
     const container = document.getElementById(html_list);
     for (let i in response){
-        let content = document.createElement('option').value = i;
+        var content = document.createElement('option');
+        content.value = option;
         container.appendChild(content);
     }
 }
+
+function retrive_data(data,url,lists_array){
+    fetch(url,{
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers:{'Content-Type': 'application/json'}
+    })
+    .then((response => response.json()))
+    .then( data => {
+        for (const list of lists_array){
+            let container = document.getElementById(list);
+            for (const option of data){
+                var content = document.createElement('option');
+                content.value = option;
+                content.innerHTML = option;
+                container.appendChild(content)
+            }
+        }
+    })
+};

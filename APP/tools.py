@@ -45,3 +45,15 @@ def create_wp():
     data = request.get_json()
     print(data)
     return "Hola"
+
+@bp.route('/projects', methods=['POST'])
+def retrive_projects():
+    return ['Hola', 'me','llamo','jose']
+
+@bp.route('/disciplines', methods=['POST'])
+def retrive_disciplines():
+    data = request.get_json()
+    if data['project_code'] == "Hola":
+        return ['me','llamo','jose']
+    
+    return[1,2,3]

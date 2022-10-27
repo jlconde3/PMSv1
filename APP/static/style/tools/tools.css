@@ -39,6 +39,7 @@ main{
 }
 
 input{
+    position: relative;
     height: 40px;
     padding-left: 5px;
     margin-top: 10px;
@@ -46,6 +47,7 @@ input{
     border: #EAEAEA solid 1px;
     color:  #57647E;
 }
+
 
 .more-tasks{
     display: flex;
@@ -109,4 +111,31 @@ textarea{
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+
+datalist {
+    position:relative;
+    top: -1px;
+    left: 0px;
+    overflow-y: auto;
+    background-color: white;
+    border: #EAEAEA solid 1px;
+  
+}
+  
+option {
+    border-bottom:#EAEAEA solid 1px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    height: 40px;
+    padding-left: 5px;
+    outline: none;
+    color:  #57647E;
+    cursor: pointer;
+}
+  
+option:hover,  .active{
+  background-color: #fafafa;
 }

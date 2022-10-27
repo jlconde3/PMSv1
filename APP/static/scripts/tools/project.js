@@ -26,3 +26,4 @@ document.getElementById('submit_button').addEventListener('click',() => {
 document.getElementById('cancel_button').addEventListener('click',() => {
     window.location.replace("/tools")
 });
+

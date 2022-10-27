@@ -2,19 +2,19 @@
 let action_template = `
     <div>
         <label class = "label-title">Subaction</label>
-        </div>
-        <div class="fields-group">
+    </div>
+    <div class="fields-group">
         <div>
             <label class = "label-field">Custom code</label><br>
-            <input class = "input-4" type="text" name = "custom_code">
+            <input class = "input-4" type="" name = "custom_code">
         </div>
         <div>
             <label class = "label-field">Zone</label><br>
-            <input class = "input-4" type="text" name = "subaction_zone" list="zones">
+            <select class = "input-4" name = "subaction_zone" id = "subaction_zone"></select>
         </div>
         <div>
             <label class = "label-field">Area</label><br>
-            <input class = "input-4" type="text" name = "subaction_area" list="areas">
+            <select class = "input-4" name = "subaction_area" id = "subaction_area"></select>
         </div>
         <div>
             <label class = "label-field">Time</label><br>
@@ -24,9 +24,17 @@ let action_template = `
 </div>
 `
 
-document.getElementById('more_button').addEventListener('click',() => 
-    add_more( 'subactions',action_template)
-);
+function remove_values_zones_areas (){
+    var zones = [...document.getElementsByName('subaction_zone')];
+    var areas = [...document.getElementsByName('subaction_area')];
+
+    zones.forEach((item)=>{
+        item.value = null;
+    });
+    areas.forEach((item)=>{
+        item.value = null;
+    });
+}
 
 document.getElementById('submit_button').addEventListener('click',() => {
     let data = {
@@ -50,13 +58,71 @@ document.getElementById('submit_button').addEventListener('click',() => {
         headers:{
             'Content-Type': 'application/json'
         }
-    }).then(window.location.replace("/tools"))
-
+    }).then(window.location.replace("/tools"));
 });
 
 document.getElementById('cancel_button').addEventListener('click',() => {
-    window.location.replace("/tools")
+    window.location.replace("/tools");
 });
 
+document.getElementById('project_code').addEventListener('click',()=>
+    {
+        retrive_data(
+            data = {},
+            url = '/tools/projects',
+            lists_array = ['projects']
+        )
+    },
+    {once:true}
+);
 
 
+document.getElementById('project_code').addEventListener('change',()=>
+    {   
+        document.getElementById('discipline_code').value = null;
+        document.getElementById('phase_code').value = null;
+        remove_values_zones_areas();
+        retrive_data(
+            data = {
+                project_code:element_id_value('project_code')
+            },
+            url = '/tools/disciplines',
+            lists_array = ['disciplines']
+        )
+    },
+);
+
+document.getElementById('discipline_code').addEventListener('change',()=>
+    {   
+        document.getElementById('phase_code').value = null;
+        remove_values_zones_areas();
+        retrive_data(
+            data = {
+                project_code:element_id_value('project_code'),
+                discipline_code:element_id_value('discipline_code'),
+            },
+            url = '/tools/projects',
+            lists_array = ['phases']
+        )
+    },
+);
+
+document.getElementById('phase_code').addEventListener('change',()=>
+    {
+        remove_values_zones_areas();
+        retrive_data(
+            data = {
+                project_code:element_id_value('project_code'),
+                discipline_code:element_id_value('discipline_code'),
+                phase_code: element_id_value('phase_code'),
+            },
+            url = '/tools/projects',
+            lists_array = ['zones', 'areas']
+        )
+    },
+);
+
+document.getElementById('more_button').addEventListener('click',() => 
+{
+    add_more('subactions',action_template);
+});
