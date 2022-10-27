@@ -18,19 +18,18 @@ main{
     margin-right: auto;
 }
 
-input, textarea, button, option{
+input, textarea, button, option, label{
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
 }
 
 
 nav{
-    height: 60px;
     background-color: #ffffff;
     border-bottom: #EAEAEA solid 1px;
     width: 100%;
     overflow: hidden;
-    position: fixed;
+    position:absolute;
     top: 0;
 }
 

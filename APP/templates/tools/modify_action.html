@@ -1,7 +1,88 @@
-{% extends "wip.html" %}
+{% extends "base.html" %}
 
-{% block css %}{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style/tools/tools.css')}}"/>
+{% endblock %}
 
-{% block scripts %}{% endblock %}
+{% block scripts %}
+{% block scripts %}
+<script src="/static/scripts/tools/action copy 2.js"></script>
+<script src="/static/scripts/tools/action.js" defer></script>
+{% endblock %}
 
-{% block title %}PMS | Modify Action{% endblock %}
+
+{% block title%}PMS | Project{% endblock %}
+
+
+{%block main%}
+<main style="display: flex; flex-direction: column;">
+    <style>
+        label{
+            margin-left: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            width: 30%;
+        }
+        .label-field{
+            font-size: 12px;
+            font-weight: 400;
+            color:  #57647E;
+        }
+        input{
+            width: 300px;
+            height: 40px;
+            padding-left: 5px;
+            margin-top: 10px;
+            outline: none;
+            border: #EAEAEA solid 1px;
+            color:  #57647E;
+        }
+        datalist{
+            position: absolute;
+            overflow-y: auto;
+            background-color: white;
+            border: #EAEAEA solid 1px;
+            display: none;
+            z-index: 1;
+        }
+
+        option{
+            display: flex;
+            align-items: center;
+            width: 300px;
+            font-size: 14px;
+            height: 40px;
+            padding-left: 5px;
+            outline: none;
+            color:  #57647E;
+            cursor: pointer;
+            border-bottom:#EAEAEA solid 1px;
+        }
+        option:hover{
+            background-color: #fafafa;
+        }
+
+        .dropdown{
+            display: inline-block;
+        }
+
+
+    </style>
+
+    <div class="group">
+        <div>
+            <label>Project</label>
+        </div>
+
+        <div class="fields-group">
+            <div class="dropdwn">
+                <label class="label-field" >Agresso Code</label><br>
+                <input  autocomplete="off" list="" id="project_code">
+                <datalist id="projects">
+                    <option value="Hola"></option>
+                </datalist>
+            </div>
+        </div>
+    </div>
+</main>
+{%endblock%}

@@ -1,3 +1,4 @@
+
 function create_table(table_type){
     switch(table_type){
         case "projects":
@@ -79,7 +80,7 @@ function html_list(response,html_list){
     }
 }
 
-function retrive_data(data,url,lists_array){
+function retrive_data(reload,data,url,input_id,lists_array){
     fetch(url,{
         credentials: 'include',
         method: 'POST',
@@ -88,14 +89,43 @@ function retrive_data(data,url,lists_array){
     })
     .then((response => response.json()))
     .then( data => {
-        for (const list of lists_array){
-            let container = document.getElementById(list);
+        if (reload == true){
+            let container = document.getElementById(lists_array);
             for (const option of data){
                 var content = document.createElement('option');
                 content.value = option;
                 content.innerHTML = option;
                 container.appendChild(content)
             }
+            
         }
+
     })
+    .then(()=>{display_select_input(input_id,lists_array)})
+};
+
+function display_select_input(input_id,datalist_id){
+    document.getElementById(datalist_id).style.display = 'block';
+    var options = [...document.getElementById(datalist_id).options]
+
+    options.forEach((item)=>{
+        item.addEventListener('click',()=>{
+            document.getElementById(input_id).value = item.value;
+            document.getElementById(datalist_id).style.display = 'none';
+        },false)
+    });
+
+    var currentFocus = -1;
+    document.getElementById(input_id).oninput = function() {
+        currentFocus = -1;
+        var text = document.getElementById(input_id).value.toUpperCase();
+        options.forEach((item)=>{
+            if(item.value.toUpperCase().indexOf(text) > -1){
+                item.style.display = "flex";
+            }
+            else{
+                item.style.display = "none";
+            }
+        });
+    }    
 };
