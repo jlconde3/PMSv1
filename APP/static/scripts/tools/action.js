@@ -18,9 +18,18 @@ document.getElementById('project_code').addEventListener('click',()=>{
         input_id = 'project_code',
         list_id = 'projects',
     )
-    return reload_projects = false;
+    reload_projects = false;
 })
 
+document.getElementById('project_code').addEventListener('change',()=>{
+    delete_list('types');
+    delete_value('action_type')
+    delete_list('disciplines');
+    delete_value('discipline_code')
+    delete_list('phases');
+    delete_value('phase_code')
+    reload_types = true;
+});
 
 document.getElementById('action_type').addEventListener('click',()=>{
     retrive_data(
@@ -30,7 +39,7 @@ document.getElementById('action_type').addEventListener('click',()=>{
         input_id = 'action_type',
         list_id = 'types',
     )
-    return reload_types = true;   
+    reload_types = false;   
 });
 
 document.getElementById('discipline_code').addEventListener('click',()=>{
@@ -41,7 +50,7 @@ document.getElementById('discipline_code').addEventListener('click',()=>{
         input_id = 'discipline_code',
         list_id = 'disciplines',
     )
-    return reload_disciplines = false;   
+    reload_disciplines = false;   
 });
 
 document.getElementById('phase_code').addEventListener('click',()=>{
@@ -52,7 +61,7 @@ document.getElementById('phase_code').addEventListener('click',()=>{
         input_id = 'phase_code',
         list_id = 'phases',
     )
-    return reload_phase = false;   
+    reload_phase = false;   
 });
 
 

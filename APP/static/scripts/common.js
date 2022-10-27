@@ -50,6 +50,10 @@ function delete_list(element_id){
     }
 }
 
+function delete_value(element_id){
+    document.getElementById(element_id).value=null;
+}
+
 function add_more(parente_element,content){
     const container = document.getElementById(parente_element);
     let div = document.createElement('div');
