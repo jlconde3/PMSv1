@@ -9,14 +9,17 @@ const task_template = `
         <div>
             <label class = "label-field">Action</label><br>
             <input class = "input-3" name = "task_action" list="actions" id="action_${j}>
+            <datalist id="actions_${j}" class = "input-3" ></datalist>
         </div>
         <div>
             <label class = "label-field">Area</label><br>
-            <input class = "input-3" type="text" name = "task_area" id="task_area_${j}>
+            <input class = "input-3" type="text" name = "task_area" id="area_${j}>
+            <datalist id="areas_${j}" class = "input-3"></datalist>
         </div>
         <div>
             <label class = "label-field">Task</label><br>
-            <input class = "input-3" name = "task_code" id="task_code_${j}>
+            <input class = "input-3" name = "task_code" id="task_${j}>
+            <datalist id="tasks_${j}" class = "input-3"></datalist>
         </div>
     </div>
 `;
