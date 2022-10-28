@@ -63,13 +63,13 @@ function add_more(parent_element,content){
 }
 
 function element_id_value(element_id){
-    return document.getElementById(element_id).value;
+    return document.getElementById(element_id).value.toUpperCase();
 }
 
 function element_name_value(element_name){
     const list_values = [];
     for (let i of document.getElementsByName(element_name)){   
-        list_values.push(i.value);
+        list_values.push(i.value.toUpperCase());
     }
     return list_values;
 }
