@@ -158,7 +158,6 @@ document.getElementById(`area_0`).addEventListener('click',()=>{
 
 
 document.getElementById('submit_button').addEventListener('click',() => {
-
     let i = 0;
     let empty = true;
     const inputs = document.getElementsByTagName('input');
@@ -175,35 +174,31 @@ document.getElementById('submit_button').addEventListener('click',() => {
         i++;
     }
     
-    console
     if (!empty){
-        delay(2000).then(()=>{
-            
-            let data = {
-                project_code: element_id_value('project_code'),
-                customer_code: element_id_value('customer_code'),
-                action_type: element_id_value('action_type'),
-                action_date: element_id_value('action_date'),
-                discipline_code:element_id_value('discipline_code'),
-                phase_code: element_id_value('phase_code'),
-                action_description: element_id_value('action_description'),
-                custom_code: element_name_value('custom_code'),
-                subaction_zone: element_name_value('subaction_zone'),
-                subaction_area: element_name_value('subaction_area'),
-                subaction_time: element_name_value('subaction_time')
-            };
-    
-            fetch('/tools/create_action', {
-                credentials: 'include',
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers:{
-                    'Content-Type': 'application/json'
-                }
-            }).then(window.location.replace("/tools"))
-        })
+        let data = {
+            project_code: element_id_value('project_code'),
+            customer_code: element_id_value('customer_code'),
+            action_type: element_id_value('action_type'),
+            action_date: element_id_value('action_date'),
+            discipline_code:element_id_value('discipline_code'),
+            phase_code: element_id_value('phase_code'),
+            action_description: element_id_value('action_description'),
+            custom_code: element_name_value('custom_code'),
+            subaction_zone: element_name_value('subaction_zone'),
+            subaction_area: element_name_value('subaction_area'),
+            subaction_time: element_name_value('subaction_time')
+        };
+        fetch('/tools/create_action', {
+            credentials: 'include',
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(window.location.replace("/tools"))
     }
     else{
         alert("You left some fields empty!!")
     }
 });
+
