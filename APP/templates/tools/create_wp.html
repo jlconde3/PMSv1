@@ -12,204 +12,195 @@
 
 
 {%block main%}
-<datalist id="projects"></datalist>
-<datalist id="disciplines"></datalist>
-<datalist id="phases"></datalist>
-<datalist id="types"></datalist>
-<datalist id="stations"></datalist>
-<datalist id="zones"></datalist>
-<datalist id="actions"></datalist>
-<datalist id="areas"></datalist>
-<datalist id="tasks_list"></datalist>
-<datalist id="users_list"></datalist>
-
 <main>
-    <div id = "main">
-        <div class="top-buttons">
-            <button class = "black-button" type="button" id="submit_button" >Generate WP</button>
-            <button class = "white-button" type="button" id="cancel_button">Cancel</button>
-        </div>
-        <div class="border"></div>
-        <form method="post" name="project_atributes" autocomplete="off">
-            <div class="group">
-                <div>
-                    <label class = "label-title">Project</label>
-                </div>
-                <div class="fields-group">
-                    <div>
-                        <label class = "label-field">Agresso Code</label><br>
-                        <input class = "input-3" id = "project_code" list = "projects">
-                    </div>
-                </div>
-            </div>
-            <div class="border"></div>
-            <div class="group">
-                <div>
-                    <label class = "label-title">Situation</label>
-                </div>
-                <div class="fields-group">
-                    <div>
-                        <label class = "label-field">Discipline</label><br>
-                        <input class = "input-2" id = "discipline_code" list = "disciplines">
-                    </div>
-                    <div>
-                        <label class = "label-field">Phase</label><br>
-                        <input class = "input-2" id = "phase_code" list = "phases">
-                    </div>
-                </div>
-            </div>
-    
-            <div class="group">
-                <div>
-                    <label class = "label-title">Workspace</label>
-                </div>
-                <div class="fields-group">
-                    <div>
-                        <label class = "label-field">Type</label><br>
-                        <input class = "input-3" id = "wp_type">
-                    </div>
-                    <div>
-                        <label class = "label-field">Station</label><br>
-                        <input class = "input-3" type="text" id = "wp_station" list = "stations">
-                    </div>
-                    <div>
-                        <label class = "label-field">Zone</label><br>
-                        <input class = "input-3" id = "wp_zone" list = "zones">
-                    </div>
-                </div>
-            </div>
-            <div class="border"></div>
-            <div id = "tasks">
-                <div class="group">
-                    <div>
-                        <label class = "label-title">Task</label>
-                    </div>
-                    <div class="fields-group">
-                        <div>
-                            <label class = "label-field">Action</label><br>
-                            <input class = "input-3" name = "task_action" list="actions">
-                        </div>
-                        <div>
-                            <label class = "label-field">Area</label><br>
-                            <input class = "input-3" type="text" name = "task_area" list="areas">
-                        </div>
-                        <div>
-                            <label class = "label-field">Task</label><br>
-                            <input class = "input-3" name = "task_code" list ="tasks_list">
-                        </div>
-                    </div>
-                </div>
-            </div>    
-            <div class="group">
-                <button type="button" id = "more_button" class="more-tasks">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus"
-                    width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
-                    fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <line x1="9" y1="12" x2="15" y2="12"></line>
-                        <line x1="12" y1="9" x2="12" y2="15"></line>
-                    </svg>
-                    <p>Click here to add new task...</p>
-                </button>
-            </div>
-        </form>
-        <div class="border"></div>
+    <div class="top-buttons">
+        <button class = "black-button"type = "submit" id = "submit_button">Submit</button>
+        <button class = "white-button"type = "submit" id = "cancel_button">Cancel</button>
     </div>
-    
-    <dialog id = "validate_window" class="validate-window">
-            <div class="top-buttons">
-                <button class = "black-button" type="button" id="validate_button" >Validate WP</button>
-                <button class = "white-button" type="button" id="cancel_validate_button" >Cancel</button>
+    <form autocomplete="off" method="post">
+        <div class="border"></div>    
+        <div class="group">
+            <div>
+                <label>Project</label>
             </div>
-            <div class="border"></div>
-            <div class="group">
-                <div>
-                    <label class = "label-title">WP</label>
+            <div class="fields-group">
+                <div class="dropdwn">
+                    <label class="label-field" >Agresso Code</label><br>
+                    <input class = "input-2" id="project_code" required>
+                    <datalist id="projects"></datalist>
                 </div>
-                <div class="fields-group">
-                    <div>
-                        <label class = "label-field">Code</label><br>
-                        <input id = "wp_code" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="border"></div>
-            <div class="group">
-                <div>
-                    <label class = "label-title">Attributes</label>
-                </div>
-                <div class="fields-group">
-                    <div>
-                        <label class = "label-field">Difficulty</label><br>
-                        <input type="number" id = "wp_difficulty">
-                    </div>
-                    <div>
-                        <label class = "label-field">Volume</label><br>
-                        <input type="number" id = "wp_volume">
-                    </div>
-                    <div>
-                        <label class = "label-field">Complexity</label><br>
-                        <input type="number" id = "wp_complexity">
-                    </div>
-                </div>
-            </div>
-            <div class="group">
-                <div>
-                    <label class = "label-title">Time</label>
-                </div>
-                <div class="fields-group">
-                    <div>
-                        <label class = "label-field">Contracted</label><br>
-                        <input type="number" id = "wp_contracted_time">
-                    </div>
-                    <div>
-                        <label class = "label-field">Planned</label><br>
-                        <input type="number" id = "wp_planned_time">
-                    </div>
-                    <div>
-                        <label class = "label-field">Scheduled</label><br>
-                        <input type="number" id = "wp_scheduled_time">
-                    </div>
-                </div>
-            </div>
-            <div class="border"></div>
-            <div id = "users">
-                <div class="group">
-                    <div>
-                        <label class = "label-title">In charge</label>
-                    </div>
-                    <div class="fields-group">
-                        <div>
-                            <label class = "label-field">User</label><br>
-                            <input type="text" name = "username" list = "users_list">
-                        </div>
-                        <div>
-                            <label class = "label-field">Level</label><br>
-                            <input type="number" name = "user_level">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            
-            <div class="group">
-                <button type="button" id = "more_users_button" class="more-tasks">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus"
-                    width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
-                    fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <line x1="9" y1="12" x2="15" y2="12"></line>
-                        <line x1="12" y1="9" x2="12" y2="15"></line>
-                    </svg>
-                    <p>Click here to add more resources...</p>
-                </button>
             </div>
         </div>
-    </dialog>
+        <div class="border"></div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Situation</label>
+            </div>
+            <div class="fields-group">
+                <div class="dropdown">
+                    <label class = "label-field">Discipline</label><br>
+                    <input class = "input-2" id = "discipline_code">
+                    <datalist id="disciplines"></datalist>
+                </div>
+                <div class="dropdown">
+                    <label class = "label-field">Phase</label><br>
+                    <input class = "input-2" id = "phase_code">
+                    <datalist id="phases"></datalist>
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Workspace</label>
+            </div>
+            <div class="fields-group">
+                <div class="dropdown">
+                    <label class = "label-field">Type</label><br>
+                    <input class = "input-3" id = "wp_type">
+                    <datalist id="types"></datalist>
+                </div>
+                <div class="dropdown">
+                    <label class = "label-field">Station</label><br>
+                    <input class = "input-3" type="text" id = "wp_station">
+                    <datalist id="stations"></datalist>
+                </div>
+                <div class="dropdown">
+                    <label class = "label-field">Zone</label><br>
+                    <input class = "input-3" id = "wp_zone">
+                    <datalist id="zones"></datalist>
+                </div>
+            </div>
+        </div>
+        <div class="border"></div>
+        <div id = "subactions">
+            <div class="group">
+                <div>
+                    <label class = "label-title">Task</label>
+                </div>
+                <div class="fields-group">
+                    <div class="dropdown">
+                        <label class = "label-field">Action</label><br>
+                        <input class = "input-3" name = "task_action" id = "action_0">
+                        <datalist id="actions"></datalist>
+                    </div>
+                    <div class="dropdown">
+                        <label class = "label-field">Area</label><br>
+                        <input class = "input-3" type="text" name = "task_area" id = "task_area_0">
+                        <datalist id="areas"></datalist>
+                    </div>
+                    <div class="dropdown">
+                        <label class = "label-field">Task</label><br>
+                        <input class = "input-3" name = "task_code" id = "task_code_0">
+                        <datalist id="tasks_list"></datalist>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <button type="button" id = "more_button" class="more-tasks">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus"
+                width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <line x1="9" y1="12" x2="15" y2="12"></line>
+                    <line x1="12" y1="9" x2="12" y2="15"></line>
+                </svg>
+                <p>Click here to add new task...</p>
+            </button>
+        </div>
+    </form>
 
+    <dialog id = "validate_window" class="validate-window">
+        <div class="top-buttons">
+            <button class = "black-button" type="button" id="validate_button" >Validate WP</button>
+            <button class = "white-button" type="button" id="cancel_validate_button" >Cancel</button>
+        </div>
+        <div class="border"></div>
+        <div class="group">
+            <div>
+                <label class = "label-title">WP</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class = "label-field">Code</label><br>
+                    <input id = "wp_code" class="input-2" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="border"></div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Attributes</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class = "label-field">Difficulty</label><br>
+                    <input type="number" id = "wp_difficulty">
+                </div>
+                <div>
+                    <label class = "label-field">Volume</label><br>
+                    <input type="number" id = "wp_volume">
+                </div>
+                <div>
+                    <label class = "label-field">Complexity</label><br>
+                    <input type="number" id = "wp_complexity">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Time</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class = "label-field">Contracted</label><br>
+                    <input type="number" id = "wp_contracted_time">
+                </div>
+                <div>
+                    <label class = "label-field">Planned</label><br>
+                    <input type="number" id = "wp_planned_time">
+                </div>
+                <div>
+                    <label class = "label-field">Scheduled</label><br>
+                    <input type="number" id = "wp_scheduled_time">
+                </div>
+            </div>
+        </div>
+        <div class="border"></div>
+        <div id = "users">
+            <div class="group">
+                <div>
+                    <label class = "label-title">In charge</label>
+                </div>
+                <div class="fields-group">
+                    <div>
+                        <label class = "label-field">User</label><br>
+                        <input type="text" name = "username">
+                    </div>
+                    <div>
+                        <label class = "label-field">Level</label><br>
+                        <input type="number" name = "user_level">
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+        <div class="group">
+            <button type="button" id = "more_users_button" class="more-tasks">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus"
+                width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <line x1="9" y1="12" x2="15" y2="12"></line>
+                    <line x1="12" y1="9" x2="12" y2="15"></line>
+                </svg>
+                <p>Click here to add more resources...</p>
+            </button>
+        </div>
+    </div>
+    </dialog>
 
 </main>
 {%endblock%}

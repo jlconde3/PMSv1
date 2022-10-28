@@ -1,3 +1,5 @@
+let j = 1;
+
 //Template for tasks
 const task_template = ` 
     <div>
@@ -6,15 +8,15 @@ const task_template = `
     <div class="fields-group">
         <div>
             <label class = "label-field">Action</label><br>
-            <input class = "input-3" name = "task_action" list="actions">
+            <input class = "input-3" name = "task_action" list="actions" id="action_${j}>
         </div>
         <div>
             <label class = "label-field">Area</label><br>
-            <input class = "input-3" type="text" name = "task_area" list="areas">
+            <input class = "input-3" type="text" name = "task_area" id="task_area_${j}>
         </div>
         <div>
             <label class = "label-field">Task</label><br>
-            <input class = "input-3" name = "task_code" list ="tasks_list">
+            <input class = "input-3" name = "task_code" id="task_code_${j}>
         </div>
     </div>
 `;
@@ -36,7 +38,7 @@ const user_template =`
 `;
 
 document.getElementById('more_button').addEventListener('click',() => {
-    add_more( 'tasks',task_template);
+    add_more('subactions',task_template);
 });
 
 document.getElementById('submit_button').addEventListener('click',() => {

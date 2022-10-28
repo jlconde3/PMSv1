@@ -54,8 +54,8 @@ function delete_value(element_id){
     document.getElementById(element_id).value=null;
 }
 
-function add_more(parente_element,content){
-    const container = document.getElementById(parente_element);
+function add_more(parent_element,content){
+    const container = document.getElementById(parent_element);
     let div = document.createElement('div');
     div.setAttribute('class','group');
     div.innerHTML = content;
@@ -85,7 +85,6 @@ function html_list(response,html_list){
 }
 
 function retrive_data(reload,data,url,input_id){
-    console.log(input_id)
     let list = document.getElementById(input_id).nextElementSibling;
 
     fetch(url,{
