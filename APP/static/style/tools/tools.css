@@ -116,12 +116,12 @@ textarea{
     height: 100px;
     width: 675px;
     resize: none;
+    position: relative;
 }
 
 .align-top{
     align-items: baseline;
 }
-
 
 .validate-window{
     width: 50%;
@@ -130,12 +130,7 @@ textarea{
 }
 
 #the-count {
-    position: relative;
-    bottom: 20px;
-    left: 640px;
+    width: 100%;
     font-size: 12px;
     color:  #57647E;
-    width: 100%;
-    height: 100%;
-    
 }
