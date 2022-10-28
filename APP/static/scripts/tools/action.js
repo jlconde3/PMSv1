@@ -1,26 +1,31 @@
-var reload_projects = true;
-var reload_types = true;
-var reload_disciplines = true;
-var reload_phases = true;
-var reload_zones = true;
-var reload_areas = true;
-var reload = true;
-var j = 1;
+
+let projects = true
+let types = true 
+let disciplines = true
+let phases = true 
+
+let zones_area ={
+    'zone_0': true,
+    'area_0':true,
+};
+
+console.log(zones_area['zone_0'])
+let j = 1;
+
 
 
 document.getElementById('cancel_button').addEventListener('click',() => {
-    window.location.replace("/tools");
+    window.location.replace("/tools");xw
 });
 
 document.getElementById('project_code').addEventListener('click',()=>{
     retrive_data(
-        reload = reload_projects,
+        reload = projects,
         data = {},
         url = '/tools/projects',
         input_id = 'project_code',
-        list_id = 'projects',
     )
-    reload_projects = false;
+    projects = false;
 })
 
 document.getElementById('project_code').addEventListener('change',()=>{
@@ -30,55 +35,57 @@ document.getElementById('project_code').addEventListener('change',()=>{
     delete_value('discipline_code')
     delete_list('phases');
     delete_value('phase_code')
-    reload_types = true;
+    types = true;
+    disciplines = true;
+    phases = true;
+
 });
 
 document.getElementById('action_type').addEventListener('click',()=>{
     retrive_data(
-        reload = reload_types,
+        reload = types,
         data = {},
         url = '/tools/projects',
         input_id = 'action_type',
-        list_id = 'types',
     )
-    reload_types = false;   
+    types = false;   
 });
 
 document.getElementById('discipline_code').addEventListener('click',()=>{
     retrive_data(
-        reload = reload_disciplines,
+        reload = disciplines,
         data = {},
         url = '/tools/projects',
         input_id = 'discipline_code',
-        list_id = 'disciplines',
     )
-    reload_disciplines = false;   
+    disciplines = false;   
 });
 
 document.getElementById('discipline_code').addEventListener('change',()=>{
     delete_list('phases');
     delete_value('phase_code')
-    reload_types = true;
+    load_lists[disciplines] = false;  
 });
 
 document.getElementById('phase_code').addEventListener('click',()=>{
     retrive_data(
-        reload = reload_phases,
+        reload = phases,
         data = {},
         url = '/tools/projects',
         input_id = 'phase_code',
-        list_id = 'phases',
     )
-    reload_phase = false;   
+    phases = false;   
 });
 
+document.getElementById('phase_code').addEventListener('change',()=>{});
 
-//Template for actions
-let action_template = `
-
-`
+let btns = [...document.getElementsByName('subaction_area')]
 
 document.getElementById('more_button').addEventListener('click',() => {
+    let i = j;
+    zones_area[`zone_${i}`] = true;
+    zones_area[`area_${i}`] = true;
+
     add_more('subactions',
     `
     <div>
@@ -105,5 +112,46 @@ document.getElementById('more_button').addEventListener('click',() => {
         </div>
     </div>
     `);
+
+    document.getElementById(`zone_${i}`).addEventListener('click',()=>{
+        retrive_data(
+            reload = zones_area[`zone_${i}`],
+            data = {},
+            url = '/tools/projects',
+            input_id = `zone_${i}`,
+        )
+        zones_area[`zone_${i}`] = false;
+    })
+
+    document.getElementById(`area_${i}`).addEventListener('click',()=>{
+        retrive_data(
+            reload = zones_area[`area_${i}`],
+            data = {},
+            url = '/tools/projects',
+            input_id = `area_${i}`,
+        )
+        zones_area[`area_${i}`] = false;
+    })
     j++;
 });
+
+document.getElementById(`zone_0`).addEventListener('click',()=>{
+    retrive_data(
+        reload = zones_area['zone_0'],
+        data = {},
+        url = '/tools/projects',
+        input_id = 'area_0',
+    )
+    zones_area['zone_0'] = false;
+})
+
+
+document.getElementById(`area_0`).addEventListener('click',()=>{
+    retrive_data(
+        reload = zones_area['area_0'],
+        data = {},
+        url = '/tools/projects',
+        input_id = 'area_0',
+    )
+    zones_area['area_0'] = false;
+})

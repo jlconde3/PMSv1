@@ -84,7 +84,10 @@ function html_list(response,html_list){
     }
 }
 
-function retrive_data(reload,data,url,input_id,lists_array){
+function retrive_data(reload,data,url,input_id){
+    console.log(input_id)
+    let list = document.getElementById(input_id).nextElementSibling;
+
     fetch(url,{
         credentials: 'include',
         method: 'POST',
@@ -94,18 +97,16 @@ function retrive_data(reload,data,url,input_id,lists_array){
     .then((response => response.json()))
     .then( data => {
         if (reload == true){
-            let container = document.getElementById(lists_array);
+            let container =  list
             for (const option of data){
                 var content = document.createElement('option');
                 content.value = option;
                 content.innerHTML = option;
                 container.appendChild(content)
             }
-            
         }
-
     })
-    .then(()=>{display_select_input(input_id,lists_array)})
+    .then(()=>{display_select_input(input_id,list.id)})
 };
 
 function display_select_input(input_id,datalist_id){
@@ -131,5 +132,8 @@ function display_select_input(input_id,datalist_id){
                 item.style.display = "none";
             }
         });
-    }    
+    }
+    window.addEventListener('click',()=>{
+        document.getElementById(datalist_id).style.display = 'none';
+    })
 };
