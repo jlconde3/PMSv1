@@ -72,9 +72,12 @@ document.getElementById('phase_code').addEventListener('click',()=>{
     phases = false;   
 });
 
-document.getElementById('phase_code').addEventListener('change',()=>{});
+document.getElementById('action_description').addEventListener('keyup',()=>{
+    var characterCount = document.getElementById('action_description').value.length;
+    current = document.getElementById('current');
+    current.innerText = characterCount;
 
-let btns = [...document.getElementsByName('subaction_area')]
+});
 
 document.getElementById('more_button').addEventListener('click',() => {
     let i = j;
