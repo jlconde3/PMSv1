@@ -63,13 +63,22 @@ function add_more(parent_element,content){
 }
 
 function element_id_value(element_id){
-    return document.getElementById(element_id).value.toUpperCase();
+    input = document.getElementById(element_id)
+    if (input.type == "number"){
+        return input.value.toUpperCase().replace(',','.');
+    }
+    return input.value.toUpperCase()
 }
 
 function element_name_value(element_name){
     const list_values = [];
-    for (let i of document.getElementsByName(element_name)){   
-        list_values.push(i.value.toUpperCase());
+    for (let i of document.getElementsByName(element_name)){  
+        if (i.type == "number"){
+            list_values.push(i.value.toUpperCase().replace(',','.'));
+        }
+        else{
+            list_values.push(i.value.toUpperCase());
+        }
     }
     return list_values;
 }
@@ -136,3 +145,8 @@ function display_select_input(input_id,datalist_id){
         document.getElementById(datalist_id).style.display = 'none';
     })
 };
+
+
+function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
