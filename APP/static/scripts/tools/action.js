@@ -1,7 +1,4 @@
 let j = 1;
-
-
-
 let projects = true;
 let types = true;
 let disciplines = true;
@@ -174,7 +171,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
         i++;
     }
     
-    if (!empty){
+    if (!empty){        
         let data = {
             project_code: element_id_value('project_code'),
             customer_code: element_id_value('customer_code'),
