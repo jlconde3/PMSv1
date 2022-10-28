@@ -1,17 +1,16 @@
+let j = 1;
 
-let projects = true
-let types = true 
-let disciplines = true
-let phases = true 
+let projects = true;
+let types = true;
+let disciplines = true;
+let phases = true;
 
 let zones_area ={
     'zone_0': true,
     'area_0':true,
 };
-let j = 1;
-
 document.getElementById('cancel_button').addEventListener('click',() => {
-    window.location.replace("/tools");xw
+    window.location.replace("/tools");
 });
 
 document.getElementById('project_code').addEventListener('click',()=>{
