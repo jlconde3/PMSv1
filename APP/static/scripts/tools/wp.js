@@ -170,11 +170,137 @@ document.getElementById('more_button').addEventListener('click',() => {
     j++;
 });
 
-
+const validate_window = `
+<dialog id = "validate_window" class="validate-window">
+<div class="top-buttons">
+    <button class = "black-button" type="button" id="validate_button" >Validate WP</button>
+    <button class = "white-button" type="button" id="cancel_validate_button" >Cancel</button>
+</div>
+<form autocomplete="off" method="post">
+    <div class="border"></div>
+        <div class="group">
+            <div>
+                <label class = "label-title">WP</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class = "label-field">Code</label><br>
+                    <input id = "wp_code" class="input-2" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="border"></div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Attributes</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class = "label-field">Difficulty</label><br>
+                    <input type="number" id = "wp_difficulty">
+                </div>
+                <div>
+                    <label class = "label-field">Volume</label><br>
+                    <input type="number" id = "wp_volume">
+                </div>
+                <div>
+                    <label class = "label-field">Complexity</label><br>
+                    <input type="number" id = "wp_complexity">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Time</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class = "label-field">Contracted</label><br>
+                    <input type="number" id = "wp_contracted_time">
+                </div>
+                <div>
+                    <label class = "label-field">Planned</label><br>
+                    <input type="number" id = "wp_planned_time">
+                </div>
+                <div>
+                    <label class = "label-field">Scheduled</label><br>
+                    <input type="number" id = "wp_scheduled_time">
+                </div>
+            </div>
+        </div>
+        <div class="border"></div>
+        <div id = "users">
+            <div class="group">
+                <div>
+                    <label class = "label-title">In charge</label>
+                </div>
+                <div class="fields-group">
+                    <div>
+                        <label class = "label-field">User</label><br>
+                        <input type="text" name = "username" id="user_0">
+                        <datalist class = "input-4" id="users_0" ></datalist>
+                    </div>
+                    <div>
+                        <label class = "label-field">Level</label><br>
+                        <input type="number" name = "user_level" id ="user_level_0">
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+        <div class="group">
+            <button type="button" id = "more_users_button" class="more-tasks">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus"
+                width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <line x1="9" y1="12" x2="15" y2="12"></line>
+                    <line x1="12" y1="9" x2="12" y2="15"></line>
+                </svg>
+                <p>Click here to add more resources...</p>
+            </button>
+        </div>
+    </div>
+</form>
+</dialog>
+`
 
 document.getElementById('submit_button').addEventListener('click',() => {
-    document.body.style.overflow = "hidden"
-    document.getElementById('validate_window').showModal();
+    let i = 0;
+    let empty = true;
+    const inputs = document.getElementsByTagName('input');
+
+    for (input of inputs){
+        if (input.value.replace(/ /g,'') == ""){
+            input.style.border = "red solid 1px";
+            empty = true;
+        }
+        else{
+            empty = false;
+            input.style.border = "#EAEAEA solid 1px";
+        }
+        i++;
+    }    
+
+    if (!empty){
+     
+        document.getElementById('validate_window').showModal();  
+        let data = {};
+        fetch('/tools/create_action', {
+            credentials: 'include',
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(window.location.replace("/tools"))
+    }
+    else{
+        alert("You left some fields empty!!")
+    }
+
+
 });
 
 document.getElementById(`user_0`).addEventListener('click',()=>{
@@ -227,35 +353,55 @@ document.getElementById('cancel_button').addEventListener('click',() => {
 
 
 document.getElementById('validate_button').addEventListener('click',() => {
-    let data = {
-        project_code: element_id_value('project_code'),
-        discipline_code: element_id_value('discipline_code'),
-        phase_code: element_id_value('phase_code'),
-        wp_type: element_id_value('wp_station'),
-        wp_station: element_id_value('wp_station'),
-        wp_zone: element_id_value('wp_zone'),
-        task_action: element_name_value('task_action'),
-        task_area: element_name_value('task_area'),
-        task_code: element_name_value('task_code'),
-        wp_code: element_id_value('wp_code'),
-        wp_difficulty: element_id_value('wp_difficulty'),
-        wp_volume: element_id_value('wp_volume'),
-        wp_complexity: element_id_value('wp_complexity'),
-        wp_contracted_time: element_id_value('wp_contracted_time'),
-        wp_planned_time: element_id_value('wp_planned_time'),
-        wp_scheduled_time:  element_id_value('wp_scheduled_time'),
-        username: element_name_value('username'),
-        user_level: element_name_value('user_level')
-    };
+    let i = 0;
+    let empty = true;
+    const inputs = document.getElementsByTagName('input');
     
-    fetch('/tools/create_wp', {
-        credentials: 'include',
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers:{
-            'Content-Type': 'application/json'
+    for (input of inputs){
+        if (input.value.replace(/ /g,'') == ""){
+            input.style.border = "red solid 1px";
+            empty = true;
         }
-    }).then(window.location.replace("/tools"));
+        else{
+            empty = false;
+            input.style.border = "#EAEAEA solid 1px";
+        }
+        i++;
+    }    
+    if (!empty){        
+        let data = {
+            project_code: element_id_value('project_code'),
+            discipline_code: element_id_value('discipline_code'),
+            phase_code: element_id_value('phase_code'),
+            wp_type: element_id_value('wp_station'),
+            wp_station: element_id_value('wp_station'),
+            wp_zone: element_id_value('wp_zone'),
+            task_action: element_name_value('task_action'),
+            task_area: element_name_value('task_area'),
+            task_code: element_name_value('task_code'),
+            wp_code: element_id_value('wp_code'),
+            wp_difficulty: element_id_value('wp_difficulty'),
+            wp_volume: element_id_value('wp_volume'),
+            wp_complexity: element_id_value('wp_complexity'),
+            wp_contracted_time: element_id_value('wp_contracted_time'),
+            wp_planned_time: element_id_value('wp_planned_time'),
+            wp_scheduled_time:  element_id_value('wp_scheduled_time'),
+            username: element_name_value('username'),
+            user_level: element_name_value('user_level')
+        };
+
+        fetch('/tools/create_action', {
+            credentials: 'include',
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(window.location.replace("/tools"))
+    }
+    else{
+        alert("You left some fields empty!!")
+    }
 });
 
 document.getElementById('cancel_validate_button').addEventListener('click',() => {
