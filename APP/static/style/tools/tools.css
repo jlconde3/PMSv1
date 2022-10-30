@@ -81,6 +81,7 @@ option:hover{
 
 .more-tasks{
     display: flex;
+    align-items: center;
     background-color: transparent;
     border: none;
     color: #d5d5d5;

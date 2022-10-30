@@ -43,7 +43,7 @@ function hide_table (){
     tables_array.forEach((item)=>{item.setAttribute('style', 'display:none')})
 }
 
-function delete_list(element_id){
+function delete_childs(element_id){
     const list = document.getElementById(element_id);
     while (list.hasChildNodes()){
         list.removeChild(list.firstChild);
@@ -58,6 +58,13 @@ function add_more(parent_element,content){
     const container = document.getElementById(parent_element);
     let div = document.createElement('div');
     div.setAttribute('class','group');
+    div.innerHTML = content;
+    container.appendChild(div);
+}
+
+function add_validate_window(parent_element, content){
+    const container = document.getElementById(parent_element);
+    let div = document.createElement('div');
     div.innerHTML = content;
     container.appendChild(div);
 }

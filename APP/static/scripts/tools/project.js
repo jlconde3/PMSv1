@@ -1,3 +1,8 @@
+document.getElementById('cancel_button').addEventListener('click',() => {
+    window.location.replace("/tools");
+});
+
+
 document.getElementById('submit_button').addEventListener('click',() => {
     let i = 0;
     let empty = true;

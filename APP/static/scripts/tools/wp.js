@@ -171,7 +171,7 @@ document.getElementById('more_button').addEventListener('click',() => {
 });
 
 const validate_window = `
-<dialog id = "validate_window" class="validate-window">
+
 <div class="top-buttons">
     <button class = "black-button" type="button" id="validate_button" >Validate WP</button>
     <button class = "white-button" type="button" id="cancel_validate_button" >Cancel</button>
@@ -263,8 +263,10 @@ const validate_window = `
         </div>
     </div>
 </form>
-</dialog>
 `
+document.getElementById('cancel_button').addEventListener('click',() => {
+    window.location.replace("/tools");
+});
 
 document.getElementById('submit_button').addEventListener('click',() => {
     let i = 0;
@@ -284,8 +286,8 @@ document.getElementById('submit_button').addEventListener('click',() => {
     }    
 
     if (!empty){
-     
-        document.getElementById('validate_window').showModal();  
+        add_validate_window('validate_window',validate_window);
+        ;  
         let data = {};
         fetch('/tools/create_action', {
             credentials: 'include',
@@ -294,120 +296,119 @@ document.getElementById('submit_button').addEventListener('click',() => {
             headers:{
                 'Content-Type': 'application/json'
             }
-        }).then(window.location.replace("/tools"))
-    }
-    else{
-        alert("You left some fields empty!!")
-    }
-
-
-});
-
-document.getElementById(`user_0`).addEventListener('click',()=>{
-    console.log("Hola")
-    retrive_data(
-        reload = action_area_task[`users_0`],
-        data = {},
-        url = '/tools/projects',
-        input_id = `user_0`,
-    )
-    action_area_task[`users_0`] = false;
-});
-
-document.getElementById('more_users_button').addEventListener('click',() => {
-    let k = q;
-    action_area_task[`users_${k}`] = true;
-    add_more('users',
-    `
-    <div>
-        <label class = "label-title">In charge</label>
-    </div>
-    <div class="fields-group">
-        <div>
-            <label class = "label-field">User</label><br>
-            <input type="text" name = "username" id = "user_${k}">
-            <datalist class = "input-4" id="users_${k}" ></datalist>
-        </div>
-        <div>
-            <label class = "label-field">Level</label><br>
-            <input type="number" name = "user_level" id = "user_level_${k}">
-        </div>
-    </div>
-    `);
-
-    document.getElementById(`user_${k}`).addEventListener('click',()=>{
-        retrive_data(
-            reload = action_area_task[`users_${k}`],
-            data = {},
-            url = '/tools/projects',
-            input_id = `user_${k}`,
+        }
+        ).then(
+            document.getElementById('validate_window').showModal()
+        ).then(
+            document.getElementById(`user_0`).addEventListener('click',()=>{
+                console.log("Hola")
+                retrive_data(
+                    reload = action_area_task[`users_0`],
+                    data = {},
+                    url = '/tools/projects',
+                    input_id = `user_0`,
+                )
+                action_area_task[`users_0`] = false;
+            })
+        ).then(
+            document.getElementById('more_users_button').addEventListener('click',() => {
+                let k = q;
+                action_area_task[`users_${k}`] = true;
+                add_more('users',
+                `
+                <div>
+                    <label class = "label-title">In charge</label>
+                </div>
+                <div class="fields-group">
+                    <div>
+                        <label class = "label-field">User</label><br>
+                        <input type="text" name = "username" id = "user_${k}">
+                        <datalist class = "input-4" id="users_${k}" ></datalist>
+                    </div>
+                    <div>
+                        <label class = "label-field">Level</label><br>
+                        <input type="number" name = "user_level" id = "user_level_${k}">
+                    </div>
+                </div>
+                `);
+            
+                document.getElementById(`user_${k}`).addEventListener('click',()=>{
+                    retrive_data(
+                        reload = action_area_task[`users_${k}`],
+                        data = {},
+                        url = '/tools/projects',
+                        input_id = `user_${k}`,
+                    )
+                    action_area_task[`users_${k}`] = false;
+                });
+                q++;
+            })
+        ).then(
+            document.getElementById('cancel_validate_button').addEventListener('click',() => {
+                delete_childs('validate_window')
+                document.getElementById('validate_window').close(); 
+            })
+        ).finally(
+            document.getElementById('validate_button').addEventListener('click',() => {
+                let i = 0;
+                let empty = true;
+                const inputs = document.getElementsByTagName('input');
+                
+                for (input of inputs){
+                    if (input.value.replace(/ /g,'') == ""){
+                        input.style.border = "red solid 1px";
+                        empty = true;
+                    }
+                    else{
+                        empty = false;
+                        input.style.border = "#EAEAEA solid 1px";
+                    }
+                    i++;
+                }    
+                if (!empty){        
+                    let data = {
+                        project_code: element_id_value('project_code'),
+                        discipline_code: element_id_value('discipline_code'),
+                        phase_code: element_id_value('phase_code'),
+                        wp_type: element_id_value('wp_station'),
+                        wp_station: element_id_value('wp_station'),
+                        wp_zone: element_id_value('wp_zone'),
+                        task_action: element_name_value('task_action'),
+                        task_area: element_name_value('task_area'),
+                        task_code: element_name_value('task_code'),
+                        wp_code: element_id_value('wp_code'),
+                        wp_difficulty: element_id_value('wp_difficulty'),
+                        wp_volume: element_id_value('wp_volume'),
+                        wp_complexity: element_id_value('wp_complexity'),
+                        wp_contracted_time: element_id_value('wp_contracted_time'),
+                        wp_planned_time: element_id_value('wp_planned_time'),
+                        wp_scheduled_time:  element_id_value('wp_scheduled_time'),
+                        username: element_name_value('username'),
+                        user_level: element_name_value('user_level')
+                    };
+            
+                    fetch('/tools/create_action', {
+                        credentials: 'include',
+                        method: 'POST',
+                        body: JSON.stringify(data),
+                        headers:{
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(window.location.replace("/tools"))
+                }
+                else{
+                    alert("You left some fields empty!!")
+                }
+            })
         )
-        action_area_task[`users_${k}`] = false;
-    });
-    q++;
-});
-
-document.getElementById('cancel_button').addEventListener('click',() => {
-    window.location.replace("/tools");
-});
-
-
-document.getElementById('validate_button').addEventListener('click',() => {
-    let i = 0;
-    let empty = true;
-    const inputs = document.getElementsByTagName('input');
-    
-    for (input of inputs){
-        if (input.value.replace(/ /g,'') == ""){
-            input.style.border = "red solid 1px";
-            empty = true;
-        }
-        else{
-            empty = false;
-            input.style.border = "#EAEAEA solid 1px";
-        }
-        i++;
-    }    
-    if (!empty){        
-        let data = {
-            project_code: element_id_value('project_code'),
-            discipline_code: element_id_value('discipline_code'),
-            phase_code: element_id_value('phase_code'),
-            wp_type: element_id_value('wp_station'),
-            wp_station: element_id_value('wp_station'),
-            wp_zone: element_id_value('wp_zone'),
-            task_action: element_name_value('task_action'),
-            task_area: element_name_value('task_area'),
-            task_code: element_name_value('task_code'),
-            wp_code: element_id_value('wp_code'),
-            wp_difficulty: element_id_value('wp_difficulty'),
-            wp_volume: element_id_value('wp_volume'),
-            wp_complexity: element_id_value('wp_complexity'),
-            wp_contracted_time: element_id_value('wp_contracted_time'),
-            wp_planned_time: element_id_value('wp_planned_time'),
-            wp_scheduled_time:  element_id_value('wp_scheduled_time'),
-            username: element_name_value('username'),
-            user_level: element_name_value('user_level')
-        };
-
-        fetch('/tools/create_action', {
-            credentials: 'include',
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        }).then(window.location.replace("/tools"))
     }
     else{
         alert("You left some fields empty!!")
     }
 });
 
-document.getElementById('cancel_validate_button').addEventListener('click',() => {
-    document.body.style.overflow = "visible"
-    document.getElementById('validate_window').close(); 
-});
+
+
 
 
 
