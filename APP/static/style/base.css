@@ -13,11 +13,12 @@ body{
     margin-top: 80px;
 }
 
-main{
-    margin-left: auto;
-    margin-right: auto;
+#window{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-
 
 
 nav{
@@ -25,7 +26,7 @@ nav{
     border-bottom: #EAEAEA solid 1px;
     width: 100%;
     overflow: hidden;
-    position:absolute;
+    position:fixed;
     top: 0;
 }
 
@@ -63,14 +64,17 @@ nav{
     opacity: 50%;
 }
 
+main{
+    margin-left: auto;
+    margin-right: auto;
+}
+
 footer {
-    margin-top: auto;
+    margin-top: 50px;
     width: 100%;
 }
 
 .footer-group{
-    margin-top: auto;
-    padding-top:50px;
     display: flex;
     justify-content: center;
 }

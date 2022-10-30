@@ -124,11 +124,13 @@ textarea{
     align-items: baseline;
 }
 
-.validate-window{
+dialog{
     width: 50%;
     min-width: 700px;
     border: #d1d1d1  solid 1px;
+    margin: auto;
 }
+
 
 #the-count {
     width: 100%;
