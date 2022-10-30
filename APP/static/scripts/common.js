@@ -157,3 +157,15 @@ function display_select_input(input_id,datalist_id){
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
+
+function loader (){
+    const container = document.getElementById('window');
+    let dialog = document.createElement('dialog');
+    dialog.setAttribute('id','loader_window')
+    dialog.innerHTML = `
+    <p class = "loading_title">Saving your data in the best possible way. This operation will take some time...</p>
+    <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    `;
+    container.appendChild(dialog);
+    document.getElementById('loader_window').showModal();
+}
