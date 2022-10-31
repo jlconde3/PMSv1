@@ -35,6 +35,35 @@ def projects ():
     MySQL.cursor.execute('SELECT DISTINCT project FROM pms.areas')
     return format_mysql_list(MySQL.cursor.fetchall())
 
+@bp.route('/disciplines',methods=['POST','GET'])
+def disciplines ():
+    data = request.get_json()
+    MySQL.cursor.execute('SELECT DISTINCT discipline FROM pms.areas WHERE project = %s', (data['project_code'],))
+    return format_mysql_list(MySQL.cursor.fetchall())
+
+@bp.route('/phases',methods=['POST','GET'])
+def phases ():
+    data = request.get_json()
+    MySQL.cursor.execute('SELECT DISTINCT phase FROM pms.areas WHERE project = %s AND discipline = %s',
+    (data['project_code'],data['discipline_code']))
+    return format_mysql_list(MySQL.cursor.fetchall())
+
+@bp.route('/zones',methods=['POST','GET'])
+def zones ():
+    data = request.get_json()
+    MySQL.cursor.execute('SELECT DISTINCT zone FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s',
+    (data['project_code'],data['discipline_code'],data['phase_code']))
+    return format_mysql_list(MySQL.cursor.fetchall())
+
+@bp.route('/areas',methods=['POST','GET'])
+def areas ():
+    data = request.get_json()
+    print(data)
+    MySQL.cursor.execute('SELECT DISTINCT area FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s AND zone = %s',
+    (data['project_code'],data['discipline_code'],data['phase_code'],data['zone_code']))
+    return format_mysql_list(MySQL.cursor.fetchall())
+
+
 @bp.route('/create_project', methods=['POST'])
 def create_project():
     data = request.get_json()
@@ -47,10 +76,9 @@ def create_project():
 
     try:
         MySQL.cursor.execute(
-            '''
-            INSERT INTO pms.projects (agresso_code,date,name,client,section,
-            division,budget,profit_margin,cpt_default,cpt_actions,management,extra,user)VALUES
-            (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
+            'INSERT INTO pms.projects (agresso_code,date,name,client,section,\
+            division,budget,profit_margin,cpt_default,cpt_actions,management,extra,user)VALUES\
+            (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
             (format_upper_case(remove_spaces(data['project_code'])),
             datetime.now(),
             format_upper_case(data['project_name']),
@@ -80,13 +108,12 @@ def create_action():
         data['subaction_zone'],data['subaction_area'], data['subaction_time']):
 
             MySQL.cursor.execute(
-            '''
-            INSERT INTO pms.actions (project,customer_code,type,date_recived,
-            disicipline,phase,description,custom_code,zone,area,time,user,date)
-            VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(
+            'INSERT INTO pms.actions (project,customer_code,type,date_recived,\
+            disicipline,phase,description,custom_code,zone,area,time,user,date)\
+            VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(
             format_upper_case(remove_spaces(data['project_code'])),
             format_upper_case(remove_spaces(data['customer_code'])),
-            format_upper_case(remove_spaces(data['action_type']))),
+            format_upper_case(remove_spaces(data['action_type'])),
             format_upper_case(data['action_date']),
             format_upper_case(remove_spaces(data['discipline_code'])),
             format_upper_case(remove_spaces(data['phase_code'])),
@@ -96,7 +123,7 @@ def create_action():
             format_upper_case(remove_spaces(area)),
             format_dots(remove_spaces(time)),
             g.user,
-            datetime.now())
+            datetime.now()))
             MySQL.con.commit()
 
         return Response(status=211)

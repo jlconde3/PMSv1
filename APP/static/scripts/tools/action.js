@@ -20,26 +20,13 @@ document.getElementById('project_code').addEventListener('click',()=>{
         input_id = 'project_code',
     )
     projects = false;
-})
-
-document.getElementById('project_code').addEventListener('change',()=>{
-    delete_list('types');
-    delete_value('action_type')
-    delete_list('disciplines');
-    delete_value('discipline_code')
-    delete_list('phases');
-    delete_value('phase_code')
-    types = true;
-    disciplines = true;
-    phases = true;
-
 });
 
 document.getElementById('action_type').addEventListener('click',()=>{
     retrive_data(
         reload = types,
         data = {},
-        url = '/tools/projects',
+        url = '/tools/types',
         input_id = 'action_type',
     )
     types = false;   
@@ -48,34 +35,24 @@ document.getElementById('action_type').addEventListener('click',()=>{
 document.getElementById('discipline_code').addEventListener('click',()=>{
     retrive_data(
         reload = disciplines,
-        data = {},
-        url = '/tools/projects',
+        data = {'project_code': document.getElementById('project_code').value},
+        url = '/tools/disciplines',
         input_id = 'discipline_code',
     )
     disciplines = false;   
 });
 
-document.getElementById('discipline_code').addEventListener('change',()=>{
-    delete_list('phases');
-    delete_value('phase_code')
-    load_lists[disciplines] = false;  
-});
-
 document.getElementById('phase_code').addEventListener('click',()=>{
     retrive_data(
         reload = phases,
-        data = {},
-        url = '/tools/projects',
+        data = {
+            'project_code': document.getElementById('project_code').value,
+            'discipline_code': document.getElementById('discipline_code').value,
+        },
+        url = '/tools/phases',
         input_id = 'phase_code',
     )
     phases = false;   
-});
-
-document.getElementById('action_description').addEventListener('keyup',()=>{
-    var characterCount = document.getElementById('action_description').value.length;
-    current = document.getElementById('current');
-    current.innerText = characterCount;
-
 });
 
 document.getElementById('more_button').addEventListener('click',() => {
@@ -113,8 +90,12 @@ document.getElementById('more_button').addEventListener('click',() => {
     document.getElementById(`zone_${i}`).addEventListener('click',()=>{
         retrive_data(
             reload = zones_area[`zone_${i}`],
-            data = {},
-            url = '/tools/projects',
+            data = {
+                'project_code': document.getElementById('project_code').value,
+                'discipline_code': document.getElementById('discipline_code').value,
+                'phase_code':document.getElementById('phase_code').value,
+            },
+            url = '/tools/zones',
             input_id = `zone_${i}`,
         )
         zones_area[`zone_${i}`] = false;
@@ -123,8 +104,13 @@ document.getElementById('more_button').addEventListener('click',() => {
     document.getElementById(`area_${i}`).addEventListener('click',()=>{
         retrive_data(
             reload = zones_area[`area_${i}`],
-            data = {},
-            url = '/tools/projects',
+            data = {
+                'project_code': document.getElementById('project_code').value,
+                'discipline_code': document.getElementById('discipline_code').value,
+                'phase_code':document.getElementById('phase_code').value,
+                'zone_code':document.getElementById(`zone_${i}`).value
+            },
+            url = '/tools/areas',
             input_id = `area_${i}`,
         )
         zones_area[`area_${i}`] = false;
@@ -135,28 +121,35 @@ document.getElementById('more_button').addEventListener('click',() => {
 document.getElementById(`zone_0`).addEventListener('click',()=>{
     retrive_data(
         reload = zones_area['zone_0'],
-        data = {},
-        url = '/tools/projects',
+        data = {
+            'project_code': document.getElementById('project_code').value,
+            'discipline_code': document.getElementById('discipline_code').value,
+            'phase_code':document.getElementById('phase_code').value
+        },
+        url = '/tools/zones',
         input_id = 'zone_0',
     )
     zones_area['zone_0'] = false;
-})
-
+});
 
 document.getElementById(`area_0`).addEventListener('click',()=>{
     retrive_data(
         reload = zones_area['area_0'],
-        data = {},
-        url = '/tools/projects',
+        data = {
+            'project_code': document.getElementById('project_code').value,
+            'discipline_code': document.getElementById('discipline_code').value,
+            'phase_code':document.getElementById('phase_code').value,
+            'zone_code':document.getElementById('zone_0').value
+        },
+        url = '/tools/areas',
         input_id = 'area_0',
     )
     zones_area['area_0'] = false;
-})
-
+});
 
 document.getElementById('submit_button').addEventListener('click',() => {
     let i = 0;
-    let empty = true;
+    let empty = false;
     const inputs = document.getElementsByTagName('input');
     
     for (input of inputs){
@@ -165,12 +158,12 @@ document.getElementById('submit_button').addEventListener('click',() => {
             empty = true;
         }
         else{
-            empty = false;
             input.style.border = "#EAEAEA solid 1px";
         }
         i++;
     }
-    
+    console.log(empty)
+
     if (!empty){        
         let data = {
             project_code: element_id_value('project_code'),
@@ -192,10 +185,18 @@ document.getElementById('submit_button').addEventListener('click',() => {
             headers:{
                 'Content-Type': 'application/json'
             }
-        }).then(response => response_status(response))
+        }).then(
+            response => response_status(response)
+        )
     }
     else{
         alert("You left some fields empty!!")
     }
 });
 
+document.getElementById('action_description').addEventListener('keyup',()=>{
+    var characterCount = document.getElementById('action_description').value.length;
+    current = document.getElementById('current');
+    current.innerText = characterCount;
+
+});

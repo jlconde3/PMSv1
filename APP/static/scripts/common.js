@@ -34,14 +34,14 @@ function transform_data_table (table_id,response){
         }
         document.getElementById(table_id).appendChild(tr);
     };
-}
+};
 
 function hide_table (){
     const tables = document.getElementsByName('table');
     const tables_array = [...tables];
     document.getElementById('intro-text').style.display = "none";
     tables_array.forEach((item)=>{item.setAttribute('style', 'display:none')})
-}
+};
 
 function delete_childs(element_id){
     const list = document.getElementById(element_id);
@@ -52,7 +52,7 @@ function delete_childs(element_id){
 
 function delete_value(element_id){
     document.getElementById(element_id).value=null;
-}
+};
 
 function add_more(parent_element,content){
     const container = document.getElementById(parent_element);
@@ -60,14 +60,14 @@ function add_more(parent_element,content){
     div.setAttribute('class','group');
     div.innerHTML = content;
     container.appendChild(div);
-}
+};
 
 function add_validate_window(parent_element, content){
     const container = document.getElementById(parent_element);
     let div = document.createElement('div');
     div.innerHTML = content;
     container.appendChild(div);
-}
+};
 
 function element_id_value(element_id){
     input = document.getElementById(element_id)
@@ -75,7 +75,7 @@ function element_id_value(element_id){
         return input.value.toUpperCase().replace(',','.');
     }
     return input.value.toUpperCase()
-}
+};
 
 function element_name_value(element_name){
     const list_values = [];
@@ -88,7 +88,7 @@ function element_name_value(element_name){
         }
     }
     return list_values;
-}
+};
 
 
 function html_list(response,html_list){
@@ -98,7 +98,7 @@ function html_list(response,html_list){
         content.value = option;
         container.appendChild(content);
     }
-}
+};
 
 function retrive_data(reload,data,url,input_id){
     let list = document.getElementById(input_id).nextElementSibling;
@@ -168,7 +168,7 @@ function loader (){
     `;
     container.appendChild(dialog);
     document.getElementById('loader_window').showModal();
-}
+};
 
 function response_status(response){
 
@@ -183,4 +183,4 @@ function response_status(response){
         window.location.replace("/tools");
     }
 
-}
+};
