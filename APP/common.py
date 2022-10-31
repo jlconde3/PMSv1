@@ -13,7 +13,7 @@ class MySQLHelper(object):
         mysql_port= os.getenv("MYSQL_AZURE_PORT")
         mysql_user = os.getenv("MYSQL_AZURE_USER")
         mysql_password = os.getenv("MYSQL_AZURE_PASSWORD")
-        mysql_database = "web_app"
+        mysql_database = os.getenv("MYSQL_AZURE_DATABASE")
         mysql_certificate = os.getenv("MYSQL_AZURE_SSL_CA")
 
         self.con = MySQLConnection(

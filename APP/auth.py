@@ -20,12 +20,12 @@ def login_user ():
         password = request.form['password']
         error = None
 
-        MySQL.cursor.execute('SELECT * FROM users_login WHERE user_name = %s ORDER BY user_id DESC LIMIT 1', (username,))
+        MySQL.cursor.execute('SELECT * FROM users WHERE user = %s ORDER BY id DESC LIMIT 1', (username,))
         user = MySQL.cursor.fetchone()
 
         if user is None:
             error = 'Incorrect username'
-        elif not check_password_hash(user[3], password):
+        elif not check_password_hash(user[5], password):
             error = 'Incorrect password'
 
         if error is None:
