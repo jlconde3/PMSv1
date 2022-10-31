@@ -31,29 +31,7 @@ bp.add_url_rule('/modify_task', view_func=Tools.as_view('/modify_task', 'modify_
 @bp.route('/create_project', methods=['POST'])
 def create_project():
     data = request.get_json()
-    print(data)
-    return "Hola"
-
-@bp.route('/create_action', methods=['POST'])
-def create_action():
-    data = request.get_json()
-    print(data)
-    return "Hola"
-
-@bp.route('/create_wp', methods=['POST'])
-def create_wp():
-    data = request.get_json()
-    print(data)
-    return "Hola"
-
-@bp.route('/projects', methods=['POST'])
-def retrive_projects():
-    return ['Hola', 'me','llamo','jose']
-
-@bp.route('/disciplines', methods=['POST'])
-def retrive_disciplines():
-    data = request.get_json()
-    if data['project_code'] == "Hola":
-        return ['me','llamo','jose']
     
-    return[1,2,3]
+    
+
+    return "Hola"
