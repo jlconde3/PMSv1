@@ -38,29 +38,82 @@ def projects ():
 @bp.route('/disciplines',methods=['POST','GET'])
 def disciplines ():
     data = request.get_json()
-    MySQL.cursor.execute('SELECT DISTINCT discipline FROM pms.areas WHERE project = %s', (data['project_code'],))
+    MySQL.cursor.execute('SELECT DISTINCT discipline FROM pms.areas WHERE project = %s',
+    (remove_spaces(format_upper_case(data['project_code'])),))
     return format_mysql_list(MySQL.cursor.fetchall())
 
 @bp.route('/phases',methods=['POST','GET'])
 def phases ():
     data = request.get_json()
-    MySQL.cursor.execute('SELECT DISTINCT phase FROM pms.areas WHERE project = %s AND discipline = %s',
-    (data['project_code'],data['discipline_code']))
+    MySQL.cursor.execute('SELECT DISTINCT phase FROM pms.areas WHERE project = %s AND\
+    discipline = %s',
+    (remove_spaces(format_upper_case(data['project_code'])),
+    remove_spaces(format_upper_case(data['discipline_code']))
+    ))
     return format_mysql_list(MySQL.cursor.fetchall())
 
 @bp.route('/zones',methods=['POST','GET'])
 def zones ():
     data = request.get_json()
-    MySQL.cursor.execute('SELECT DISTINCT zone FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s',
-    (data['project_code'],data['discipline_code'],data['phase_code']))
+    MySQL.cursor.execute('SELECT DISTINCT zone FROM pms.areas WHERE project = %s AND\
+    discipline = %s AND phase = %s',
+    (remove_spaces(format_upper_case(data['project_code'])),
+    remove_spaces(format_upper_case(data['discipline_code'])),
+    remove_spaces(format_upper_case(data['phase_code']))
+    ))
     return format_mysql_list(MySQL.cursor.fetchall())
 
 @bp.route('/areas',methods=['POST','GET'])
 def areas ():
     data = request.get_json()
+    MySQL.cursor.execute('SELECT DISTINCT area FROM pms.areas WHERE project = %s AND\
+    discipline = %s AND phase = %s AND zone = %s',
+    (remove_spaces(format_upper_case(data['project_code'])),
+    remove_spaces(format_upper_case(data['discipline_code'])),
+    remove_spaces(format_upper_case(data['phase_code'])),
+    remove_spaces(format_upper_case(data['zone_code']))
+    ))
+    return format_mysql_list(MySQL.cursor.fetchall())
+
+@bp.route('/actions',methods=['POST','GET'])
+def actions ():
+    data = request.get_json()
+    MySQL.cursor.execute('SELECT DISTINCT code FROM pms.actions WHERE project = %s AND\
+    discipline = %s AND phase = %s AND zone = %s',
+    (remove_spaces(format_upper_case(data['project_code'])),
+    remove_spaces(format_upper_case(data['discipline_code'])),
+    remove_spaces(format_upper_case(data['phase_code'])),
+    remove_spaces(format_upper_case(data['zone_code'])) 
+    ))
+    return format_mysql_list(MySQL.cursor.fetchall())
+
+@bp.route('/stations',methods=['POST','GET'])
+def stations ():
+    data = request.get_json()
+    MySQL.cursor.execute('SELECT DISTINCT station FROM pms.tasks WHERE project = %s AND\
+    discipline = %s',
+    (remove_spaces(format_upper_case(data['project_code'])),
+    remove_spaces(format_upper_case(data['discipline_code']))
+    ))
+    return format_mysql_list(MySQL.cursor.fetchall())
+
+@bp.route('/tasks',methods=['POST','GET'])
+def tasks ():
+    data = request.get_json()
+    MySQL.cursor.execute('SELECT DISTINCT task FROM pms.tasks WHERE project = %s AND\
+    discipline = %s AND station = %s',
+    (remove_spaces(format_upper_case(data['project_code'])),
+    remove_spaces(format_upper_case(data['discipline_code'])),
+    remove_spaces(format_upper_case(data['station_code']))
+    ))
+    return format_mysql_list(MySQL.cursor.fetchall())
+
+@bp.route('/users_projects',methods=['POST','GET'])
+def users_projects():
+    data = request.get_json()
     print(data)
-    MySQL.cursor.execute('SELECT DISTINCT area FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s AND zone = %s',
-    (data['project_code'],data['discipline_code'],data['phase_code'],data['zone_code']))
+    MySQL.cursor.execute('SELECT DISTINCT user FROM pms.users_projects WHERE project = %s',
+    (remove_spaces(format_upper_case(data['project_code'])),))
     return format_mysql_list(MySQL.cursor.fetchall())
 
 

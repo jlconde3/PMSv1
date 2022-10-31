@@ -33,8 +33,8 @@ document.getElementById('project_code').addEventListener('click',()=>{
 document.getElementById('discipline_code').addEventListener('click',()=>{
     retrive_data(
         reload = disciplines,
-        data = {},
-        url = '/tools/projects',
+        data = {'project_code': document.getElementById('project_code').value},
+        url = '/tools/disciplines',
         input_id = 'discipline_code',
     )
     disciplines = false;   
@@ -43,8 +43,11 @@ document.getElementById('discipline_code').addEventListener('click',()=>{
 document.getElementById('phase_code').addEventListener('click',()=>{
     retrive_data(
         reload = phases,
-        data = {},
-        url = '/tools/projects',
+        data = {
+            'project_code': document.getElementById('project_code').value,
+            'discipline_code': document.getElementById('discipline_code').value
+        },
+        url = '/tools/phases',
         input_id = 'phase_code',
     )
     phases = false;   
@@ -53,8 +56,12 @@ document.getElementById('phase_code').addEventListener('click',()=>{
 document.getElementById('wp_zone').addEventListener('click',()=>{
     retrive_data(
         reload = zones,
-        data = {},
-        url = '/tools/projects',
+        data = {
+            'project_code': document.getElementById('project_code').value,
+            'discipline_code': document.getElementById('discipline_code').value,
+            'phase_code':document.getElementById('phase_code').value
+        },
+        url = '/tools/zones',
         input_id = 'wp_zone',
     )
     zones = false;   
@@ -63,8 +70,8 @@ document.getElementById('wp_zone').addEventListener('click',()=>{
 document.getElementById('wp_type').addEventListener('click',()=>{
     retrive_data(
         reload = types,
-        data = {},
-        url = '/tools/projects',
+        data = {'project_code': document.getElementById('project_code').value},
+        url = '/tools/types',
         input_id = 'wp_type',
     )
     types = false;   
@@ -73,8 +80,13 @@ document.getElementById('wp_type').addEventListener('click',()=>{
 document.getElementById('wp_station').addEventListener('click',()=>{
     retrive_data(
         reload = stations,
-        data = {},
-        url = '/tools/projects',
+        data = {
+            'project_code': document.getElementById('project_code').value,
+            'discipline_code': document.getElementById('discipline_code').value,
+            'phase_code':document.getElementById('phase_code').value,
+            'zone_code':document.getElementById('wp_zone').value
+        },
+        url = '/tools/stations',
         input_id = 'wp_station',
     )
     stations = false;   
@@ -83,8 +95,13 @@ document.getElementById('wp_station').addEventListener('click',()=>{
 document.getElementById(`action_0`).addEventListener('click',()=>{
     retrive_data(
         reload = action_area_task[`actions_0`],
-        data = {},
-        url = '/tools/projects',
+        data = {
+            'project_code': document.getElementById('project_code').value,
+            'discipline_code': document.getElementById('discipline_code').value,
+            'phase_code':document.getElementById('phase_code').value,
+            'zone_code':document.getElementById('wp_zone').value
+        },
+        url = '/tools/actions',
         input_id = `action_0`,
     )
     action_area_task[`actions_0`] = false;
@@ -92,18 +109,28 @@ document.getElementById(`action_0`).addEventListener('click',()=>{
 document.getElementById(`area_0`).addEventListener('click',()=>{
     retrive_data(
         reload = action_area_task[`areas_0`],
-        data = {},
-        url = '/tools/projects',
+        data = {
+            'project_code': document.getElementById('project_code').value,
+            'discipline_code': document.getElementById('discipline_code').value,
+            'phase_code':document.getElementById('phase_code').value,
+            'zone_code':document.getElementById('wp_zone').value
+        },
+        url = '/tools/areas',
         input_id = `area_0`,
     )
-    action_area_task[`area_0`] = false;
+    action_area_task[`areas_0`] = false;
 })
 
 document.getElementById(`task_0`).addEventListener('click',()=>{
     retrive_data(
         reload = action_area_task[`tasks_0`],
-        data = {},
-        url = '/tools/projects',
+        data = {
+            'project_code': document.getElementById('project_code').value,
+            'discipline_code': document.getElementById('discipline_code').value,
+            'phase_code':document.getElementById('phase_code').value,
+            'station_code':document.getElementById('wp_station').value
+        },
+        url = '/tools/tasks',
         input_id = `task_0`,
     )
     action_area_task[`tasks_0`] = false;
@@ -143,26 +170,43 @@ document.getElementById('more_button').addEventListener('click',() => {
     document.getElementById(`action_${i}`).addEventListener('click',()=>{
         retrive_data(
             reload = action_area_task[`actions_${i}`],
-            data = {},
-            url = '/tools/projects',
+            data = {
+                'project_code': document.getElementById('project_code').value,
+                'discipline_code': document.getElementById('discipline_code').value,
+                'phase_code':document.getElementById('phase_code').value,
+                'zone_code':document.getElementById('wp_zone').value
+            },
+            url = '/tools/actions',
             input_id = `action_${i}`,
         )
         action_area_task[`actions_${i}`] = false;
     });
+
     document.getElementById(`area_${j}`).addEventListener('click',()=>{
         retrive_data(
             reload = action_area_task[`areas_${i}`],
-            data = {},
-            url = '/tools/projects',
+            data = {
+                'project_code': document.getElementById('project_code').value,
+                'discipline_code': document.getElementById('discipline_code').value,
+                'phase_code':document.getElementById('phase_code').value,
+                'zone_code':document.getElementById('wp_zone').value
+            },
+            url = '/tools/areas',
             input_id = `area_${i}`,
         )
         action_area_task[`areas_${i}`] = false;
     });
+
     document.getElementById(`task_${i}`).addEventListener('click',()=>{
         retrive_data(
             reload = action_area_task[`tasks_${i}`],
-            data = {},
-            url = '/tools/projects',
+            data = {
+                'project_code': document.getElementById('project_code').value,
+                'discipline_code': document.getElementById('discipline_code').value,
+                'phase_code':document.getElementById('phase_code').value,
+                'station_code':document.getElementById('wp_station').value
+            },
+            url = '/tools/tasks',
             input_id = `task_${i}`,
         )
         action_area_task[`tasks_${i}`] = false;
@@ -270,7 +314,7 @@ document.getElementById('cancel_button').addEventListener('click',() => {
 
 document.getElementById('submit_button').addEventListener('click',() => {
     let i = 0;
-    let empty = true;
+    let empty = false;
     const inputs = document.getElementsByTagName('input');
 
     for (input of inputs){
@@ -279,7 +323,6 @@ document.getElementById('submit_button').addEventListener('click',() => {
             empty = true;
         }
         else{
-            empty = false;
             input.style.border = "#EAEAEA solid 1px";
         }
         i++;
@@ -289,7 +332,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
         add_validate_window('validate_window',validate_window);
         ;  
         let data = {};
-        fetch('/tools/create_action', {
+        fetch('/tools/create_wp', {
             credentials: 'include',
             method: 'POST',
             body: JSON.stringify(data),
@@ -304,8 +347,10 @@ document.getElementById('submit_button').addEventListener('click',() => {
                 console.log("Hola")
                 retrive_data(
                     reload = action_area_task[`users_0`],
-                    data = {},
-                    url = '/tools/projects',
+                    data = {
+                        'project_code': document.getElementById('project_code').value
+                    },
+                    url = '/tools/users_projects',
                     input_id = `user_0`,
                 )
                 action_area_task[`users_0`] = false;
@@ -335,8 +380,10 @@ document.getElementById('submit_button').addEventListener('click',() => {
                 document.getElementById(`user_${k}`).addEventListener('click',()=>{
                     retrive_data(
                         reload = action_area_task[`users_${k}`],
-                        data = {},
-                        url = '/tools/projects',
+                        data = {
+                            'project_code': document.getElementById('project_code').value,
+                        },
+                        url = '/tools/users_projects',
                         input_id = `user_${k}`,
                     )
                     action_area_task[`users_${k}`] = false;
