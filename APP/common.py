@@ -53,11 +53,19 @@ def format_dots (data:str)->str:
     '''
     return data.replace(',','.')
 
-def response (response:str):
-    '''
-    Formt response for the browser.
-    :param response: string to send to browser.
+def remove_spaces (data:str)->str:
+    ''' 
+    Remove non-informative white space from strings.
 
-    Returns json object.
+    :param data: string to format.
+    
+    Returns format string.
     '''
-    return json.dumps({'response':response})
+    return data.replace(" ","")
+
+
+def format_mysql_list(list:list)->list:
+    empty_list = []
+    for i in list:
+        empty_list.append(i[0])
+    return empty_list

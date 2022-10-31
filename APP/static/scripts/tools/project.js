@@ -44,15 +44,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
                 'Content-Type': 'application/json'
             }
         }).then(
-            response => {
-                if (response.status != 211){
-                    alert('Try again!!');
-                }
-                else{
-                    alert('All data saved');
-                    window.location.replace("/tools");
-                }
-            }
+            response => response_status(response)
         )
     }
     else{

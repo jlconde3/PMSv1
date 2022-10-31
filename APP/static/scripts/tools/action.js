@@ -192,7 +192,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
             headers:{
                 'Content-Type': 'application/json'
             }
-        }).then(window.location.replace("/tools"))
+        }).then(response => response_status(response))
     }
     else{
         alert("You left some fields empty!!")
