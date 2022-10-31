@@ -1,6 +1,9 @@
-from flask import render_template, Blueprint, request
+
+from common import MySQL, format_upper_case, format_dots, response
+from flask import render_template, Blueprint, request,g, Response
 from auth import login_required
 from flask.views import View
+from datetime import datetime
 
 bp = Blueprint('tools', __name__, url_prefix='/tools')
 
@@ -31,7 +34,27 @@ bp.add_url_rule('/modify_task', view_func=Tools.as_view('/modify_task', 'modify_
 @bp.route('/create_project', methods=['POST'])
 def create_project():
     data = request.get_json()
-    
-    
-
-    return "Hola"
+    try:
+        MySQL.cursor.execute(
+            '''
+            INSERT INTO pms.projects (agresso_code,date,name,client,section,
+            division,budget,profit_margin,cpt_default,cpt_actions,management,extra,user)VALUES
+            (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
+            (format_upper_case(data['project_code']),
+            datetime.now(),
+            format_upper_case(data['project_name']),
+            format_upper_case(data['project_client']),
+            format_upper_case(data['project_section']),
+            format_upper_case(data['project_division']),
+            format_dots(data['project_budget']),
+            format_dots(data['project_profit_margin']),
+            format_dots(data['project_cpt']),
+            format_dots(data['project_cpt_actions']),
+            format_dots(data['project_management_cost']),
+            format_dots(data['project_extra_cost']), g.user)
+        )
+        MySQL.con.commit()
+        return Response(status=211)
+    except MySQL.Error as error:
+        print(error)
+        return  Response(status=411)

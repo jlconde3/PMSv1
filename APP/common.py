@@ -1,20 +1,23 @@
+import json
 import os
 
 from dotenv import load_dotenv
 from mysql.connector import MySQLConnection, Error
 
 class MySQLHelper(object):
-    """
-    Establish a connection to database. Returns a connector object. 
-    """
+    '''
+    Class for connection to database. 
+
+    Returns a connector object. 
+    '''
     def __init__(self):
         load_dotenv()
-        mysql_host = os.getenv("MYSQL_AZURE_HOST")
-        mysql_port= os.getenv("MYSQL_AZURE_PORT")
-        mysql_user = os.getenv("MYSQL_AZURE_USER")
-        mysql_password = os.getenv("MYSQL_AZURE_PASSWORD")
-        mysql_database = os.getenv("MYSQL_AZURE_DATABASE")
-        mysql_certificate = os.getenv("MYSQL_AZURE_SSL_CA")
+        mysql_host = os.getenv('MYSQL_AZURE_HOST')
+        mysql_port= os.getenv('MYSQL_AZURE_PORT')
+        mysql_user = os.getenv('MYSQL_AZURE_USER')
+        mysql_password = os.getenv('MYSQL_AZURE_PASSWORD')
+        mysql_database = os.getenv('MYSQL_AZURE_DATABASE')
+        mysql_certificate = os.getenv('MYSQL_AZURE_SSL_CA')
 
         self.con = MySQLConnection(
             user = mysql_user,
@@ -30,3 +33,31 @@ class MySQLHelper(object):
 MySQL = MySQLHelper()
 
 
+def format_upper_case (data:str)->str:
+    '''
+    Format string to uppercase.
+
+    :param data: string to format.
+
+    Returns format string.
+    '''
+    return data.upper()
+
+def format_dots (data:str)->str:
+    ''' 
+    replace commas for dots in numeric strings.
+
+    :param data: string to format.
+    
+    Returns format string.
+    '''
+    return data.replace(',','.')
+
+def response (response:str):
+    '''
+    Formt response for the browser.
+    :param response: string to send to browser.
+
+    Returns json object.
+    '''
+    return json.dumps({'response':response})

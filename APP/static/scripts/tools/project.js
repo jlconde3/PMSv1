@@ -36,14 +36,24 @@ document.getElementById('submit_button').addEventListener('click',() => {
             project_extra_cost: element_id_value('project_extra_cost')
         };
         
-        fetch('/tools/create_action', {
+        fetch('/tools/create_project', {
             credentials: 'include',
             method: 'POST',
             body: JSON.stringify(data),
             headers:{
                 'Content-Type': 'application/json'
             }
-        }).then(window.location.replace("/tools"))
+        }).then(
+            response => {
+                if (response.status != 211){
+                    alert('Try again!!');
+                }
+                else{
+                    alert('All data saved');
+                    window.location.replace("/tools");
+                }
+            }
+        )
     }
     else{
         alert("You left some fields empty!!")
