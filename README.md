@@ -18,6 +18,6 @@ Software approach in project management. PMS stands for Project Management Syste
 ### Version 0.0.1
 Not for production. First version and still development version.
 
-###Limitations:
+### Limitations:
 
 - Inside a project all tasks must be uniques
