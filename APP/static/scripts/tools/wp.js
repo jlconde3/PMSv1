@@ -103,6 +103,8 @@ document.getElementById(`action_0`).addEventListener('click',()=>{
     )
     action_area_task[`actions_0`] = false;
 })
+
+
 document.getElementById(`area_0`).addEventListener('click',()=>{
     retrive_data(
         reload = action_area_task[`areas_0`],
@@ -177,6 +179,7 @@ document.getElementById('more_button').addEventListener('click',() => {
             input_id = `action_${i}`,
         )
         action_area_task[`actions_${i}`] = false;
+
     });
 
     document.getElementById(`area_${j}`).addEventListener('click',()=>{
@@ -450,13 +453,3 @@ document.getElementById('submit_button').addEventListener('click',() => {
         alert("You left some fields empty!!")
     }
 });
-
-
-
-
-
-
-
-
-
-

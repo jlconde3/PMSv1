@@ -30,19 +30,19 @@ bp.add_url_rule('/modify_workspace', view_func=Tools.as_view('/modify_worksace',
 bp.add_url_rule('/modify_task', view_func=Tools.as_view('/modify_task', 'modify_task'))
 
 
-@bp.route('/projects',methods=['POST','GET'])
+@bp.route('/projects',methods=['GET','POST'])
 def projects ():
     MySQL.cursor.execute('SELECT DISTINCT project FROM pms.areas')
     return format_mysql_list(MySQL.cursor.fetchall())
 
-@bp.route('/disciplines',methods=['POST','GET'])
+@bp.route('/disciplines',methods=['GET','POST'])
 def disciplines ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT discipline FROM pms.areas WHERE project = %s',
     (remove_spaces(format_upper_case(data['project_code'])),))
     return format_mysql_list(MySQL.cursor.fetchall())
 
-@bp.route('/phases',methods=['POST','GET'])
+@bp.route('/phases',methods=['GET','POST'])
 def phases ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT phase FROM pms.areas WHERE project = %s AND\
@@ -52,7 +52,13 @@ def phases ():
     ))
     return format_mysql_list(MySQL.cursor.fetchall())
 
-@bp.route('/zones',methods=['POST','GET'])
+@bp.route('/types',methods=['GET','POST'])
+def types ():
+    data = request.get_json()
+    MySQL.cursor.execute('SELECT type FROM pms.types WHERE project = %s',(remove_spaces(format_upper_case(data['project_code'])),))
+    return format_mysql_list(MySQL.cursor.fetchall())
+
+@bp.route('/zones',methods=['GET','POST'])
 def zones ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT zone FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s',
@@ -62,7 +68,7 @@ def zones ():
     ))
     return format_mysql_list(MySQL.cursor.fetchall())
 
-@bp.route('/areas',methods=['POST','GET'])
+@bp.route('/areas',methods=['GET','POST'])
 def areas ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT area FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s AND zone = %s',
@@ -73,10 +79,10 @@ def areas ():
     ))
     return format_mysql_list(MySQL.cursor.fetchall())
 
-@bp.route('/actions',methods=['POST','GET'])
+@bp.route('/actions',methods=['GET','POST'])
 def actions ():
     data = request.get_json()
-    MySQL.cursor.execute('SELECT subaction_code, custom_code FROM pms.actions WHERE project = %s AND discipline = %s AND phase = %s AND zone = %s',
+    MySQL.cursor.execute('SELECT subaction_code, custom_code FROM pms.actions WHERE project = %s AND discipline = %s AND phase = %s AND zone = %s AND status = "Not assigned" ',
     (remove_spaces(format_upper_case(data['project_code'])),
     remove_spaces(format_upper_case(data['discipline_code'])),
     remove_spaces(format_upper_case(data['phase_code'])),
@@ -84,7 +90,7 @@ def actions ():
     ))
     return format_actions_list(MySQL.cursor.fetchall())
 
-@bp.route('/stations',methods=['POST','GET'])
+@bp.route('/stations',methods=['GET','POST'])
 def stations ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT station FROM pms.tasks WHERE project = %s AND discipline = %s',
@@ -93,7 +99,7 @@ def stations ():
     ))
     return format_mysql_list(MySQL.cursor.fetchall())
 
-@bp.route('/tasks',methods=['POST','GET'])
+@bp.route('/tasks',methods=['GET','POST'])
 def tasks ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT task FROM pms.tasks WHERE project = %s AND discipline = %s AND station = %s',
@@ -103,7 +109,7 @@ def tasks ():
     ))
     return format_mysql_list(MySQL.cursor.fetchall())
 
-@bp.route('/users_projects',methods=['POST','GET'])
+@bp.route('/users_projects',methods=['GET','POST'])
 def users_projects():
     data = request.get_json()
     print(data)
