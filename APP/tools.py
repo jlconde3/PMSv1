@@ -1,5 +1,5 @@
-import json
 
+from hashlib import sha256
 from common import MySQL, format_upper_case, format_dots, remove_spaces, format_mysql_list, format_actions_list
 from flask import render_template, Blueprint, request,g, Response
 from auth import login_required
@@ -330,3 +330,43 @@ def user_level():
         
         
     return {'level': total_level/len(data['tasks'])}
+
+@bp.route('/validate_wp', methods=['GET','POST'])
+def validate_wp():
+    data = request.get_json()
+    project = data ['project_code']
+    discipline = data ['discipline_code']
+    phase = data ['phase_code']
+    wp_type = data ['wp_type']
+    station = data ['wp_station']
+    zone = data ['wp_zone']
+    actions_list = data ['task_action']
+    areas_list = data ['task_area']
+    tasks_list = data ['task_code']
+    wp_code = data ['wp_code']
+    dif = data ['wp_difficulty']
+    vol = data ['wp_volume']
+    cpl = data ['wp_complexity']
+    wp_contracted = data ['wp_contracted_time']
+    wp_planned = data ['wp_planned_time']
+    wp_scheduled = data ['wp_scheduled_time']
+    users = data ['username']
+    users_level = data ['user_level']
+
+
+    for area,task,action in zip(areas_list, tasks_list,actions_list):
+        text_to_hash = f"{project}{discipline}{phase}{station}{zone}{action}{area}{task}"
+        id = sha256(text_to_hash.encode('utf-8')).hexdigest()
+        print(id)
+        MySQL.cursor.execute('SELECT code FROM wp WHERE id_hash = %s',(id,))
+        check = MySQL.cursor.fetchall()
+        if check is not None:
+            return "Existe"
+
+        
+        return "Hola"
+
+
+
+
+
