@@ -336,11 +336,10 @@ document.getElementById('submit_button').addEventListener('click',() => {
             zone: document.getElementById('wp_zone').value,
             type: document.getElementById('wp_type').value,
             station:document.getElementById('wp_station').value,
-            actions:retrive_list(document.getElementsByName('task_action')),
-            areas:retrive_list(document.getElementsByName('task_area')),
-            tasks:retrive_list(document.getElementsByName('task_code')),
+            actions:element_name_value('task_action'),
+            areas:element_name_value('task_area'),
+            tasks:element_name_value('task_code'),
         };
-        console.log(data)
         fetch("/tools/generate_wp",{
             credentials: 'include',
             method: 'POST',
@@ -361,7 +360,6 @@ document.getElementById('submit_button').addEventListener('click',() => {
             }
         ).then(
             document.getElementById(`user_0`).addEventListener('click',()=>{
-                console.log("Hola")
                 retrive_data(
                     reload = action_area_task[`users_0`],
                     data = {
@@ -372,6 +370,28 @@ document.getElementById('submit_button').addEventListener('click',() => {
                 )
                 action_area_task[`users_0`] = false;
             })
+
+        ).then(
+            document.getElementById(`user_level_0`).addEventListener('click',()=>{
+                console.log('ahora')
+                data = {
+                    project: document.getElementById('project_code').value,
+                    user: document.getElementById('user_0').value,
+                    tasks:element_name_value('task_code')
+                }
+
+                fetch("/tools/user_level",{
+                    credentials: 'include',
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                    }
+                ).then( response => response.json()
+                ).then(data => document.getElementById(`user_level_0`).value = data.level)    
+            })
+
         ).then(
             document.getElementById('more_users_button').addEventListener('click',() => {
                 let k = q;
@@ -406,6 +426,26 @@ document.getElementById('submit_button').addEventListener('click',() => {
                     action_area_task[`users_${k}`] = false;
                 });
                 q++;
+
+                document.getElementById(`user_level_${k}`).addEventListener('click',()=>{
+                    console.log('ahora')
+                    data = {
+                        project: document.getElementById('project_code').value,
+                        user: document.getElementById(`user_${k}`).value,
+                        tasks:element_name_value('task_code')
+                    }
+    
+                    fetch("/tools/user_level",{
+                        credentials: 'include',
+                        method: 'POST',
+                        body: JSON.stringify(data),
+                        headers:{
+                            'Content-Type': 'application/json'
+                        }
+                        }
+                    ).then( response => response.json()
+                    ).then(data => document.getElementById(`user_level_${k}`).value = data.level)    
+                });
             })
         ).then(
             document.getElementById('cancel_validate_button').addEventListener('click',() => {

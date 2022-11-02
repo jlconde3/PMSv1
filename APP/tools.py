@@ -313,3 +313,20 @@ def generate_wp():
         'wp_planned_time': wp_time*generate_wp_planned(wp_vol,wp_cpl)
     }
     
+@bp.route('/user_level', methods=['GET','POST'])
+def user_level():
+    data = request.get_json()
+    total_level = 0
+    for task in data['tasks']:
+        MySQL.cursor.execute('SELECT level FROM users_projects WHERE project =%s AND user =%s AND task = %s',(data['project'],data['user'], task))
+        level = (MySQL.cursor.fetchone())
+
+        if level is None:
+            level = 0
+            total_level = level + total_level
+        
+        else:
+            total_level = float(level[0]) + total_level
+        
+        
+    return {'level': total_level/len(data['tasks'])}
