@@ -154,10 +154,6 @@ function display_select_input(input_id,datalist_id){
 };
 
 
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
-}
-
 function loader (){
     const container = document.getElementById('window');
     let dialog = document.createElement('dialog');
@@ -184,3 +180,11 @@ function response_status(response){
     }
 
 };
+
+function retrive_list(parent_element){
+    empty_list = []
+    for (i of parent_element){
+        empty_list.push(i.value);
+    }
+    return empty_list;
+}

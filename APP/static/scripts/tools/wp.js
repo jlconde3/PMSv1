@@ -16,7 +16,6 @@ let action_area_task ={
     'users_0':true,
 };
 
-
 document.getElementById('project_code').addEventListener('click',()=>{
     retrive_data(
         reload = projects,
@@ -330,18 +329,36 @@ document.getElementById('submit_button').addEventListener('click',() => {
 
     if (!empty){
         add_validate_window('validate_window',validate_window);
-        ;  
-        let data = {};
-        fetch('/tools/create_wp', {
+        let data = {
+            project: document.getElementById('project_code').value,
+            discipline: document.getElementById('discipline_code').value,
+            phase: document.getElementById('phase_code').value,
+            zone: document.getElementById('wp_zone').value,
+            type: document.getElementById('wp_type').value,
+            station:document.getElementById('wp_station').value,
+            actions:retrive_list(document.getElementsByName('task_action')),
+            areas:retrive_list(document.getElementsByName('task_area')),
+            tasks:retrive_list(document.getElementsByName('task_code')),
+        };
+        console.log(data)
+        fetch("/tools/generate_wp",{
             credentials: 'include',
             method: 'POST',
             body: JSON.stringify(data),
             headers:{
                 'Content-Type': 'application/json'
             }
-        }
-        ).then(
+            }
+        ).then((response) => response.json()
+        ).then((data) => {
             document.getElementById('validate_window').showModal()
+            document.getElementById('wp_code').value = data.wp_code;
+            document.getElementById('wp_difficulty').value = data.wp_dif;
+            document.getElementById('wp_volume').value = data.wp_vol;
+            document.getElementById('wp_complexity').value = data.wp_cpl;
+            document.getElementById('wp_contracted_time').value = data.wp_contracted_time;
+            document.getElementById('wp_planned_time').value = data.wp_planned_time;
+            }
         ).then(
             document.getElementById(`user_0`).addEventListener('click',()=>{
                 console.log("Hola")

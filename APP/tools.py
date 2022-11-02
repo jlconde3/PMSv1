@@ -1,3 +1,5 @@
+import json
+
 from common import MySQL, format_upper_case, format_dots, remove_spaces, format_mysql_list, format_actions_list
 from flask import render_template, Blueprint, request,g, Response
 from auth import login_required
@@ -122,7 +124,7 @@ def users_projects():
 def create_project():
     data = request.get_json()
 
-    MySQL.cursor.execute('SELECT DISTINCT agresso_code FROM pms.projects WHERE agresso_code = %s',
+    MySQL.cursor.execute('SELECT DISTINCT code FROM pms.projects WHERE agresso_code = %s',
     (format_upper_case(remove_spaces(data['project_code'])),)) 
 
     if MySQL.cursor.fetchone() is not None:
@@ -210,7 +212,104 @@ def create_action():
         print(error)
         return  Response(status=411)
 
+def generate_wp_code () -> str:
+    MySQL.cursor.execute('SELECT code FROM wp ORDER BY id DESC LIMIT 1')
+    code = MySQL.cursor.fetchone()
+    if code is None:
+        code = 'WP10000001'
+    else:
+        code = code[0][:2]+ str(int(code[0][2:])+1)
+    return code
+
+def generate_wp_dif (list:list) -> float:
+    total_dif = 0
+    for task in list:
+        MySQL.cursor.execute('SELECT dif FROM tasks WHERE task =%s',
+        (task,))
+        dif = float(MySQL.cursor.fetchone()[0])
+        total_dif = dif + total_dif
+    return total_dif/len(list)
+
+def generate_wp_vol (areas:list) -> float:
+    total_vol = 0
+    for area in areas:
+        MySQL.cursor.execute('SELECT vol FROM areas WHERE area =%s',
+        (area,))
+        vol = float(MySQL.cursor.fetchone()[0])
+        total_vol = vol + total_vol
+    return total_vol/len(areas)
+
+def generate_wp_cpl (areas:list) -> float:
+    total_cpl = 0
+    for area in areas:
+        MySQL.cursor.execute('SELECT cpl FROM areas WHERE area =%s',
+        (area,))
+        cpl = float(MySQL.cursor.fetchone()[0])
+        total_cpl = cpl + total_cpl
+    return total_cpl/len(areas)
+
+def get_weights_tasks(project, discipline, station, task)->float:
+    MySQL.cursor.execute('SELECT weight FROM tasks WHERE project =%s AND discipline =%s AND station = %s AND task=%s',
+    (project,discipline,station,task))
+    return float(MySQL.cursor.fetchone()[0])
+
+def get_weights_areas(project, discipline, zone, area)->float:
+    MySQL.cursor.execute('SELECT weight FROM areas WHERE project =%s AND discipline =%s AND zone = %s AND area=%s',
+    (project,discipline,zone,area))
+    return float(MySQL.cursor.fetchone()[0])
+
+def get_project_hours(project):
+    MySQL.cursor.execute('SELECT execution_hours FROM projects WHERE code =%s ORDER BY date DESC LIMIT 1',
+    (project,))
+    return float(MySQL.cursor.fetchone()[0])
+
+def get_subaction_hours(subaction):
+    MySQL.cursor.execute('SELECT time FROM projects WHERE subaction_code=%s',
+    (subaction),)
+    return float(MySQL.cursor.fetchone()[0])
+
+
+def generate_wp_contracted_time (project, discipline,zone,type,station,subactions:list,areas:list, tasks:list) -> float:
+    total_hours = 0
+    if type == "DESIGN":
+        for area, task in zip(areas, tasks):
+            hour = get_project_hours(project)*get_weights_areas(project,discipline,zone,area)*get_weights_tasks(project,discipline,station,task)
+            total_hours = hour + total_hours
+        return total_hours
+    
+    for subaction, task in zip(subactions, tasks):
+        hour = get_subaction_hours(subaction)*get_weights_tasks(project,discipline,station,task)
+        total_hours = hour + total_hours
+    return total_hours
+
+
+def generate_wp_planned (vol,cpl) -> float:
+    return float (((vol+cpl)/10)+1)
+
 
 @bp.route('/generate_wp', methods=['GET','POST'])
 def generate_wp():
-    pass
+    data = request.get_json()
+    wp_code =  generate_wp_code()
+    wp_dif = generate_wp_dif(data['tasks'])
+    wp_vol = generate_wp_vol(data['areas'])
+    wp_cpl = generate_wp_cpl(data['areas'])
+    wp_time = generate_wp_contracted_time(
+        data['project'],
+        data['discipline'],
+        data['zone'],
+        data['type'],
+        data['station'],
+        data['actions'],
+        data['areas'],
+        data['tasks']            
+    )
+    return {
+        'wp_code': wp_code,
+        'wp_dif': wp_dif,
+        'wp_vol': wp_vol,
+        'wp_cpl': wp_cpl,
+        'wp_contracted_time': wp_time,
+        'wp_planned_time': wp_time*generate_wp_planned(wp_vol,wp_cpl)
+    }
+    
