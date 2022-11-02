@@ -16,9 +16,6 @@ let action_area_task ={
     'users_0':true,
 };
 
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
-  }
 
 document.getElementById('project_code').addEventListener('click',()=>{
     retrive_data(
@@ -151,7 +148,7 @@ document.getElementById('more_button').addEventListener('click',() => {
     <div class="fields-group">
     <div>
         <label class = "label-field">Action</label><br>
-        <input class = "input-3" name = "task_action" list="actions" id="action_${i}">
+        <input class = "input-3" name = "task_action" id="action_${i}">
         <datalist id="actions_${i}" class = "input-3" ></datalist>
     </div>
     <div>

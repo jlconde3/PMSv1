@@ -1,4 +1,4 @@
-from common import MySQL, format_upper_case, format_dots, remove_spaces, format_mysql_list
+from common import MySQL, format_upper_case, format_dots, remove_spaces, format_mysql_list, format_actions_list
 from flask import render_template, Blueprint, request,g, Response
 from auth import login_required
 from flask.views import View
@@ -55,8 +55,7 @@ def phases ():
 @bp.route('/zones',methods=['POST','GET'])
 def zones ():
     data = request.get_json()
-    MySQL.cursor.execute('SELECT DISTINCT zone FROM pms.areas WHERE project = %s AND\
-    discipline = %s AND phase = %s',
+    MySQL.cursor.execute('SELECT DISTINCT zone FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s',
     (remove_spaces(format_upper_case(data['project_code'])),
     remove_spaces(format_upper_case(data['discipline_code'])),
     remove_spaces(format_upper_case(data['phase_code']))
@@ -66,8 +65,7 @@ def zones ():
 @bp.route('/areas',methods=['POST','GET'])
 def areas ():
     data = request.get_json()
-    MySQL.cursor.execute('SELECT DISTINCT area FROM pms.areas WHERE project = %s AND\
-    discipline = %s AND phase = %s AND zone = %s',
+    MySQL.cursor.execute('SELECT DISTINCT area FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s AND zone = %s',
     (remove_spaces(format_upper_case(data['project_code'])),
     remove_spaces(format_upper_case(data['discipline_code'])),
     remove_spaces(format_upper_case(data['phase_code'])),
@@ -78,20 +76,18 @@ def areas ():
 @bp.route('/actions',methods=['POST','GET'])
 def actions ():
     data = request.get_json()
-    MySQL.cursor.execute('SELECT DISTINCT code FROM pms.actions WHERE project = %s AND\
-    discipline = %s AND phase = %s AND zone = %s',
+    MySQL.cursor.execute('SELECT subaction_code, custom_code FROM pms.actions WHERE project = %s AND discipline = %s AND phase = %s AND zone = %s',
     (remove_spaces(format_upper_case(data['project_code'])),
     remove_spaces(format_upper_case(data['discipline_code'])),
     remove_spaces(format_upper_case(data['phase_code'])),
     remove_spaces(format_upper_case(data['zone_code'])) 
     ))
-    return format_mysql_list(MySQL.cursor.fetchall())
+    return format_actions_list(MySQL.cursor.fetchall())
 
 @bp.route('/stations',methods=['POST','GET'])
 def stations ():
     data = request.get_json()
-    MySQL.cursor.execute('SELECT DISTINCT station FROM pms.tasks WHERE project = %s AND\
-    discipline = %s',
+    MySQL.cursor.execute('SELECT DISTINCT station FROM pms.tasks WHERE project = %s AND discipline = %s',
     (remove_spaces(format_upper_case(data['project_code'])),
     remove_spaces(format_upper_case(data['discipline_code']))
     ))
@@ -100,8 +96,7 @@ def stations ():
 @bp.route('/tasks',methods=['POST','GET'])
 def tasks ():
     data = request.get_json()
-    MySQL.cursor.execute('SELECT DISTINCT task FROM pms.tasks WHERE project = %s AND\
-    discipline = %s AND station = %s',
+    MySQL.cursor.execute('SELECT DISTINCT task FROM pms.tasks WHERE project = %s AND discipline = %s AND station = %s',
     (remove_spaces(format_upper_case(data['project_code'])),
     remove_spaces(format_upper_case(data['discipline_code'])),
     remove_spaces(format_upper_case(data['station_code']))
@@ -129,8 +124,7 @@ def create_project():
 
     try:
         MySQL.cursor.execute(
-            'INSERT INTO pms.projects (agresso_code,date,name,client,section,\
-            division,budget,profit_margin,cpt_default,cpt_actions,management,extra,user)VALUES\
+            'INSERT INTO pms.projects (agresso_code,date,name,client,section,division,budget,profit_margin,cpt_default,cpt_actions,management,extra,user)VALUES\
             (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
             (format_upper_case(remove_spaces(data['project_code'])),
             datetime.now(),
@@ -153,17 +147,40 @@ def create_project():
         print(error)
         return  Response(status=411)
 
+
+def generate_action_code () -> str:
+    MySQL.cursor.execute('SELECT action_code FROM actions ORDER BY id DESC LIMIT 1')
+    code = MySQL.cursor.fetchone()
+    if code is None:
+        code = 'ACT1000001'
+    else:
+        code = code[0][:3]+ str(int(code[0][3:])+1)
+    return code
+
+def generate_subaction_code () -> str:
+    MySQL.cursor.execute('SELECT subaction_code FROM actions ORDER BY id DESC LIMIT 1')
+    code = MySQL.cursor.fetchone()
+    if code is None:
+        code = 'SUBACT10000001'
+    else:
+        code = code[0][:6]+ str(int(code[0][6:])+1)
+    return code
+
+
 @bp.route('/create_action', methods=['POST'])
 def create_action():
     data = request.get_json()
-    try:
-        for code,zone, area, time in zip(data['custom_code'],
-        data['subaction_zone'],data['subaction_area'], data['subaction_time']):
+    action_code = generate_action_code()
 
+    try:
+        for code,zone,area,time in zip(data['custom_code'],data['subaction_zone'],data['subaction_area'], data['subaction_time']):
             MySQL.cursor.execute(
-            'INSERT INTO pms.actions (project,customer_code,type,date_recived,\
-            disicipline,phase,description,custom_code,zone,area,time,user,date)\
-            VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(
+            'INSERT INTO actions (action_code,project,\
+                customer_code,type,date_recived,discipline,\
+                phase,description,subaction_code,custom_code,zone,area,time,user,date)\
+                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
+            (
+            action_code,
             format_upper_case(remove_spaces(data['project_code'])),
             format_upper_case(remove_spaces(data['customer_code'])),
             format_upper_case(remove_spaces(data['action_type'])),
@@ -171,16 +188,23 @@ def create_action():
             format_upper_case(remove_spaces(data['discipline_code'])),
             format_upper_case(remove_spaces(data['phase_code'])),
             format_upper_case(remove_spaces(data['action_description'])),
+            generate_subaction_code(),
             format_upper_case(remove_spaces(code)),
             format_upper_case(remove_spaces(zone)),
             format_upper_case(remove_spaces(area)),
             format_dots(remove_spaces(time)),
             g.user,
             datetime.now()))
-            MySQL.con.commit()
+
+        MySQL.con.commit()
 
         return Response(status=211)
 
     except MySQL.Error as error:
         print(error)
         return  Response(status=411)
+
+
+@bp.route('/generate_wp', methods=['GET','POST'])
+def generate_wp():
+    pass

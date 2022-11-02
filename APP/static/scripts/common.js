@@ -121,7 +121,7 @@ function retrive_data(reload,data,url,input_id){
             }
         }
     })
-    .then(()=>{display_select_input(input_id,list.id)})
+    .then(()=> display_select_input(input_id,list.id))
 };
 
 function display_select_input(input_id,datalist_id){

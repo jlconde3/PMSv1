@@ -69,3 +69,9 @@ def format_mysql_list(list:list)->list:
     for i in list:
         empty_list.append(i[0])
     return empty_list
+
+def format_actions_list(list:list)->list:
+    empty_list = []
+    for i in list:
+        empty_list.append(i[0]+"-"+i[1])
+    return empty_list

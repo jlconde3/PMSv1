@@ -134,7 +134,7 @@ document.getElementById(`zone_0`).addEventListener('click',()=>{
 
 document.getElementById(`area_0`).addEventListener('click',()=>{
     retrive_data(
-        reload = zones_area['area_0'],
+        reload = zones_area['areas_0'],
         data = {
             'project_code': document.getElementById('project_code').value,
             'discipline_code': document.getElementById('discipline_code').value,
@@ -144,7 +144,7 @@ document.getElementById(`area_0`).addEventListener('click',()=>{
         url = '/tools/areas',
         input_id = 'area_0',
     )
-    zones_area['area_0'] = false;
+    zones_area['areas_0'] = false;
 });
 
 document.getElementById('submit_button').addEventListener('click',() => {
