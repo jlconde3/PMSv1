@@ -491,14 +491,14 @@ document.getElementById('submit_button').addEventListener('click',() => {
                         user_level: element_name_value('user_level')
                     };
             
-                    fetch('/tools/create_action', {
+                    fetch('/tools/validate_wp', {
                         credentials: 'include',
                         method: 'POST',
                         body: JSON.stringify(data),
                         headers:{
                             'Content-Type': 'application/json'
                         }
-                    }).then(window.location.replace("/tools"))
+                    })
                 }
                 else{
                     alert("You left some fields empty!!")
