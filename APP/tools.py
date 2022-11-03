@@ -33,11 +33,13 @@ bp.add_url_rule('/modify_task', view_func=Tools.as_view('/modify_task', 'modify_
 
 
 @bp.route('/projects',methods=['GET','POST'])
+@login_required
 def projects ():
     MySQL.cursor.execute('SELECT DISTINCT project FROM pms.areas')
     return format_mysql_list(MySQL.cursor.fetchall())
 
 @bp.route('/disciplines',methods=['GET','POST'])
+@login_required
 def disciplines ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT discipline FROM pms.areas WHERE project = %s',
@@ -45,6 +47,7 @@ def disciplines ():
     return format_mysql_list(MySQL.cursor.fetchall())
 
 @bp.route('/phases',methods=['GET','POST'])
+@login_required
 def phases ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT phase FROM pms.areas WHERE project = %s AND\
@@ -55,12 +58,14 @@ def phases ():
     return format_mysql_list(MySQL.cursor.fetchall())
 
 @bp.route('/types',methods=['GET','POST'])
+@login_required
 def types ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT type FROM pms.types WHERE project = %s',(remove_spaces(format_upper_case(data['project_code'])),))
     return format_mysql_list(MySQL.cursor.fetchall())
 
 @bp.route('/zones',methods=['GET','POST'])
+@login_required
 def zones ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT zone FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s',
@@ -71,6 +76,7 @@ def zones ():
     return format_mysql_list(MySQL.cursor.fetchall())
 
 @bp.route('/areas',methods=['GET','POST'])
+@login_required
 def areas ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT area FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s AND zone = %s',
@@ -82,6 +88,7 @@ def areas ():
     return format_mysql_list(MySQL.cursor.fetchall())
 
 @bp.route('/actions',methods=['GET','POST'])
+@login_required
 def actions ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT subaction_code, custom_code FROM pms.actions WHERE project = %s AND discipline = %s AND phase = %s AND zone = %s AND status = "Not assigned" ',
@@ -93,6 +100,7 @@ def actions ():
     return format_actions_list(MySQL.cursor.fetchall())
 
 @bp.route('/stations',methods=['GET','POST'])
+@login_required
 def stations ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT station FROM pms.tasks WHERE project = %s AND discipline = %s',
@@ -102,6 +110,7 @@ def stations ():
     return format_mysql_list(MySQL.cursor.fetchall())
 
 @bp.route('/tasks',methods=['GET','POST'])
+@login_required
 def tasks ():
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT task FROM pms.tasks WHERE project = %s AND discipline = %s AND station = %s',
@@ -112,6 +121,7 @@ def tasks ():
     return format_mysql_list(MySQL.cursor.fetchall())
 
 @bp.route('/users_projects',methods=['GET','POST'])
+@login_required
 def users_projects():
     data = request.get_json()
     print(data)
@@ -121,6 +131,7 @@ def users_projects():
 
 
 @bp.route('/create_project', methods=['POST'])
+@login_required
 def create_project():
     data = request.get_json()
 
@@ -176,6 +187,7 @@ def generate_subaction_code () -> str:
 
 
 @bp.route('/create_action', methods=['POST'])
+@login_required
 def create_action():
     data = request.get_json()
     action_code = generate_action_code()
@@ -312,6 +324,7 @@ def generate_wp_id(project:str, discipline:str, phase:str, station:str, zone:str
     return id
 
 @bp.route('/generate_wp', methods=['GET','POST'])
+@login_required
 def generate_wp():
     data = request.get_json()
 
@@ -368,6 +381,7 @@ def generate_wp():
 
 
 @bp.route('/user_level', methods=['GET','POST'])
+@login_required
 def user_level():
     data = request.get_json()
     total_level = 0
@@ -386,6 +400,7 @@ def user_level():
     return {'level': total_level/len(data['tasks'])}
 
 @bp.route('/validate_wp', methods=['GET','POST'])
+@login_required
 def validate_wp():
     data = request.get_json()
     project = data ['project_code']
