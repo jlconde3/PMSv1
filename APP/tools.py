@@ -416,7 +416,11 @@ def validate_wp():
             VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
             """,(wp_code,id_hash,project,discipline,phase,zone,wp_type,station,action,area,task,dif,vol,cpl,wp_contracted,wp_planned,wp_scheduled))
 
+        for user in users:
+            MySQL.cursor.execute("""INSERT INTO users_wp(user,project,wp,scheduled_time)VALUES(%s,%s,%s,%s)""",(user,project,wp_code,float(wp_scheduled)/len(users)))
+            
         MySQL.con.commit()
+
         return Response(status=211)
 
     except MySQL.Error as e:
