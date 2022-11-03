@@ -328,13 +328,12 @@ document.getElementById('submit_button').addEventListener('click',() => {
     }    
 
     if (!empty){
-        add_validate_window('validate_window',validate_window);
         let data = {
             project: document.getElementById('project_code').value,
             discipline: document.getElementById('discipline_code').value,
             phase: document.getElementById('phase_code').value,
             zone: document.getElementById('wp_zone').value,
-            type: document.getElementById('wp_type').value,
+            wp_type: document.getElementById('wp_type').value,
             station:document.getElementById('wp_station').value,
             actions:element_name_value('task_action'),
             areas:element_name_value('task_area'),
@@ -345,166 +344,162 @@ document.getElementById('submit_button').addEventListener('click',() => {
             method: 'POST',
             body: JSON.stringify(data),
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json'}
             }
-            }
-        ).then((response) => response.json()
-        ).then((data) => {
-            document.getElementById('validate_window').showModal()
-            document.getElementById('wp_code').value = data.wp_code;
-            document.getElementById('wp_difficulty').value = data.wp_dif;
-            document.getElementById('wp_volume').value = data.wp_vol;
-            document.getElementById('wp_complexity').value = data.wp_cpl;
-            document.getElementById('wp_contracted_time').value = data.wp_contracted_time;
-            document.getElementById('wp_planned_time').value = data.wp_planned_time;
-            }
-        ).then(
-            document.getElementById(`user_0`).addEventListener('click',()=>{
-                retrive_data(
-                    reload = action_area_task[`users_0`],
-                    data = {
-                        'project_code': document.getElementById('project_code').value
-                    },
-                    url = '/tools/users_projects',
-                    input_id = `user_0`,
-                )
-                action_area_task[`users_0`] = false;
-            })
+        ).then(response => {
+            if (response.status == 212 ){
+                response.json().then(data => 
+                    {alert('This combination has been created previously:'+ `${data.zone}`)}
+            )}
+            else if(response.status == 213){
+                response.json().then(data => {
+                    add_validate_window('validate_window',validate_window)
 
-        ).then(
-            document.getElementById(`user_level_0`).addEventListener('click',()=>{
-                console.log('ahora')
-                data = {
-                    project: document.getElementById('project_code').value,
-                    user: document.getElementById('user_0').value,
-                    tasks:element_name_value('task_code')
-                }
+                    document.getElementById('validate_window').showModal();
+                    document.getElementById('wp_code').value = data.wp_code;
+                    document.getElementById('wp_difficulty').value = data.wp_dif;
+                    document.getElementById('wp_volume').value = data.wp_vol;
+                    document.getElementById('wp_complexity').value = data.wp_cpl;
+                    document.getElementById('wp_contracted_time').value = data.wp_contracted_time;
+                    document.getElementById('wp_planned_time').value = data.wp_planned_time;
 
-                fetch("/tools/user_level",{
-                    credentials: 'include',
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers:{
-                        'Content-Type': 'application/json'
-                    }
-                    }
-                ).then( response => response.json()
-                ).then(data => document.getElementById(`user_level_0`).value = data.level)    
-            })
-
-        ).then(
-            document.getElementById('more_users_button').addEventListener('click',() => {
-                let k = q;
-                action_area_task[`users_${k}`] = true;
-                add_more('users',
-                `
-                <div>
-                    <label class = "label-title">In charge</label>
-                </div>
-                <div class="fields-group">
-                    <div>
-                        <label class = "label-field">User</label><br>
-                        <input type="text" name = "username" id = "user_${k}">
-                        <datalist class = "input-4" id="users_${k}" ></datalist>
-                    </div>
-                    <div>
-                        <label class = "label-field">Level</label><br>
-                        <input type="number" name = "user_level" id = "user_level_${k}">
-                    </div>
-                </div>
-                `);
-            
-                document.getElementById(`user_${k}`).addEventListener('click',()=>{
-                    retrive_data(
-                        reload = action_area_task[`users_${k}`],
+                    document.getElementById(`user_0`).addEventListener('click',()=>{
+                        retrive_data(
+                            reload = action_area_task[`users_0`],
+                            data = {
+                                'project_code': document.getElementById('project_code').value
+                            },
+                            url = '/tools/users_projects',
+                            input_id = `user_0`,
+                        )
+                        action_area_task[`users_0`] = false;
+                    })
+                    
+                    document.getElementById(`user_level_0`).addEventListener('click',()=>{
                         data = {
-                            'project_code': document.getElementById('project_code').value,
-                        },
-                        url = '/tools/users_projects',
-                        input_id = `user_${k}`,
-                    )
-                    action_area_task[`users_${k}`] = false;
-                });
-                q++;
+                            project: document.getElementById('project_code').value,
+                            user: document.getElementById('user_0').value,
+                            tasks:element_name_value('task_code')
+                        }
+                        fetch("/tools/user_level",{
+                            credentials: 'include',
+                            method: 'POST',
+                            body: JSON.stringify(data),
+                            headers:{
+                                'Content-Type': 'application/json'
+                            }
+                        }).then( response => response.json()
+                        ).then(data => document.getElementById(`user_level_0`).value = data.level)    
+                    })
+                    
+                    document.getElementById('more_users_button').addEventListener('click',() => {
+                        let k = q;
+                        action_area_task[`users_${k}`] = true;
+                        add_more('users',
+                        `
+                        <div>
+                            <label class = "label-title">In charge</label>
+                        </div>
+                        <div class="fields-group">
+                            <div>
+                                <label class = "label-field">User</label><br>
+                                <input type="text" name = "username" id = "user_${k}">
+                                <datalist class = "input-4" id="users_${k}" ></datalist>
+                            </div>
+                            <div>
+                                <label class = "label-field">Level</label><br>
+                                <input type="number" name = "user_level" id = "user_level_${k}">
+                            </div>
+                        </div>
+                        `);
+                    
+                        document.getElementById(`user_${k}`).addEventListener('click',()=>{
+                            retrive_data(
+                                reload = action_area_task[`users_${k}`],
+                                data = {
+                                    'project_code': document.getElementById('project_code').value,
+                                },
+                                url = '/tools/users_projects',
+                                input_id = `user_${k}`,
+                            )
+                            action_area_task[`users_${k}`] = false;
+                        });
+                        q++
+                        document.getElementById(`user_level_${k}`).addEventListener('click',()=>{
+                            data = {
+                                project: document.getElementById('project_code').value,
+                                user: document.getElementById(`user_${k}`).value,
+                                tasks:element_name_value('task_code')
+                            }
+                            fetch("/tools/user_level",{
+                                credentials: 'include',
+                                method: 'POST',
+                                body: JSON.stringify(data),
+                                headers:{
+                                    'Content-Type': 'application/json'
+                                }
+                            }).then( response => response.json()
+                            ).then(data => document.getElementById(`user_level_${k}`).value = data.level)    
+                        });
+                    })
+                    
+                    document.getElementById('cancel_validate_button').addEventListener('click',() => {
+                        reset_users_wp(j)
+                    })
 
-                document.getElementById(`user_level_${k}`).addEventListener('click',()=>{
-                    console.log('ahora')
-                    data = {
-                        project: document.getElementById('project_code').value,
-                        user: document.getElementById(`user_${k}`).value,
-                        tasks:element_name_value('task_code')
-                    }
-    
-                    fetch("/tools/user_level",{
-                        credentials: 'include',
-                        method: 'POST',
-                        body: JSON.stringify(data),
-                        headers:{
-                            'Content-Type': 'application/json'
+                    document.getElementById('validate_button').addEventListener('click',() => {
+                        let i = 0;
+                        let empty = true;
+                        const inputs = document.getElementsByTagName('input');
+                        for (input of inputs){
+                            if (input.value.replace(/ /g,'') == ""){
+                                input.style.border = "red solid 1px";
+                                empty = true;
+                            }
+                            else{
+                                empty = false;
+                                input.style.border = "#EAEAEA solid 1px";
+                            }
+                            i++;
+                        }    
+                        if (!empty){        
+                            let data = {
+                                project_code: element_id_value('project_code'),
+                                discipline_code: element_id_value('discipline_code'),
+                                phase_code: element_id_value('phase_code'),
+                                wp_type: element_id_value('wp_type'),
+                                wp_station: element_id_value('wp_station'),
+                                wp_zone: element_id_value('wp_zone'),
+                                task_action: element_name_value('task_action'),
+                                task_area: element_name_value('task_area'),
+                                task_code: element_name_value('task_code'),
+                                wp_code: element_id_value('wp_code'),
+                                wp_difficulty: element_id_value('wp_difficulty'),
+                                wp_volume: element_id_value('wp_volume'),
+                                wp_complexity: element_id_value('wp_complexity'),
+                                wp_contracted_time: element_id_value('wp_contracted_time'),
+                                wp_planned_time: element_id_value('wp_planned_time'),
+                                wp_scheduled_time:  element_id_value('wp_scheduled_time'),
+                                username: element_name_value('username'),
+                                user_level: element_name_value('user_level')
+                            };
+                    
+                            fetch('/tools/validate_wp', {
+                                credentials: 'include',
+                                method: 'POST',
+                                body: JSON.stringify(data),
+                                headers:{
+                                    'Content-Type': 'application/json'
+                                }
+                            }).then(window.location.replace("/tools"))
                         }
-                        }
-                    ).then( response => response.json()
-                    ).then(data => document.getElementById(`user_level_${k}`).value = data.level)    
-                });
-            })
-        ).then(
-            document.getElementById('cancel_validate_button').addEventListener('click',() => {
-                delete_childs('validate_window')
-                document.getElementById('validate_window').close(); 
-            })
-        ).finally(
-            document.getElementById('validate_button').addEventListener('click',() => {
-                let i = 0;
-                let empty = true;
-                const inputs = document.getElementsByTagName('input');
-                
-                for (input of inputs){
-                    if (input.value.replace(/ /g,'') == ""){
-                        input.style.border = "red solid 1px";
-                        empty = true;
-                    }
-                    else{
-                        empty = false;
-                        input.style.border = "#EAEAEA solid 1px";
-                    }
-                    i++;
-                }    
-                if (!empty){        
-                    let data = {
-                        project_code: element_id_value('project_code'),
-                        discipline_code: element_id_value('discipline_code'),
-                        phase_code: element_id_value('phase_code'),
-                        wp_type: element_id_value('wp_station'),
-                        wp_station: element_id_value('wp_station'),
-                        wp_zone: element_id_value('wp_zone'),
-                        task_action: element_name_value('task_action'),
-                        task_area: element_name_value('task_area'),
-                        task_code: element_name_value('task_code'),
-                        wp_code: element_id_value('wp_code'),
-                        wp_difficulty: element_id_value('wp_difficulty'),
-                        wp_volume: element_id_value('wp_volume'),
-                        wp_complexity: element_id_value('wp_complexity'),
-                        wp_contracted_time: element_id_value('wp_contracted_time'),
-                        wp_planned_time: element_id_value('wp_planned_time'),
-                        wp_scheduled_time:  element_id_value('wp_scheduled_time'),
-                        username: element_name_value('username'),
-                        user_level: element_name_value('user_level')
-                    };
-            
-                    fetch('/tools/validate_wp', {
-                        credentials: 'include',
-                        method: 'POST',
-                        body: JSON.stringify(data),
-                        headers:{
-                            'Content-Type': 'application/json'
+                        else{
+                            alert("You left some fields empty!!")
                         }
                     })
                 }
-                else{
-                    alert("You left some fields empty!!")
-                }
-            })
-        )
+            )}
+        })
     }
     else{
         alert("You left some fields empty!!")

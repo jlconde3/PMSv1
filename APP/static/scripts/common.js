@@ -171,7 +171,7 @@ function response_status(response){
     if (response.status == 411){
         alert('Try again!!');
     }
-    else if (response.status == 412){
+    else if (response.status == 215){
         alert('That project exist already!!')
     }
     else{
@@ -187,4 +187,14 @@ function retrive_list(parent_element){
         empty_list.push(i.value);
     }
     return empty_list;
+}
+
+function reset_users_wp (j){
+    delete_childs('validate_window')
+    document.getElementById('validate_window').close();
+    for (let u = 1; u<j+1; u++){
+        console.log(action_area_task)
+        delete action_area_task[`users_${u}`]}
+        action_area_task[`users_0`] = true;
+    q = 1;
 }

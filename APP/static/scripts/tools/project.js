@@ -44,7 +44,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
                 'Content-Type': 'application/json'
             }
         }).then(
-            response => response_status(response)
+            window.location.replace("/tools")
         )
     }
     else{

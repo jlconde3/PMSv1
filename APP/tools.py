@@ -1,7 +1,7 @@
 
 from hashlib import sha256
 from common import MySQL, format_upper_case, format_dots, remove_spaces, format_mysql_list, format_actions_list
-from flask import render_template, Blueprint, request,g, Response
+from flask import render_template, Blueprint, request,g, Response, make_response
 from auth import login_required
 from flask.views import View
 from datetime import datetime
@@ -128,7 +128,7 @@ def create_project():
     (format_upper_case(remove_spaces(data['project_code'])),)) 
 
     if MySQL.cursor.fetchone() is not None:
-        return  Response(status=412)
+        return  Response(status=215)
 
     try:
         MySQL.cursor.execute(
@@ -282,37 +282,91 @@ def generate_wp_contracted_time (project, discipline,zone,type,station,subaction
         total_hours = hour + total_hours
     return total_hours
 
-
-def generate_wp_planned (vol,cpl) -> float:
+def generate_wp_planned_time (vol,cpl) -> float:
     return float (((vol+cpl)/10)+1)
 
+def validate_combination (project:str, discipline:str, phase:str, station:str, zone:str, action:str, area:str, task:str)->bool:
+    """
+    Check if a combination of project, discipline, phase, station, zone, action, area, task area unique.
+
+    Return True if combination is unique, False if it is repeated.
+    """
+    text_to_hash = f"{project}{discipline}{phase}{station}{zone}{action}{area}{task}"
+    id = sha256(text_to_hash.encode('utf-8')).hexdigest()
+
+    MySQL.cursor.execute('SELECT code FROM wp WHERE id_hash = %s',(id,))
+    check = MySQL.cursor.fetchall()
+
+    return True if check == [] else False
+
+
+
+def generate_wp_id(project:str, discipline:str, phase:str, station:str, zone:str, action:str, area:str, task:str)->str:
+    """
+    Generate a unique id for each combination.
+
+    Returns sha256 string.
+    """
+    text_to_hash = f"{project}{discipline}{phase}{station}{zone}{action}{area}{task}"
+    id = sha256(text_to_hash.encode('utf-8')).hexdigest()
+    return id
 
 @bp.route('/generate_wp', methods=['GET','POST'])
 def generate_wp():
     data = request.get_json()
+
+    project = data ['project']
+    discipline = data ['discipline']
+    phase = data ['phase']
+    zone = data ['zone']
+    wp_type = data ['wp_type']
+    station = data ['station']
+    actions_list = data ['actions']
+    areas_list = data ['areas']
+    tasks_list = data ['tasks']
+
+    for action, area, task in zip(actions_list,areas_list,tasks_list):
+        if validate_combination (project, discipline, phase, station, zone, action, area, task) is False:
+            print("Not unique")
+            unique = False
+            break
+        else:
+            unique = True
+            print("Unique")
+
+    if not unique:
+        response = make_response({
+        'project': project,
+        'discipline': discipline,
+        'phase':phase,
+        'station':station,
+        'zone':zone,
+        'action':action,
+        'area':area,
+        'task':task
+        }, 212)
+        return response
+        
+
     wp_code =  generate_wp_code()
-    wp_dif = generate_wp_dif(data['tasks'])
-    wp_vol = generate_wp_vol(data['areas'])
-    wp_cpl = generate_wp_cpl(data['areas'])
-    wp_time = generate_wp_contracted_time(
-        data['project'],
-        data['discipline'],
-        data['zone'],
-        data['type'],
-        data['station'],
-        data['actions'],
-        data['areas'],
-        data['tasks']            
-    )
-    return {
+    wp_dif = generate_wp_dif(tasks_list)
+    wp_vol = generate_wp_vol(areas_list)
+    wp_cpl = generate_wp_cpl(areas_list)
+    wp_time = generate_wp_contracted_time(project,discipline,zone, wp_type, station,actions_list, areas_list, tasks_list)
+
+    response = make_response({
         'wp_code': wp_code,
         'wp_dif': wp_dif,
         'wp_vol': wp_vol,
         'wp_cpl': wp_cpl,
         'wp_contracted_time': wp_time,
-        'wp_planned_time': wp_time*generate_wp_planned(wp_vol,wp_cpl)
-    }
-    
+        'wp_planned_time': generate_wp_planned_time(wp_vol, wp_cpl)*wp_time
+    }, 213)
+
+    return response
+                
+
+
 @bp.route('/user_level', methods=['GET','POST'])
 def user_level():
     data = request.get_json()
@@ -353,18 +407,25 @@ def validate_wp():
     users = data ['username']
     users_level = data ['user_level']
 
+    try:
+        for action, area, task in zip(actions_list, areas_list, tasks_list):
+            id_hash = generate_wp_id(project, discipline, phase, station, zone, action, area, task)
+            MySQL.cursor.execute("""
+            INSERT INTO wp(code,id_hash,project,discipline,phase,zone,type,station,action,area,
+            task,dif,vol,cpl,contacted_time,planned_time,scheduled_time)
+            VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
+            """,(wp_code,id_hash,project,discipline,phase,zone,wp_type,station,action,area,task,dif,vol,cpl,wp_contracted,wp_planned,wp_scheduled))
 
-    for area,task,action in zip(areas_list, tasks_list,actions_list):
-        text_to_hash = f"{project}{discipline}{phase}{station}{zone}{action}{area}{task}"
-        id = sha256(text_to_hash.encode('utf-8')).hexdigest()
-        print(id)
-        MySQL.cursor.execute('SELECT code FROM wp WHERE id_hash = %s',(id,))
-        check = MySQL.cursor.fetchall()
-        if check is not None:
-            return "Existe"
+        MySQL.con.commit()
+        return Response(status=211)
 
-        
-        return "Hola"
+    except MySQL.Error as e:
+        print(e)
+        return Response(status=411)
+
+
+
+
 
 
 

@@ -21,3 +21,16 @@ Not for production. First version and still development version.
 ### Limitations:
 
 - Inside a project all tasks must be uniques
+
+### Status
+
+- 211 -> Ok
+- 212 -> WP not unique
+- 213 -> WP unique
+- 214 ->  
+- 215 -> Project not unique 
+
+
+- 411 -> Error storage in Database
+
+
