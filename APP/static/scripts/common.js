@@ -166,20 +166,7 @@ function loader (){
     document.getElementById('loader_window').showModal();
 };
 
-function response_status(response){
 
-    if (response.status == 411){
-        alert('Try again!!');
-    }
-    else if (response.status == 215){
-        alert('That project exist already!!')
-    }
-    else{
-        alert('All data saved');
-        window.location.replace("/tools");
-    }
-
-};
 
 function retrive_list(parent_element){
     empty_list = []
