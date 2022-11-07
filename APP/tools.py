@@ -57,13 +57,6 @@ def phases ():
     ))
     return format_mysql_list(MySQL.cursor.fetchall())
 
-@bp.route('/types',methods=['GET','POST'])
-@login_required
-def types ():
-    data = request.get_json()
-    MySQL.cursor.execute('SELECT type FROM pms.types WHERE project = %s',(remove_spaces(format_upper_case(data['project_code'])),))
-    return format_mysql_list(MySQL.cursor.fetchall())
-
 @bp.route('/zones',methods=['GET','POST'])
 @login_required
 def zones ():
@@ -99,13 +92,33 @@ def actions ():
     ))
     return format_actions_list(MySQL.cursor.fetchall())
 
+@bp.route('/actions_stations',methods=['GET','POST'])
+@login_required
+def actions_stations ():
+    print("HolA!")
+    data = request.get_json()
+    MySQL.cursor.execute('SELECT DISTINCT station FROM pms.tasks WHERE project = %s AND discipline = %s AND line ="ACTIONS"',
+    (remove_spaces(format_upper_case(data['project_code'])),
+    remove_spaces(format_upper_case(data['discipline_code'])),
+    ))
+    return format_mysql_list(MySQL.cursor.fetchall())
+
+@bp.route('/lines',methods=['GET','POST'])
+@login_required
+def types ():
+    data = request.get_json()
+    MySQL.cursor.execute('SELECT DISTINCT line FROM pms.tasks WHERE project = %s AND discipline=%s',
+    (remove_spaces(format_upper_case(data['project_code'])), remove_spaces(format_upper_case(data['discipline_code']))))
+    return format_mysql_list(MySQL.cursor.fetchall())
+
 @bp.route('/stations',methods=['GET','POST'])
 @login_required
 def stations ():
     data = request.get_json()
-    MySQL.cursor.execute('SELECT DISTINCT station FROM pms.tasks WHERE project = %s AND discipline = %s',
+    MySQL.cursor.execute('SELECT DISTINCT station FROM pms.tasks WHERE project = %s AND discipline = %s AND line =%s',
     (remove_spaces(format_upper_case(data['project_code'])),
-    remove_spaces(format_upper_case(data['discipline_code']))
+    remove_spaces(format_upper_case(data['discipline_code'])),
+    remove_spaces(format_upper_case(data['wp_line']))
     ))
     return format_mysql_list(MySQL.cursor.fetchall())
 
@@ -113,9 +126,10 @@ def stations ():
 @login_required
 def tasks ():
     data = request.get_json()
-    MySQL.cursor.execute('SELECT DISTINCT task FROM pms.tasks WHERE project = %s AND discipline = %s AND station = %s',
+    MySQL.cursor.execute('SELECT DISTINCT task FROM pms.tasks WHERE project=%s AND discipline=%s AND line=%s AND station=%s',
     (remove_spaces(format_upper_case(data['project_code'])),
     remove_spaces(format_upper_case(data['discipline_code'])),
+    remove_spaces(format_upper_case(data['wp_line'])),
     remove_spaces(format_upper_case(data['station_code']))
     ))
     return format_mysql_list(MySQL.cursor.fetchall())
@@ -128,7 +142,6 @@ def users_projects():
     MySQL.cursor.execute('SELECT DISTINCT user FROM pms.users_projects WHERE project = %s',
     (remove_spaces(format_upper_case(data['project_code'])),))
     return format_mysql_list(MySQL.cursor.fetchall())
-
 
 @bp.route('/create_project', methods=['POST'])
 @login_required
@@ -311,8 +324,6 @@ def validate_combination (project:str, discipline:str, phase:str, station:str, z
 
     return True if check == [] else False
 
-
-
 def generate_wp_id(project:str, discipline:str, phase:str, station:str, zone:str, action:str, area:str, task:str)->str:
     """
     Generate a unique id for each combination.
@@ -332,7 +343,7 @@ def generate_wp():
     discipline = data ['discipline']
     phase = data ['phase']
     zone = data ['zone']
-    wp_type = data ['wp_type']
+    wp_line = data ['wp_line']
     station = data ['station']
     actions_list = data ['actions']
     areas_list = data ['areas']
@@ -365,7 +376,7 @@ def generate_wp():
     wp_dif = generate_wp_dif(tasks_list)
     wp_vol = generate_wp_vol(areas_list)
     wp_cpl = generate_wp_cpl(areas_list)
-    wp_time = generate_wp_contracted_time(project,discipline,zone, wp_type, station,actions_list, areas_list, tasks_list)
+    wp_time = generate_wp_contracted_time(project,discipline,zone, wp_line, station,actions_list, areas_list, tasks_list)
 
     response = make_response({
         'wp_code': wp_code,
@@ -406,7 +417,7 @@ def validate_wp():
     project = data ['project_code']
     discipline = data ['discipline_code']
     phase = data ['phase_code']
-    wp_type = data ['wp_type']
+    wp_line = data ['wp_line']
     station = data ['wp_station']
     zone = data ['wp_zone']
     actions_list = data ['task_action']
@@ -426,10 +437,10 @@ def validate_wp():
         for action, area, task in zip(actions_list, areas_list, tasks_list):
             id_hash = generate_wp_id(project, discipline, phase, station, zone, action, area, task)
             MySQL.cursor.execute("""
-            INSERT INTO wp(code,id_hash,project,discipline,phase,zone,type,station,action,area,
+            INSERT INTO wp(code,id_hash,project,discipline,phase,zone,line,station,action,area,
             task,dif,vol,cpl,contacted_time,planned_time,scheduled_time)
             VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
-            """,(wp_code,id_hash,project,discipline,phase,zone,wp_type,station,action,area,task,dif,vol,cpl,wp_contracted,wp_planned,wp_scheduled))
+            """,(wp_code,id_hash,project,discipline,phase,zone,wp_line,station,action,area,task,dif,vol,cpl,wp_contracted,wp_planned,wp_scheduled))
 
         for user in users:
             MySQL.cursor.execute("""INSERT INTO users_wp(user,project,wp,scheduled_time)VALUES(%s,%s,%s,%s)""",(user,project,wp_code,float(wp_scheduled)/len(users)))
@@ -443,10 +454,22 @@ def validate_wp():
         return Response(status=411)
 
 
+@bp.route('/action_area', methods=['GET','POST'])
+@login_required
+def action_area():
+    data = request.get_json()
+    project = data['project']
+    action = str (data['action'])
+    action_code = action.split('-')
+    
 
+    try:
+        MySQL.cursor.execute("""SELECT area FROM actions WHERE project =%s AND subaction_code =%s""", (project,action_code[0]))
+        area = MySQL.cursor.fetchone()[0]
+        response = make_response({'area':area}, 211)
+        return response
 
-
-
-
-
-
+    except MySQL.Error as e:
+        print(e)
+        response = make_response({'response':e}, 411)
+        return response

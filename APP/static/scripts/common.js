@@ -90,7 +90,6 @@ function element_name_value(element_name){
     return list_values;
 };
 
-
 function html_list(response,html_list){
     const container = document.getElementById(html_list);
     for (let i in response){
@@ -100,8 +99,9 @@ function html_list(response,html_list){
     }
 };
 
-function retrive_data(reload,data,url,input_id){
+function retrive_data(data,url,input_id){
     let list = document.getElementById(input_id).nextElementSibling;
+    delete_childs(list.id)
 
     fetch(url,{
         credentials: 'include',
@@ -110,15 +110,13 @@ function retrive_data(reload,data,url,input_id){
         headers:{'Content-Type': 'application/json'}
     })
     .then((response => response.json()))
-    .then( data => {
-        if (reload == true){
-            let container =  list
-            for (const option of data){
-                var content = document.createElement('option');
-                content.value = option;
-                content.innerHTML = option;
-                container.appendChild(content)
-            }
+    .then((data) => {
+        let container =  list
+        for (const option of data){
+            var content = document.createElement('option');
+            content.value = option;
+            content.innerHTML = option;
+            container.appendChild(content)
         }
     })
     .then(()=> display_select_input(input_id,list.id))
@@ -153,7 +151,6 @@ function display_select_input(input_id,datalist_id){
     })
 };
 
-
 function loader (){
     const container = document.getElementById('window');
     let dialog = document.createElement('dialog');
@@ -165,8 +162,6 @@ function loader (){
     container.appendChild(dialog);
     document.getElementById('loader_window').showModal();
 };
-
-
 
 function retrive_list(parent_element){
     empty_list = []
@@ -184,4 +179,41 @@ function reset_users_wp (j){
         delete action_area_task[`users_${u}`]}
         action_area_task[`users_0`] = true;
     q = 1;
+}
+
+function type_wp(value){
+    const area_field = document.getElementsByName('task_area');
+    const action_field = document.getElementsByName('task_action');
+
+    if (value != 'DESIGN'){
+        console.log(area_field)
+        for (i of area_field){
+            i.disabled = true;
+        }
+        for (i of action_field){
+            i.disabled = false;
+        }
+    }
+    else if (value == 'DESIGN'){
+        for (i of action_field){
+            i.disabled = true;
+        }
+        for (i of area_field){
+            i.disabled = false;
+        }
+    }
+}
+
+function area_action(action_id,area_id){
+    data = {
+        project:document.getElementById('project_code'),
+        action_code:document.getElementById(action_id)
+    }
+    fetch('/tools/action_area',{
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then((data) => {document.getElementById(area_id).value = data['aretuya']})
 }

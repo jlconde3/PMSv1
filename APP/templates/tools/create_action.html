@@ -18,6 +18,7 @@
     </div>
     <form autocomplete="off" method="post">
         <div class="border"></div>    
+
         <div class="group">
             <div>
                 <label>Project</label>
@@ -25,11 +26,22 @@
             <div class="fields-group">
                 <div class="dropdwn">
                     <label class="label-field" >Agresso Code</label><br>
-                    <input list="" id="project_code" class="input-2">
-                    <datalist id="projects"></datalist>
+                    <input list="" id="project_code" class="input-3">
+                    <datalist id="projects" class = "input-3"></datalist>
+                </div>
+                <div class="dropdwn">
+                    <label class = "label-field">Discipline</label><br>
+                    <input class = "input-3" type="text" id = "discipline_code">
+                    <datalist id="disciplines" class = "input-3"></datalist>
+                </div>
+                <div class="dropdwn">
+                    <label class = "label-field">Phase</label><br>
+                    <input class = "input-3" type="text" id = "phase_code">
+                    <datalist id="phases" class = "input-3"></datalist>
                 </div>
             </div>
         </div>
+
         <div class="border"></div>
         <div class="group">
             <div>
@@ -46,28 +58,12 @@
                     <datalist id="types" class = "input-3"></datalist>
                 </div>
                 <div>
-                    <label class = "label-field">Date</label><br>
+                    <label class = "label-field">Input date</label><br>
                     <input class = "input-3" type="date" id = "action_date">
                 </div>
             </div>
         </div>
-        <div class="group">
-            <div>
-                <label class = "label-title">Situation</label>
-            </div>
-            <div class="fields-group">
-                <div class="dropdwn">
-                    <label class = "label-field">Discipline</label><br>
-                    <input class = "input-2" type="text" id = "discipline_code">
-                    <datalist id="disciplines"></datalist>
-                </div>
-                <div class="dropdwn">
-                    <label class = "label-field">Phase</label><br>
-                    <input class = "input-2" type="text" id = "phase_code">
-                    <datalist id="phases"></datalist>
-                </div>
-            </div>
-        </div>
+
         <div class="border"></div>
         <div class="group align-top">
             <div>

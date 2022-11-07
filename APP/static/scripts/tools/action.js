@@ -1,64 +1,74 @@
 let j = 1;
-let projects = true;
-let types = true;
-let disciplines = true;
-let phases = true;
 
-let zones_area ={
-    'zones_0': true,
-    'areas_0':true,
-};
 document.getElementById('cancel_button').addEventListener('click',() => {
     window.location.replace("/tools");
 });
 
 document.getElementById('project_code').addEventListener('click',()=>{
     retrive_data(
-        reload = projects,
         data = {},
         url = '/tools/projects',
         input_id = 'project_code',
     )
-    projects = false;
-});
-
-document.getElementById('action_type').addEventListener('click',()=>{
-    retrive_data(
-        reload = types,
-        data = {'project_code': document.getElementById('project_code').value},
-        url = '/tools/types',
-        input_id = 'action_type',
-    )
-    types = false;   
 });
 
 document.getElementById('discipline_code').addEventListener('click',()=>{
     retrive_data(
-        reload = disciplines,
-        data = {'project_code': document.getElementById('project_code').value},
+        data = {project_code:document.getElementById('project_code').value},
         url = '/tools/disciplines',
         input_id = 'discipline_code',
     )
-    disciplines = false;   
 });
 
 document.getElementById('phase_code').addEventListener('click',()=>{
     retrive_data(
-        reload = phases,
         data = {
-            'project_code': document.getElementById('project_code').value,
-            'discipline_code': document.getElementById('discipline_code').value,
+            project_code:document.getElementById('project_code').value,
+            discipline_code:document.getElementById('discipline_code').value,
         },
         url = '/tools/phases',
         input_id = 'phase_code',
     )
-    phases = false;   
+});
+
+document.getElementById('action_type').addEventListener('click',()=>{
+    retrive_data(
+        data = {
+            project_code: document.getElementById('project_code').value,
+            discipline_code: document.getElementById('discipline_code').value,
+        },
+        url = '/tools/actions_stations',
+        input_id = 'action_type',
+    )
+});
+
+document.getElementById(`zone_0`).addEventListener('click',()=>{
+    retrive_data(
+        data = {
+            'project_code': document.getElementById('project_code').value,
+            'discipline_code': document.getElementById('discipline_code').value,
+            'phase_code':document.getElementById('phase_code').value
+        },
+        url = '/tools/zones',
+        input_id = 'zone_0',
+    )
+});
+
+document.getElementById(`area_0`).addEventListener('click',()=>{
+    retrive_data(
+        data = {
+            'project_code': document.getElementById('project_code').value,
+            'discipline_code': document.getElementById('discipline_code').value,
+            'phase_code':document.getElementById('phase_code').value,
+            'zone_code':document.getElementById('zone_0').value
+        },
+        url = '/tools/areas',
+        input_id = 'area_0',
+    )
 });
 
 document.getElementById('more_button').addEventListener('click',() => {
     let i = j;
-    zones_area[`zones_${i}`] = true;
-    zones_area[`areas_${i}`] = true;
 
     add_more('subactions',
     `
@@ -89,7 +99,6 @@ document.getElementById('more_button').addEventListener('click',() => {
 
     document.getElementById(`zone_${i}`).addEventListener('click',()=>{
         retrive_data(
-            reload = zones_area[`zones_${i}`],
             data = {
                 'project_code': document.getElementById('project_code').value,
                 'discipline_code': document.getElementById('discipline_code').value,
@@ -98,12 +107,10 @@ document.getElementById('more_button').addEventListener('click',() => {
             url = '/tools/zones',
             input_id = `zone_${i}`,
         )
-        zones_area[`zones_${i}`] = false;
     })
 
     document.getElementById(`area_${i}`).addEventListener('click',()=>{
         retrive_data(
-            reload = zones_area[`areas_${i}`],
             data = {
                 'project_code': document.getElementById('project_code').value,
                 'discipline_code': document.getElementById('discipline_code').value,
@@ -113,39 +120,11 @@ document.getElementById('more_button').addEventListener('click',() => {
             url = '/tools/areas',
             input_id = `area_${i}`,
         )
-        zones_area[`areas_${i}`] = false;
     })
     j++;
 });
 
-document.getElementById(`zone_0`).addEventListener('click',()=>{
-    retrive_data(
-        reload = zones_area['zones_0'],
-        data = {
-            'project_code': document.getElementById('project_code').value,
-            'discipline_code': document.getElementById('discipline_code').value,
-            'phase_code':document.getElementById('phase_code').value
-        },
-        url = '/tools/zones',
-        input_id = 'zone_0',
-    )
-    zones_area['zones_0'] = false;
-});
 
-document.getElementById(`area_0`).addEventListener('click',()=>{
-    retrive_data(
-        reload = zones_area['areas_0'],
-        data = {
-            'project_code': document.getElementById('project_code').value,
-            'discipline_code': document.getElementById('discipline_code').value,
-            'phase_code':document.getElementById('phase_code').value,
-            'zone_code':document.getElementById('zone_0').value
-        },
-        url = '/tools/areas',
-        input_id = 'area_0',
-    )
-    zones_area['areas_0'] = false;
-});
 
 document.getElementById('submit_button').addEventListener('click',() => {
     let i = 0;
