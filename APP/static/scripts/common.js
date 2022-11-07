@@ -50,8 +50,19 @@ function delete_childs(element_id){
     }
 }
 
-function delete_value(element_id){
-    document.getElementById(element_id).value=null;
+function delete_value(id_fields){
+    for (i of id_fields){
+        document.getElementById(i).value=null;
+    }
+};
+
+
+function delete_value_by_name(name_fields){
+    for (i of name_fields){
+        for (j of document.getElementsByName(i)){
+            j.value=null;
+        }
+    }
 };
 
 function add_more(parent_element,content){
@@ -99,7 +110,7 @@ function html_list(response,html_list){
     }
 };
 
-function retrive_data(data,url,input_id){
+function retrive_data(data,url,input_id,id_list,name_list){
     let list = document.getElementById(input_id).nextElementSibling;
     delete_childs(list.id)
 
@@ -119,10 +130,10 @@ function retrive_data(data,url,input_id){
             container.appendChild(content)
         }
     })
-    .then(()=> display_select_input(input_id,list.id))
+    .then(()=> display_select_input(input_id,list.id,id_list,name_list))
 };
 
-function display_select_input(input_id,datalist_id){
+function display_select_input(input_id,datalist_id,id_list,name_list){
     document.getElementById(datalist_id).style.display = 'block';
     var options = [...document.getElementById(datalist_id).options]
 
@@ -130,6 +141,8 @@ function display_select_input(input_id,datalist_id){
         item.addEventListener('click',()=>{
             document.getElementById(input_id).value = item.value;
             document.getElementById(datalist_id).style.display = 'none';
+            delete_value(id_list);
+            delete_value_by_name(name_list)
         },false)
     });
 
@@ -175,7 +188,6 @@ function reset_users_wp (j){
     delete_childs('validate_window')
     document.getElementById('validate_window').close();
     for (let u = 1; u<j+1; u++){
-        console.log(action_area_task)
         delete action_area_task[`users_${u}`]}
         action_area_task[`users_0`] = true;
     q = 1;
@@ -186,7 +198,6 @@ function type_wp(value){
     const action_field = document.getElementsByName('task_action');
 
     if (value != 'DESIGN'){
-        console.log(area_field)
         for (i of area_field){
             i.disabled = true;
         }
@@ -215,5 +226,6 @@ function area_action(action_id,area_id){
         body: JSON.stringify(data)
     })
     .then(response => response.json())
-    .then((data) => {document.getElementById(area_id).value = data['aretuya']})
+    .then((data) => {document.getElementById(area_id).value = data
+    })
 }

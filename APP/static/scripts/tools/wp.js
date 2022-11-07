@@ -6,8 +6,9 @@ document.getElementById('project_code').addEventListener('click',()=>{
         data = {},
         url = '/tools/projects',
         input_id = 'project_code',
+        id_list = ['discipline_code','phase_code','wp_line','wp_station','wp_zone'],
+        name_list = ['task_action','task_area','task_code']
     )
-    projects = false;
 });
 
 document.getElementById('discipline_code').addEventListener('click',()=>{
@@ -15,6 +16,8 @@ document.getElementById('discipline_code').addEventListener('click',()=>{
         data = {project_code: document.getElementById('project_code').value},
         url = '/tools/disciplines',
         input_id = 'discipline_code',
+        id_list = ['phase_code','wp_line','wp_station','wp_zone'],
+        name_list = ['task_action','task_area','task_code']
     )
 });
 
@@ -26,6 +29,8 @@ document.getElementById('phase_code').addEventListener('click',()=>{
         },
         url = '/tools/phases',
         input_id = 'phase_code',
+        id_list = ['wp_line','wp_station','wp_zone'],
+        name_list = ['task_action','task_area','task_code']
     )
 });
 
@@ -37,6 +42,8 @@ document.getElementById('wp_line').addEventListener('click', ()=>{
         },
         url = '/tools/lines',
         input_id = 'wp_line',
+        id_list = ['wp_station','wp_zone'],
+        name_list = ['task_action','task_area','task_code']
     )
 });
 
@@ -49,6 +56,8 @@ document.getElementById("wp_station").addEventListener('click',()=>{
         },
         url = '/tools/stations',
         input_id ="wp_station",
+        id_list = ['wp_zone'],
+        name_list = ['task_action','task_area','task_code']
     )
 });
 
@@ -61,6 +70,8 @@ document.getElementById('wp_zone').addEventListener('click',()=>{
         },
         url = '/tools/zones',
         input_id = 'wp_zone',
+        id_list = [],
+        name_list = ['task_action','task_area','task_code']
     )
 });
 
@@ -74,6 +85,8 @@ document.getElementById(`action_0`).addEventListener('click', async ()=>{
         },
         url = '/tools/actions',
         input_id = `action_0`,
+        id_list = [],
+        name_list = ['task_area_0','task_code_0']
     )
 })
 
@@ -87,6 +100,8 @@ document.getElementById(`area_0`).addEventListener('click',()=>{
         },
         url = '/tools/areas',
         input_id = `area_0`,
+        id_list = [],
+        name_list = []
     )
 })
 
@@ -100,6 +115,8 @@ document.getElementById(`task_0`).addEventListener('click',()=>{
         },
         url = '/tools/tasks',
         input_id = `task_0`,
+        id_list = [],
+        name_list = []
     )
 })
 
@@ -140,6 +157,8 @@ document.getElementById('more_button').addEventListener('click',() => {
             },
             url = '/tools/actions',
             input_id = `action_${i}`,
+            id_list = [],
+            name_list = [`task_area_${i}`,`task_code_${i}`]
         )
 
     });
@@ -154,6 +173,8 @@ document.getElementById('more_button').addEventListener('click',() => {
             },
             url = '/tools/areas',
             input_id = `area_${i}`,
+            id_list = [],
+            name_list = []
         )
     });
 
@@ -168,6 +189,8 @@ document.getElementById('more_button').addEventListener('click',() => {
             },
             url = '/tools/tasks',
             input_id = `task_${i}`,
+            id_list = [],
+            name_list = []
         )
     });
     j++;
@@ -375,6 +398,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
                                 },
                                 url = '/tools/users_projects',
                                 input_id = `user_${k}`,
+                                
                             )
                         });
                         q++
@@ -458,3 +482,5 @@ document.getElementById('submit_button').addEventListener('click',() => {
         alert("You left some fields empty!!")
     }
 });
+
+
