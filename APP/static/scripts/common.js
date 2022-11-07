@@ -130,7 +130,8 @@ function retrive_data(data,url,input_id,id_list,name_list){
             container.appendChild(content)
         }
     })
-    .then(()=> display_select_input(input_id,list.id,id_list,name_list))
+    .then(()=> {disabled_fields()})
+    .then(()=>{display_select_input(input_id,list.id,id_list,name_list)})
 };
 
 function display_select_input(input_id,datalist_id,id_list,name_list){
@@ -193,28 +194,6 @@ function reset_users_wp (j){
     q = 1;
 }
 
-function type_wp(value){
-    const area_field = document.getElementsByName('task_area');
-    const action_field = document.getElementsByName('task_action');
-
-    if (value != 'DESIGN'){
-        for (i of area_field){
-            i.disabled = true;
-        }
-        for (i of action_field){
-            i.disabled = false;
-        }
-    }
-    else if (value == 'DESIGN'){
-        for (i of action_field){
-            i.disabled = true;
-        }
-        for (i of area_field){
-            i.disabled = false;
-        }
-    }
-}
-
 function area_action(action_id,area_id){
     data = {
         project:document.getElementById('project_code'),
@@ -228,4 +207,24 @@ function area_action(action_id,area_id){
     .then(response => response.json())
     .then((data) => {document.getElementById(area_id).value = data
     })
+}
+
+
+function disabled_fields(){
+    if (document.getElementById('wp_line').value == 'DESIGN'){
+        for (i of document.getElementsByName('task_area')){
+            i.disabled = false;
+        }
+        for (i of document.getElementsByName('task_action')){
+            i.disabled = true;
+        }
+    }
+    else if (document.getElementById('wp_line').value == 'ACTIONS'){
+        for (i of document.getElementsByName('task_area')){
+            i.disabled = true;
+        }
+        for (i of document.getElementsByName('task_action')){
+            i.disabled = false;
+        }
+    }
 }

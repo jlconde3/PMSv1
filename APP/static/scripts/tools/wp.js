@@ -34,8 +34,8 @@ document.getElementById('phase_code').addEventListener('click',()=>{
     )
 });
 
-document.getElementById('wp_line').addEventListener('click', ()=>{
-    retrive_data(
+document.getElementById('wp_line').addEventListener('click', async ()=>{
+    await retrive_data(
         data = {
         project_code: document.getElementById('project_code').value,
         discipline_code: document.getElementById('discipline_code').value,
@@ -45,6 +45,7 @@ document.getElementById('wp_line').addEventListener('click', ()=>{
         id_list = ['wp_station','wp_zone'],
         name_list = ['task_action','task_area','task_code']
     )
+    await disabled_fields()
 });
 
 document.getElementById("wp_station").addEventListener('click',()=>{
@@ -160,10 +161,9 @@ document.getElementById('more_button').addEventListener('click',() => {
             id_list = [],
             name_list = [`task_area_${i}`,`task_code_${i}`]
         )
-
     });
-
-    document.getElementById(`area_${j}`).addEventListener('click',()=>{
+    
+    document.getElementById(`area_${i}`).addEventListener('click',()=>{
         retrive_data(
             data = {
                 project_code: document.getElementById('project_code').value,
@@ -301,8 +301,10 @@ document.getElementById('submit_button').addEventListener('click',() => {
 
     for (input of inputs){
         if (input.value.replace(/ /g,'') == ""){
-            input.style.border = "red solid 1px";
-            empty = true;
+            if (input.disabled == false){
+                input.style.border = "red solid 1px";
+                empty = true;
+            }
         }
         else{
             input.style.border = "#EAEAEA solid 1px";
@@ -483,4 +485,24 @@ document.getElementById('submit_button').addEventListener('click',() => {
     }
 });
 
+function disabled_fields(){
+    console.log(9)
+    if (document.getElementById('wp_line').value == 'DESIGN'){
+        for (i of document.getElementsByName('task_area')){
+            i.disabled = false;
+        }
+        for (i of document.getElementsByName('task_action')){
+            i.disabled = true;
+        }
+    }
+    else{
+        for (i of document.getElementsByName('task_area')){
+            i.disabled = true;
+        }
+        for (i of document.getElementsByName('task_action')){
+            i.disabled = false;
+        }
+
+    }
+}
 
