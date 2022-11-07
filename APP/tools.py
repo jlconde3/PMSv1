@@ -310,13 +310,16 @@ def generate_wp_contracted_time (project, discipline,zone,type,station,subaction
 def generate_wp_planned_time (vol,cpl) -> float:
     return float (((vol+cpl)/10)+1)
 
-def validate_combination (project:str, discipline:str, phase:str, station:str, zone:str, action:str, area:str, task:str)->bool:
+def validate_combination (project:str, discipline:str, phase:str,wp_line:str, station:str, zone:str, action:str, area:str, task:str)->bool:
     """
     Check if a combination of project, discipline, phase, station, zone, action, area, task area unique.
 
     Return True if combination is unique, False if it is repeated.
     """
-    text_to_hash = f"{project}{discipline}{phase}{station}{zone}{action}{area}{task}"
+    if wp_line == "DESIGN":
+        text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{task}"
+    elif wp_line == "ACTIONS":
+        text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{action}{task}"
     id = sha256(text_to_hash.encode('utf-8')).hexdigest()
 
     MySQL.cursor.execute('SELECT code FROM wp WHERE id_hash = %s',(id,))
@@ -324,13 +327,17 @@ def validate_combination (project:str, discipline:str, phase:str, station:str, z
 
     return True if check == [] else False
 
-def generate_wp_id(project:str, discipline:str, phase:str, station:str, zone:str, action:str, area:str, task:str)->str:
+def generate_wp_id(project:str, discipline:str, phase:str, wp_line:str,station:str, zone:str, action:str, area:str, task:str)->str:
     """
     Generate a unique id for each combination.
 
     Returns sha256 string.
     """
-    text_to_hash = f"{project}{discipline}{phase}{station}{zone}{action}{area}{task}"
+
+    if wp_line == "DESIGN":
+        text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{task}"
+    elif wp_line == "ACTIONS":
+        text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{action}{task}"
     id = sha256(text_to_hash.encode('utf-8')).hexdigest()
     return id
 
@@ -350,7 +357,7 @@ def generate_wp():
     tasks_list = data ['tasks']
 
     for action, area, task in zip(actions_list,areas_list,tasks_list):
-        if validate_combination (project, discipline, phase, station, zone, action, area, task) is False:
+        if validate_combination (project, discipline, phase, wp_line,station, zone, area, action, task) is False:
             print("Not unique")
             unique = False
             break
@@ -359,17 +366,33 @@ def generate_wp():
             print("Unique")
 
     if not unique:
-        response = make_response({
-        'project': project,
-        'discipline': discipline,
-        'phase':phase,
-        'station':station,
-        'zone':zone,
-        'action':action,
-        'area':area,
-        'task':task
-        }, 212)
-        return response
+        if wp_line == "DESIGN":
+            response = make_response({
+            'project': project,
+            'discipline': discipline,
+            'phase':phase,
+            'wp_line':wp_line,
+            'station':station,
+            'zone':zone,
+            'action':"",
+            'area':area,
+            'task':task
+            }, 212)
+            return response
+        elif wp_line == "ACTIONS":
+            response = make_response({
+            'project': project,
+            'discipline': discipline,
+            'phase':phase,
+            'wp_line':wp_line,
+            'station':station,
+            'zone':zone,
+            'action':action,
+            'area':area,
+            'task':task
+            }, 212)
+            return response
+
         
 
     wp_code =  generate_wp_code()
