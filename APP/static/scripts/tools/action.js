@@ -5,45 +5,53 @@ document.getElementById('cancel_button').addEventListener('click',() => {
 });
 
 document.getElementById('project_code').addEventListener('click',()=>{
-    retrive_data(
+    retrive_data_actions(
         data = {},
         url = '/tools/projects',
         input_id = 'project_code',
+        id_list = ['discipline_code','phase_code'],
+        name_list = []
     )
 });
 
 document.getElementById('discipline_code').addEventListener('click',()=>{
-    retrive_data(
+    retrive_data_actions(
         data = {project_code:document.getElementById('project_code').value},
         url = '/tools/disciplines',
         input_id = 'discipline_code',
+        id_list = ['phase_code'],
+        name_list = []
     )
 });
 
 document.getElementById('phase_code').addEventListener('click',()=>{
-    retrive_data(
+    retrive_data_actions(
         data = {
             project_code:document.getElementById('project_code').value,
             discipline_code:document.getElementById('discipline_code').value,
         },
         url = '/tools/phases',
         input_id = 'phase_code',
+        id_list = [],
+        name_list = []
     )
 });
 
 document.getElementById('action_type').addEventListener('click',()=>{
-    retrive_data(
+    retrive_data_actions(
         data = {
             project_code: document.getElementById('project_code').value,
             discipline_code: document.getElementById('discipline_code').value,
         },
         url = '/tools/actions_stations',
         input_id = 'action_type',
+        id_list = [],
+        name_list = []
     )
 });
 
 document.getElementById(`zone_0`).addEventListener('click',()=>{
-    retrive_data(
+    retrive_data_actions(
         data = {
             'project_code': document.getElementById('project_code').value,
             'discipline_code': document.getElementById('discipline_code').value,
@@ -51,11 +59,13 @@ document.getElementById(`zone_0`).addEventListener('click',()=>{
         },
         url = '/tools/zones',
         input_id = 'zone_0',
+        id_list = [],
+        name_list = []
     )
 });
 
 document.getElementById(`area_0`).addEventListener('click',()=>{
-    retrive_data(
+    retrive_data_actions(
         data = {
             'project_code': document.getElementById('project_code').value,
             'discipline_code': document.getElementById('discipline_code').value,
@@ -64,6 +74,8 @@ document.getElementById(`area_0`).addEventListener('click',()=>{
         },
         url = '/tools/areas',
         input_id = 'area_0',
+        id_list = [],
+        name_list = []
     )
 });
 
@@ -98,7 +110,7 @@ document.getElementById('more_button').addEventListener('click',() => {
     `);
 
     document.getElementById(`zone_${i}`).addEventListener('click',()=>{
-        retrive_data(
+        retrive_data_actions(
             data = {
                 'project_code': document.getElementById('project_code').value,
                 'discipline_code': document.getElementById('discipline_code').value,
@@ -106,11 +118,13 @@ document.getElementById('more_button').addEventListener('click',() => {
             },
             url = '/tools/zones',
             input_id = `zone_${i}`,
+            id_list = [],
+            name_list = []
         )
     })
 
     document.getElementById(`area_${i}`).addEventListener('click',()=>{
-        retrive_data(
+        retrive_data_actions(
             data = {
                 'project_code': document.getElementById('project_code').value,
                 'discipline_code': document.getElementById('discipline_code').value,
@@ -119,6 +133,8 @@ document.getElementById('more_button').addEventListener('click',() => {
             },
             url = '/tools/areas',
             input_id = `area_${i}`,
+            id_list = [],
+            name_list = []
         )
     })
     j++;

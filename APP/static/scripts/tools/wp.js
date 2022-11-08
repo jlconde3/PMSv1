@@ -353,6 +353,8 @@ document.getElementById('submit_button').addEventListener('click',() => {
                             },
                             url = '/tools/users_projects',
                             input_id = `user_0`,
+                            id_list = ['user_level_0'],
+                            name_list = []
                         )
                     })
                     
@@ -400,6 +402,8 @@ document.getElementById('submit_button').addEventListener('click',() => {
                                 },
                                 url = '/tools/users_projects',
                                 input_id = `user_${k}`,
+                                id_list = [`user_level_${k}`],
+                                name_list = []
                                 
                             )
                         });

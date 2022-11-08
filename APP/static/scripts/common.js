@@ -211,6 +211,7 @@ function area_action(action_id,area_id){
 
 
 function disabled_fields(){
+    
     if (document.getElementById('wp_line').value == 'DESIGN'){
         for (i of document.getElementsByName('task_area')){
             i.disabled = false;
@@ -227,4 +228,28 @@ function disabled_fields(){
             i.disabled = false;
         }
     }
+    
 }
+
+function retrive_data_actions(data,url,input_id,id_list,name_list){
+    let list = document.getElementById(input_id).nextElementSibling;
+    delete_childs(list.id)
+
+    fetch(url,{
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers:{'Content-Type': 'application/json'}
+    })
+    .then((response => response.json()))
+    .then((data) => {
+        let container =  list
+        for (const option of data){
+            var content = document.createElement('option');
+            content.value = option;
+            content.innerHTML = option;
+            container.appendChild(content)
+        }
+    })
+    .then(()=>{display_select_input(input_id,list.id,id_list,name_list)})
+};
