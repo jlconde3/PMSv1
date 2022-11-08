@@ -334,7 +334,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
         ).then(response => {
             if (response.status == 212 ){
                 response.json().then(data => 
-                    {alert('This combination has been created previously:'+ `${data.zone}`)}
+                    {alert('This combination has been created previously:'+ `${data.area}-${data.task}`)}
             )}
             else if(response.status == 213){
                 response.json().then(data => {
@@ -486,7 +486,6 @@ document.getElementById('submit_button').addEventListener('click',() => {
 });
 
 function disabled_fields(){
-    console.log(9)
     if (document.getElementById('wp_line').value == 'DESIGN'){
         for (i of document.getElementsByName('task_area')){
             i.disabled = false;
@@ -502,7 +501,6 @@ function disabled_fields(){
         for (i of document.getElementsByName('task_action')){
             i.disabled = false;
         }
-
     }
 }
 

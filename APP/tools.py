@@ -95,7 +95,6 @@ def actions ():
 @bp.route('/actions_stations',methods=['GET','POST'])
 @login_required
 def actions_stations ():
-    print("HolA!")
     data = request.get_json()
     MySQL.cursor.execute('SELECT DISTINCT station FROM pms.tasks WHERE project = %s AND discipline = %s AND line ="ACTIONS"',
     (remove_spaces(format_upper_case(data['project_code'])),
@@ -138,7 +137,6 @@ def tasks ():
 @login_required
 def users_projects():
     data = request.get_json()
-    print(data)
     MySQL.cursor.execute('SELECT DISTINCT user FROM pms.users_projects WHERE project = %s',
     (remove_spaces(format_upper_case(data['project_code'])),))
     return format_mysql_list(MySQL.cursor.fetchall())
@@ -289,14 +287,16 @@ def get_project_hours(project):
     return float(MySQL.cursor.fetchone()[0])
 
 def get_subaction_hours(subaction):
-    MySQL.cursor.execute('SELECT time FROM projects WHERE subaction_code=%s',
-    (subaction),)
+    MySQL.cursor.execute('SELECT time FROM actions WHERE subaction_code=%s',
+    (subaction,))
     return float(MySQL.cursor.fetchone()[0])
 
 
-def generate_wp_contracted_time (project, discipline,zone,type,station,subactions:list,areas:list, tasks:list) -> float:
+def generate_wp_contracted_time (project, discipline, wp_line, station, zone, areas:list, subactions:list, tasks:list) -> float:
+
     total_hours = 0
-    if type == "DESIGN":
+
+    if wp_line == "DESIGN":
         for area, task in zip(areas, tasks):
             hour = get_project_hours(project)*get_weights_areas(project,discipline,zone,area)*get_weights_tasks(project,discipline,station,task)
             total_hours = hour + total_hours
@@ -305,39 +305,34 @@ def generate_wp_contracted_time (project, discipline,zone,type,station,subaction
     for subaction, task in zip(subactions, tasks):
         hour = get_subaction_hours(subaction)*get_weights_tasks(project,discipline,station,task)
         total_hours = hour + total_hours
+
     return total_hours
 
 def generate_wp_planned_time (vol,cpl) -> float:
     return float (((vol+cpl)/10)+1)
 
-def validate_combination (project:str, discipline:str, phase:str,wp_line:str, station:str, zone:str, action:str, area:str, task:str)->bool:
+def validate_combination (project:str, discipline:str, phase:str,wp_line:str, station:str, zone:str, area:str, action:str, task:str)->bool:
     """
-    Check if a combination of project, discipline, phase, station, zone, action, area, task area unique.
+    Check if a combination of project, discipline, phase, wp_line, station, zone, area, action, task area unique.
 
     Return True if combination is unique, False if it is repeated.
     """
-    if wp_line == "DESIGN":
-        text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{task}"
-    elif wp_line == "ACTIONS":
-        text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{action}{task}"
+
+    text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{action}{task}"
     id = sha256(text_to_hash.encode('utf-8')).hexdigest()
 
-    MySQL.cursor.execute('SELECT code FROM wp WHERE id_hash = %s',(id,))
+    MySQL.cursor.execute('SELECT * FROM wp WHERE id_hash = %s',(id,))
     check = MySQL.cursor.fetchall()
-
     return True if check == [] else False
 
-def generate_wp_id(project:str, discipline:str, phase:str, wp_line:str,station:str, zone:str, action:str, area:str, task:str)->str:
+def generate_wp_id(project:str, discipline:str, phase:str, wp_line:str,station:str, zone:str, area:str, action:str, task:str)->str:
     """
     Generate a unique id for each combination.
 
     Returns sha256 string.
     """
 
-    if wp_line == "DESIGN":
-        text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{task}"
-    elif wp_line == "ACTIONS":
-        text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{action}{task}"
+    text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{action}{task}"
     id = sha256(text_to_hash.encode('utf-8')).hexdigest()
     return id
 
@@ -345,72 +340,110 @@ def generate_wp_id(project:str, discipline:str, phase:str, wp_line:str,station:s
 @login_required
 def generate_wp():
     data = request.get_json()
-
     project = data ['project']
     discipline = data ['discipline']
     phase = data ['phase']
     zone = data ['zone']
     wp_line = data ['wp_line']
     station = data ['station']
-    actions_list = data ['actions']
-    areas_list = data ['areas']
+    areas_list = []
+    actions_list = []
     tasks_list = data ['tasks']
 
-    for action, area, task in zip(actions_list,areas_list,tasks_list):
-        if validate_combination (project, discipline, phase, wp_line,station, zone, area, action, task) is False:
-            print("Not unique")
-            unique = False
-            break
-        else:
-            unique = True
-            print("Unique")
+    if wp_line == "DESIGN":
 
-    if not unique:
-        if wp_line == "DESIGN":
+        areas_list = data ['areas']
+
+        for area, task in zip(areas_list,tasks_list):
+            if validate_combination (project, discipline, phase,
+                                    wp_line, station, zone, area, "", task) is False:
+                print("Not unique")
+                unique = False
+                break
+            else:
+                print("Unique")
+                unique = True
+
+        if not unique:
             response = make_response({
-            'project': project,
-            'discipline': discipline,
-            'phase':phase,
-            'wp_line':wp_line,
-            'station':station,
-            'zone':zone,
-            'action':"",
-            'area':area,
-            'task':task
-            }, 212)
-            return response
-        elif wp_line == "ACTIONS":
-            response = make_response({
-            'project': project,
-            'discipline': discipline,
-            'phase':phase,
-            'wp_line':wp_line,
-            'station':station,
-            'zone':zone,
-            'action':action,
             'area':area,
             'task':task
             }, 212)
             return response
 
-        
+        wp_code =  generate_wp_code()
+        wp_dif = generate_wp_dif(tasks_list)
+        wp_vol = generate_wp_vol(areas_list)
+        wp_cpl = generate_wp_cpl(areas_list)
+        wp_time = generate_wp_contracted_time(project, discipline, wp_line, station, zone, areas_list, [], tasks_list)
 
-    wp_code =  generate_wp_code()
-    wp_dif = generate_wp_dif(tasks_list)
-    wp_vol = generate_wp_vol(areas_list)
-    wp_cpl = generate_wp_cpl(areas_list)
-    wp_time = generate_wp_contracted_time(project,discipline,zone, wp_line, station,actions_list, areas_list, tasks_list)
-
-    response = make_response({
+        response = make_response({
         'wp_code': wp_code,
         'wp_dif': wp_dif,
         'wp_vol': wp_vol,
         'wp_cpl': wp_cpl,
         'wp_contracted_time': wp_time,
         'wp_planned_time': generate_wp_planned_time(wp_vol, wp_cpl)*wp_time
-    }, 213)
+        }, 213)
 
-    return response
+        return response
+
+    if wp_line == "ACTIONS":
+
+        actions_list = data ['actions']
+        subaction_list = []
+
+        for i in actions_list:
+            subaction = i.split('-')
+            subaction_list.append(subaction[0])
+            MySQL.cursor.execute('SELECT area FROM actions WHERE project =%s AND subaction_code = %s',(data['project'], subaction[0]))
+            area = (MySQL.cursor.fetchone())
+            areas_list.append(area[0])
+
+        print(areas_list)
+        print(subaction_list)
+    
+        for area,action, task in zip(areas_list,subaction_list,tasks_list):
+            if validate_combination (project, discipline, phase, wp_line, station, zone, area, action, task) is False:
+                print("Not unique")
+                unique = False
+                break
+            else:
+                print("Unique")
+                unique = True
+
+        if not unique:
+            response = make_response({
+            'area':area,
+            'task':task
+            }, 212)
+            return response
+
+        wp_code =  generate_wp_code()
+        wp_dif = generate_wp_dif(tasks_list)
+        wp_vol = generate_wp_vol(areas_list)
+        wp_cpl = generate_wp_cpl(areas_list)
+        wp_time = generate_wp_contracted_time(project, discipline, wp_line, station, zone, areas_list, subaction_list, tasks_list)
+
+        response = make_response({
+        'wp_code': wp_code,
+        'wp_dif': wp_dif,
+        'wp_vol': wp_vol,
+        'wp_cpl': wp_cpl,
+        'wp_contracted_time': wp_time,
+        'wp_planned_time': generate_wp_planned_time(wp_vol, wp_cpl)*wp_time
+        }, 213)
+
+        return response
+    
+
+
+
+
+
+
+
+
                 
 
 
@@ -458,7 +491,7 @@ def validate_wp():
 
     try:
         for action, area, task in zip(actions_list, areas_list, tasks_list):
-            id_hash = generate_wp_id(project, discipline, phase, station, zone, action, area, task)
+            id_hash = generate_wp_id(project, discipline, phase, wp_line, station, zone, area, action, task)
             MySQL.cursor.execute("""
             INSERT INTO wp(code,id_hash,project,discipline,phase,zone,line,station,action,area,
             task,dif,vol,cpl,contacted_time,planned_time,scheduled_time)
