@@ -437,16 +437,6 @@ def generate_wp():
         return response
     
 
-
-
-
-
-
-
-
-                
-
-
 @bp.route('/user_level', methods=['GET','POST'])
 @login_required
 def user_level():

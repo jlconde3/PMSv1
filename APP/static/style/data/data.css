@@ -16,13 +16,26 @@ th{
     font-weight: bold;
 }
 
-td,tr{
-    width: auto;
+td,th{
+    width: 20%;
     height: 50px;
     border-bottom:  #d5d5d5 solid 1px;
     border-collapse: collapse;
     text-align: left;
 }
+
+.info-button{
+    height: 51px;
+    background-color: transparent;
+    border: none;
+    border-bottom :#d5d5d5 solid 1px;
+    cursor: pointer;
+}
+
+.info-button:hover{
+    opacity: 50%;
+}
+
 
 .color-main{
     background-color: white;

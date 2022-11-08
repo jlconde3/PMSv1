@@ -14,6 +14,6 @@ def main():
 @bp.route('/wp', methods=['GET'])
 @login_required
 def wp():
-    MySQL.cursor.execute('SELECT project,code, status,scheduled_time FROM wp')
+    MySQL.cursor.execute('SELECT DISTINCT project,wp,status,scheduled_time,user FROM users_wp')
     data = MySQL.cursor.fetchall()
     return data
