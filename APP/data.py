@@ -1,6 +1,6 @@
 from flask import (render_template, Blueprint)
-from auth import login_required
-from common import MySQL
+from APP.auth import login_required
+from APP.common import MySQL
 
 
 bp = Blueprint('data', __name__, url_prefix='/data')
@@ -10,10 +10,3 @@ bp = Blueprint('data', __name__, url_prefix='/data')
 def main():
     return render_template('/data/home.html')
 
-
-@bp.route('/wp', methods=['GET'])
-@login_required
-def wp():
-    MySQL.cursor.execute('SELECT DISTINCT project,wp,status,scheduled_time,user FROM users_wp')
-    data = MySQL.cursor.fetchall()
-    return data
