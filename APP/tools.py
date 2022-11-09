@@ -1,8 +1,8 @@
 
 from hashlib import sha256
-from APP.common import MySQL, format_upper_case, format_dots, remove_spaces, format_mysql_list, format_actions_list
+from common import MySQL, format_upper_case, format_dots, remove_spaces, format_mysql_list, format_actions_list
 from flask import render_template, Blueprint, request,g, Response, make_response
-from APP.auth import login_required
+from auth import login_required
 from flask.views import View
 from datetime import datetime
 

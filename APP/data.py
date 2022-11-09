@@ -1,6 +1,6 @@
 from flask import (render_template, Blueprint)
-from APP.auth import login_required
-from APP.common import MySQL
+from auth import login_required
+from common import MySQL
 
 
 bp = Blueprint('data', __name__, url_prefix='/data')
