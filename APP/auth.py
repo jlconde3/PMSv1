@@ -2,7 +2,7 @@ import functools
 
 from flask import (render_template, Blueprint, redirect, url_for, request, session, g)
 from hashlib import sha256
-from APP.common import MySQL
+from common import MySQL
 
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
