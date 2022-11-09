@@ -16,7 +16,7 @@ def check_password_hash (user_password:str,input_password:str):
 @bp.route('/login', methods=('GET', 'POST'))
 def login_user ():
     if request.method == 'POST':
-        username = request.form['username']
+        username = request.form['username'].upper()
         password = request.form['password']
         error = None
 

@@ -32,5 +32,3 @@ def create_app(test_config=None):
 
     return app
 
-
-app_run = create_app()
