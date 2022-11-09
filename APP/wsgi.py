@@ -1,14 +1,13 @@
-import imp
 import os 
 import sys
 
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, redirect, url_for
 
 def create_app(test_config=None):
 
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        SECRET_KEY='dev',
+        SECRET_KEY='7NN@j14wh*5B',
     )
 
     if test_config is None:
@@ -22,13 +21,16 @@ def create_app(test_config=None):
     def init ():
         return redirect(url_for('tools./'))
 
-    import auth
+    from APP import auth
     app.register_blueprint(auth.bp)
-    import data
+    from APP import data
     app.register_blueprint(data.bp)
-    import tools
+    from APP import tools
     app.register_blueprint(tools.bp)
-    import user
+    from APP import user
     app.register_blueprint(user.bp)
 
     return app
+
+
+app_run = create_app()

@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, request
-from auth import login_required
+from APP.auth import login_required
 from flask.views import View
 
 bp = Blueprint('user', __name__, url_prefix='/user')
