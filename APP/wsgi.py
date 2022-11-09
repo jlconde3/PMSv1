@@ -21,13 +21,13 @@ def create_app(test_config=None):
     def init ():
         return redirect(url_for('tools./'))
 
-    from APP import auth
+    import auth
     app.register_blueprint(auth.bp)
-    from APP import data
+    import data
     app.register_blueprint(data.bp)
-    from APP import tools
+    import tools
     app.register_blueprint(tools.bp)
-    from APP import user
+    import user
     app.register_blueprint(user.bp)
 
     return app
