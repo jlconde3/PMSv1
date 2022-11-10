@@ -2,7 +2,7 @@ import functools
 
 from flask import (render_template, Blueprint, redirect, url_for, request, session, g)
 from hashlib import sha256
-from common import MySQL
+from common import MySQLHelper
 
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -19,9 +19,10 @@ def login_user ():
         username = request.form['username'].upper()
         password = request.form['password']
         error = None
-
+        MySQL = MySQLHelper()
         MySQL.cursor.execute('SELECT * FROM users WHERE user = %s ORDER BY id DESC LIMIT 1', (username,))
         user = MySQL.cursor.fetchone()
+        MySQL.con.close()
 
         if user is None:
             error = 'Incorrect username'

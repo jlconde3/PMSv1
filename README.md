@@ -29,7 +29,7 @@ Not for production. First version and still development version.
 - 213 -> WP unique
 - 214 ->  
 - 215 -> Project not unique 
-
+- 216 -> Incorrect input values
 
 - 411 -> Error storage in Database
 

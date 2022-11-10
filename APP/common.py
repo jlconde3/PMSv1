@@ -29,8 +29,6 @@ class MySQLHelper(object):
         self.cursor = self.con.cursor(buffered=True)
         self.Error = Error
 
-MySQL = MySQLHelper()
-
 
 def format_upper_case (data:str)->str:
     '''

@@ -1,13 +1,13 @@
 main{
     display: flex;
     width: 100%;
-    min-width: 800px;
+    min-width: 970px;
     justify-content: space-around;
 }
 
 .tool-card{
+    padding: 20px;
     min-height: 400px;
-    padding: 2%;
     border: #dbdbdb solid 1px;
     background-color: white;
     width: 250px;
