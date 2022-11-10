@@ -40,25 +40,9 @@ def format_upper_case (data:str)->str:
     '''
     return data.upper()
 
-def format_dots (data:str)->str:
-    ''' 
-    replace commas for dots in numeric strings.
+x
 
-    :param data: string to format.
-    
-    Returns format string.
-    '''
-    return data.replace(',','.')
 
-def remove_spaces (data:str)->str:
-    ''' 
-    Remove non-informative white space from strings.
-
-    :param data: string to format.
-    
-    Returns format string.
-    '''
-    return data.replace(" ","")
 
 
 def format_mysql_list(list:list)->list:

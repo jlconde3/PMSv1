@@ -477,12 +477,15 @@ def generate_wp():
 
             actions_list = data ['actions']
             subaction_list = []
+            MySQL = MySQLHelper()
 
             for i in actions_list:
                 subaction = i.split('-')
                 subaction_list.append(subaction[0])
+
                 MySQL.cursor.execute('SELECT area FROM actions WHERE project =%s AND subaction_code = %s',(data['project'], subaction[0]))
                 area = (MySQL.cursor.fetchone())
+
                 areas_list.append(area[0])
         
             for area,action, task in zip(areas_list,subaction_list,tasks_list):
@@ -515,6 +518,8 @@ def generate_wp():
             'wp_contracted_time': wp_time,
             'wp_planned_time': generate_wp_planned_time(wp_vol, wp_cpl)*wp_time
             }, 213)
+            
+            MySQL.con.close()
 
             return response
 
