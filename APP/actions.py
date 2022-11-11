@@ -34,7 +34,7 @@ def generate_action_subaction_code (MySQL) -> str:
 @bp.route('/create', methods=['POST'])
 @login_required
 def create_action():
-    data = request.is_json
+    data = request.form['project_code']
     print(data)
     """
     project = InputClass(data['project_code'])

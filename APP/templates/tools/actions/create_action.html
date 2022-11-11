@@ -14,7 +14,7 @@
         <button class = "black-button"type = "submit" id = "submit_button"  form="action" >Submit</button>
         <button class = "white-button"type = "submit" id = "cancel_button">Cancel</button>
     </div>
-    <form autocomplete="off" method="post" action="/actions/create" id="action">
+    <form id="action" autocomplete="off" method="post" action="/actions/create" >
         <div class="border"></div>    
         <div class="group">
             <div>
@@ -22,23 +22,22 @@
             </div>
             <div class="fields-group">
                 <div class="dropdwn">
-                    <label class="label-field" >Agresso Code</label><br>
-                    <input type="text" id="project_code" class="input-3" required>
+                    <label class="label-field">Agresso Code</label><br>
+                    <input name="project_code" class="input-3" type="text" minlength="2" maxlength="8" required>
                     <datalist id="projects" class = "input-3"></datalist>
                 </div>
                 <div class="dropdwn">
                     <label class = "label-field">Discipline</label><br>
-                    <input class = "input-3" type="text" id = "discipline_code">
-                    <datalist id="disciplines" class = "input-3"></datalist>
+                    <input name="discipline_code" class="input-3" type="text"  minlength="2" maxlength="10" required>
+                    <datalist id="disciplines" class="input-3"></datalist>
                 </div>
                 <div class="dropdwn">
-                    <label class = "label-field">Phase</label><br>
-                    <input class = "input-3" type="text" id = "phase_code">
+                    <label class="label-field">Phase</label><br>
+                    <input name="phase_code" class="input-3" type="text" minlength="2" maxlength="5" required>
                     <datalist id="phases" class = "input-3"></datalist>
                 </div>
             </div>
         </div>
-
         <div class="border"></div>
         <div class="group">
             <div>
@@ -47,20 +46,19 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Customer code</label><br>
-                    <input class = "input-3" type="text" id = "customer_code">
+                    <input name="customer_code" class = "input-3" type="text" minlength="2" maxlength="20">
                 </div>
                 <div class="dropdwn">
                     <label class = "label-field">Type</label><br>
-                    <input class = "input-3" type="text" id = "action_type">
+                    <input name="action_type" class = "input-3" type="text" minlength="2" maxlength="8" required>
                     <datalist id="types" class = "input-3"></datalist>
                 </div>
                 <div>
                     <label class = "label-field">Input date</label><br>
-                    <input class = "input-3" type="date" id = "action_date">
+                    <input name="action_date" class = "input-3" type="date" minlength="8" maxlength="8" required>
                 </div>
             </div>
         </div>
-
         <div class="border"></div>
         <div class="group align-top">
             <div>
@@ -69,7 +67,7 @@
             <div>
                 <label class = "label-field">Description</label><br>
                 <div class = "description">
-                    <textarea class = "input-text"  type="text" id = "action_description" maxlength="200"></textarea>
+                    <textarea name="action_description" class = "input-text"  type="text" maxlength="200"></textarea>
                     <div id="the-count">
                         <span id="current">0</span>
                         <span id="maximum">/ 200</span>
@@ -86,21 +84,21 @@
                 <div class="fields-group">
                     <div>
                         <label class = "label-field">Custom code</label><br>
-                        <input class = "input-4" type="text" name = "custom_code">
+                        <input name = "custom_code" class = "input-4" type="text" minlength="2" maxlength="20">
                     </div>
                     <div class="dropdwn">
                         <label class = "label-field">Zone</label><br>
-                        <input class = "input-4" type="text" name = "subaction_zone" id= "zone_0">
+                        <input name = "subaction_zone" id= "zone_0" class = "input-4" type="text" minlength="2" maxlength="20" required>
                         <datalist id="zones_0" class = "input-4"></datalist>
                     </div>
                     <div class="dropdwn">
                         <label class = "label-field">Area</label><br>
-                        <input class = "input-4" type="text" name = "subaction_area" id= "area_0">
+                        <input name = "subaction_area" id= "area_0" class = "input-4" type="text" minlength="2" maxlength="20" required>
                         <datalist id="areas_0" class = "input-4"></datalist>
                     </div>
                     <div>
                         <label class = "label-field">Time</label><br>
-                        <input class = "input-4" class = "input-4" type="number" name = "subaction_time">
+                        <input name = "subaction_time" class = "input-4" type="number"  min="0" max="1000" required>
                     </div>
                 </div>
             </div>
