@@ -3,8 +3,6 @@ import re
 
 from dotenv import load_dotenv
 from mysql.connector import MySQLConnection, Error
-from flask.views import View
-
 
 class MySQLHelper(object):
     '''
@@ -137,3 +135,4 @@ class InputClass():
         Returns float number.
         '''
         return float (self.value.replace(",","."))
+
