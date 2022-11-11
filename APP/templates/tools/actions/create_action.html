@@ -4,21 +4,18 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/tools/tools.css')}}"/>
 {% endblock %}
 
-{% block scripts %}
-<script src="/static/js/tools/action.js" defer></script>
-{% endblock %}
+{% block scripts %}{% endblock %}
 
 {% block title %}PMS | Action{% endblock %}
 
 {%block main%}
 <main>
     <div class="top-buttons">
-        <button class = "black-button"type = "submit" id = "submit_button">Submit</button>
+        <button class = "black-button"type = "submit" id = "submit_button"  form="action" >Submit</button>
         <button class = "white-button"type = "submit" id = "cancel_button">Cancel</button>
     </div>
-    <form autocomplete="off" method="post">
+    <form autocomplete="off" method="post" action="/actions/create" id="action">
         <div class="border"></div>    
-
         <div class="group">
             <div>
                 <label>Project</label>
@@ -26,7 +23,7 @@
             <div class="fields-group">
                 <div class="dropdwn">
                     <label class="label-field" >Agresso Code</label><br>
-                    <input list="" id="project_code" class="input-3">
+                    <input type="text" id="project_code" class="input-3" required>
                     <datalist id="projects" class = "input-3"></datalist>
                 </div>
                 <div class="dropdwn">

@@ -1,5 +1,6 @@
 from hashlib import sha256
-from common import MySQLHelper,CustomViews
+from common import MySQLHelper
+from auth import login_required, CustomViews
 from flask import render_template, Blueprint, request,g, make_response
 
 
