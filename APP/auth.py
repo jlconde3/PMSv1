@@ -73,9 +73,9 @@ class CustomViews (View):
     methods = ["GET"]
     decorators = [login_required]
 
-    def __init__(self,module,model) -> None:
+    def __init__(self,model) -> None:
         self.model = model
-        self.template = f'/{module}/{model}.html'
+        self.template = model
 
     def dispatch_request(self):
         if request.method == "GET":
