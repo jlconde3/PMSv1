@@ -1,7 +1,8 @@
-from flask import render_template, Blueprint, request,g, make_response
+from flask import render_template, Blueprint, request,g, make_response, redirect, url_for, flash
 from common import MySQLHelper, InputClass
 from auth import login_required, CustomViews
 from datetime import datetime
+
 
 bp = Blueprint('actions', __name__, url_prefix='/actions')
 
@@ -34,8 +35,20 @@ def generate_action_subaction_code (MySQL) -> str:
 @bp.route('/create', methods=['POST'])
 @login_required
 def create_action():
-    data = request.form['project_code']
-    print(data)
+    project = request.form['project_code'].upper().strip()
+
+    projects = []
+
+    if project not in projects:
+        flash(f"Value {project} is not correct", "error")
+        return redirect(url_for('actions./create_action'))
+    else:
+        print(project)
+        
+
+
+
+
     """
     project = InputClass(data['project_code'])
     customer= InputClass(data['customer_code'])
