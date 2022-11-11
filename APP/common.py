@@ -3,6 +3,8 @@ import re
 
 from dotenv import load_dotenv
 from mysql.connector import MySQLConnection, Error
+from flask.views import View
+
 
 class MySQLHelper(object):
     '''
@@ -43,7 +45,7 @@ def format_actions_list(list:list)->list:
         empty_list.append(i[0]+"-"+i[1])
     return empty_list
 
-class input_class ():
+class InputClass():
     def __init__(self,input_value) -> None:
         self.value = input_value
         self.type = type(input_value)

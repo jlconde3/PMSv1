@@ -1,10 +1,9 @@
-
 from hashlib import sha256
-from common import MySQLHelper , format_upper_case, format_dots, remove_spaces, format_mysql_list, format_actions_list
-from flask import render_template, Blueprint, request,g, Response, make_response
+from common import MySQLHelper
+from flask import render_template, Blueprint, request,g, make_response
 from auth import login_required
 from flask.views import View
-from datetime import datetime
+
 
 bp = Blueprint('tools', __name__, url_prefix='/tools')
 
@@ -31,6 +30,7 @@ bp.add_url_rule('/modify_wp', view_func=Tools.as_view('/modify_wp', 'modify_wp')
 bp.add_url_rule('/modify_workspace', view_func=Tools.as_view('/modify_worksace', 'modify_workspace'))
 bp.add_url_rule('/modify_task', view_func=Tools.as_view('/modify_task', 'modify_task'))
 
+"""
 
 @bp.route('/projects',methods=['GET','POST'])
 @login_required
@@ -350,7 +350,6 @@ def get_subaction_hours(subaction):
 
 
 def generate_wp_contracted_time (project, discipline, wp_line, station, zone, areas:list, subactions:list, tasks:list) -> float:
-
     total_hours = 0
 
     if wp_line == "DESIGN":
@@ -369,11 +368,11 @@ def generate_wp_planned_time (vol,cpl) -> float:
     return float (((vol+cpl)/10)+1)
 
 def validate_combination (project:str, discipline:str, phase:str,wp_line:str, station:str, zone:str, area:str, action:str, task:str)->bool:
-    """
+    "
     Check if a combination of project, discipline, phase, wp_line, station, zone, area, action, task area unique.
 
     Return True if combination is unique, False if it is repeated.
-    """
+    "
 
     text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{action}{task}"
     id = sha256(text_to_hash.encode('utf-8')).hexdigest()
@@ -384,11 +383,11 @@ def validate_combination (project:str, discipline:str, phase:str,wp_line:str, st
     return True if check == [] else False
 
 def generate_wp_id(project:str, discipline:str, phase:str, wp_line:str,station:str, zone:str, area:str, action:str, task:str)->str:
-    """
+    "
     Generate a unique id for each combination.
 
     Returns sha256 string.
-    """
+    "
 
     text_to_hash = f"{project}{discipline}{phase}{wp_line}{station}{zone}{area}{action}{task}"
     id = sha256(text_to_hash.encode('utf-8')).hexdigest()
@@ -572,14 +571,14 @@ def validate_wp():
         MySQL = MySQLHelper()
         for action, area, task in zip(actions_list, areas_list, tasks_list):
             id_hash = generate_wp_id(project, discipline, phase, wp_line, station, zone, area, action, task)
-            MySQL.cursor.execute("""
+            MySQL.cursor.execute("
             INSERT INTO wp(code,id_hash,project,discipline,phase,zone,line,station,action,area,
             task,dif,vol,cpl,contacted_time,planned_time,scheduled_time)
             VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
-            """,(wp_code,id_hash,project,discipline,phase,zone,wp_line,station,action,area,task,dif,vol,cpl,wp_contracted,wp_planned,wp_scheduled))
+            ",(wp_code,id_hash,project,discipline,phase,zone,wp_line,station,action,area,task,dif,vol,cpl,wp_contracted,wp_planned,wp_scheduled))
 
         for user in users:
-            MySQL.cursor.execute("""INSERT INTO users_wp(user,project,wp,scheduled_time)VALUES(%s,%s,%s,%s)""",(user,project,wp_code,float(wp_scheduled)/len(users)))
+            MySQL.cursor.execute("INSERT INTO users_wp(user,project,wp,scheduled_time)VALUES(%s,%s,%s,%s)",(user,project,wp_code,float(wp_scheduled)/len(users)))
             
         MySQL.con.commit()
         MySQL.con.close()
@@ -602,7 +601,7 @@ def action_area():
 
     try:
         MySQL = MySQLHelper()
-        MySQL.cursor.execute("""SELECT area FROM actions WHERE project =%s AND subaction_code =%s""", (project,action_code[0]))
+        MySQL.cursor.execute(SELECT area FROM actions WHERE project =%s AND subaction_code =%s", (project,action_code[0]))
         area = MySQL.cursor.fetchone()[0]
         MySQL.con.close()
         response = make_response({'area':area}, 211)
@@ -634,3 +633,4 @@ def check_input_value(mysql_sentence:str,input_value:str) -> bool:
     return False
 
 
+"""
