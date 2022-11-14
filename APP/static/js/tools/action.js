@@ -1,5 +1,9 @@
 let j = 1;
 
+document.getElementById('cancel_button').addEventListener('click',() => {
+    window.location.replace("/tools");
+});
+
 document.getElementById('more_button').addEventListener('click',() => {
     let i = j;
     console.log("Hola")
