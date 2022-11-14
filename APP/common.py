@@ -103,7 +103,7 @@ class InputClass():
         Returns false if string has sensitive chars and true if not.
         '''
 
-        if re.search("[^0-9A-Za-zÀ-ÿ-.,@Ññ ]+",self.value) is None:
+        if re.search("[^0-9A-Za-zÀ-ÿ-.,Ññ ]+",self.value) is None:
             return True
         return False
 
@@ -127,9 +127,9 @@ class InputClass():
         :param data: string to check.
         Returns false if a string has letters and true if not.
         '''
-
-        if re.search("^[.0-9]+$",self.value):
-            return True
-        return False
+        if re.search("(^\.|\.$)",self.value) is None:
+            if re.search("[^\.0-9]",self.value) is None:
+                return True
+            return False
 
 

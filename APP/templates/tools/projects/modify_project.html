@@ -13,7 +13,7 @@
 
 {%block main%}
 <main>
-    <form autocomplete="off" method="post" action="projects/modify" >
+    <form autocomplete="off" method="post" action="/projects/modify" >
         <div class="top-buttons">
             <button class = "black-button" type="submit" id = "submit_button">Save changes</button>
             <button class = "white-button" type="button" id = "cancel_button">Cancel</button>
@@ -26,13 +26,16 @@
             <div class="fields-group">
                 <div class="dropdown">
                     <label class ="label-field">Code</label><br>
-                    <input name="code" class ="input-2" type="text" minlength="8" maxlength="8" required>
+                    <input name="code" id="code" class ="input-2" type="text" minlength="8" maxlength="8" required>
                     <datalist id="projects" class="input-2"></datalist>
                 </div>
             </div>
 
         </div>
         <div class="border"></div>
+        <div class="top-buttons">
+            <button class = "black-button" type="button" id = "retrive_button">Retrive data</button>
+        </div>
         <div class="group">
             <div>
                 <label class = "label-title">Description</label>
