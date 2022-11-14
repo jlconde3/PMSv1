@@ -18,31 +18,30 @@ def login_user ():
     if request.method == 'POST':
 
         username = InputClass(request.form['username'])
-        password = InputClass(request.form['password'])
+        password = request.form['password']
 
-        if username.check_for_sensitive_chars() and password.check_for_sensitive_chars():
+        if username.check_for_sensitive_chars():
             error = None
 
             MySQL = MySQLHelper()
-            MySQL.cursor.execute('SELECT * FROM users WHERE user = %s ORDER BY id DESC LIMIT 1', (username.format_upper_case(),))
+            MySQL.cursor.execute('SELECT user,password FROM users WHERE user = %s ORDER BY id DESC LIMIT 1', (username.value,))
             user = MySQL.cursor.fetchone()
             MySQL.con.close()
 
             if user is None:
                 error = 'Incorrect username'
-            elif not check_password_hash(user[5], password.value):
+            elif not check_password_hash(user[1], password):
                 error = 'Incorrect password'
 
             if error is None:
                 session.clear()
-                session['user_id'] = user[1]
+                session['user_id'] = user[0]
                 return redirect(url_for('tools./'))
             else:
                 return error
         
         else: 
-            error = 'You introduce special characters not allowed'
-            return error
+            return 'Special chars'
         
     return render_template('public/login.html')
 

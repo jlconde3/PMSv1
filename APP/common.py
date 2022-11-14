@@ -1,5 +1,6 @@
 import os
 import re
+import datetime
 
 from dotenv import load_dotenv
 from mysql.connector import MySQLConnection, Error
@@ -44,9 +45,55 @@ def format_actions_list(list:list)->list:
     return empty_list
 
 class InputClass():
-    def __init__(self,input_value) -> None:
-        self.value = input_value
+    def __init__(self,input_value:str) -> None:
+        self.value = input_value.upper().strip()
         self.type = type(input_value)
+
+    def check_input_project(self,MySQL:object)-> bool:
+        
+        '''
+        Check if an input project value match to an existing value.
+
+        :param self: value to check.
+        :param MySQL: object to stablish connection to database. 
+        Return True if exists or False if not.
+        '''
+        
+        MySQL.cursor.execute("SELECT DISTINCT code FROM projects")
+        response = MySQL.cursor.fetchall()
+
+        #Create and empty list and save data to be compared.
+        whitelist = []
+        
+        for i in response:whitelist.append(i[0])
+            
+
+        #If value is not in whitelist return false or true.
+        return True if self.value in whitelist else False
+
+    def check_input_value(self,MySQL:object,field:str,table:str,project:str)-> bool:
+        '''
+        Check if an input value match to an existing value.
+
+        :param self: value to check.
+        :param MySQL: object to stablish connection to database. 
+        :param field: field to search in a specific table.
+        :param table: table to search.
+        :param project: argument to pass to sql_statment.
+        Return True if exists or False if not.
+        '''
+    
+        #Retrive data from DB.
+        MySQL.cursor.execute(f"SELECT DISTINCT {field} FROM {table} WHERE project = '{project}'")
+        response = MySQL.cursor.fetchall()
+
+        #Create and empty list and save data to be compared.
+        whitelist = []
+        
+        for i in response:whitelist.append(i[0])
+
+        #If value is not in whitelist return false or true.
+        return True if self.value in whitelist else False
 
     def check_for_sensitive_chars(self)->bool:
         '''
@@ -60,6 +107,19 @@ class InputClass():
             return True
         return False
 
+    def check_for_date(self)->bool:
+        '''
+        Check for date,
+
+        :param data: value to check.
+        Returns false if string has sensitive chars and true if not.
+        '''
+        try:
+            datetime.datetime.strptime(self.value,'%Y-%m-%d')
+            return True
+        except ValueError:
+            raise ValueError ("Incorrect data format, should be DD-MM-YYYY")
+    
     def check_for_digits(self)->bool:
         '''
         Check for numbers in a string.
@@ -68,71 +128,8 @@ class InputClass():
         Returns false if a string has letters and true if not.
         '''
 
-        if re.search("[^0-9.,]+",self.value) is None:
+        if re.search("^[.0-9]+$",self.value):
             return True
         return False
 
-    def check_correct_format_numbers(self)->bool:
-        '''
-        Check for the correct format of numbers.
-
-        :param data: string to check.
-        Returns True if a string do start with "." or ",".False if not.
-        '''
-
-        if re.search("^[.,]+",self.value) is None:
-            return True
-        return False
-    
-    def check_input_value(self,MySQL:object,field:str,table:str,proejct:str)-> bool:
-        '''
-        Check if an input value match to an existing value.
-
-        :param self: value to check.
-        :param MySQL: object to stablish connection to database. 
-        :param field: field to search in a specific table.
-        :param table: table to search.
-        :param project: argument to pass to sql_statment.
-        Return True if exists or False if not.
-        '''
-
-        #Retrive data from DB.
-        MySQL.cursor.execute(f"SELECT DISTINCT {field} FROM {table} WHERE project = '{proejct}'")
-        reponse = MySQL.cursor.fetchall()
-
-        #Create and empty list and save data to be compared.
-        whitelist = []
-        
-        for i in reponse:whitelist.append(i[0])
-
-        #If value is not in whitelist return false or true.
-        return True if self.value in whitelist else False
-    
-
-    def format_upper_case (self:str)->str:
-        '''
-        Format string to uppercase.
-
-        :param data: string to format.
-        Returns format string.
-        '''
-        return self.value.upper()
-
-    def remove_spaces (self:str)->str:
-        ''' 
-        Remove unnecesary white space from strings.
-
-        :param self: string to format.
-        Returns format string.
-        '''
-        return self.value.replace(" ","")
-    
-    def replace_comma_for_dot(self:str)->float:
-        ''' 
-        Replace commas for dots for numerical fields.
-
-        :param self: string to format.
-        Returns float number.
-        '''
-        return float (self.value.replace(",","."))
 

@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/tools/tools.css')}}"/>
 {% endblock %}
 
-{% block scripts %}{% endblock %}
+{% block scripts %}<script src="/static/js/tools/action.js" defer></script>{% endblock %}
 
 {% block title %}PMS | Action{% endblock %}
 
@@ -19,7 +19,6 @@
     </ul>
     {% endif %}
     {% endwith %}
-
     <div class="top-buttons">
         <button class = "black-button"type = "submit" id = "submit_button"  form="action" >Submit</button>
         <button class = "white-button"type = "submit" id = "cancel_button">Cancel</button>
@@ -77,7 +76,7 @@
             <div>
                 <label class = "label-field">Description</label><br>
                 <div class = "description">
-                    <textarea name="action_description" class = "input-text"  type="text" maxlength="200"></textarea>
+                    <textarea id="action_description" name="action_description" class = "input-text"  type="text" maxlength="200"></textarea>
                     <div id="the-count">
                         <span id="current">0</span>
                         <span id="maximum">/ 200</span>
