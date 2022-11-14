@@ -1,8 +1,144 @@
-{% extends "wip.html" %}
+{% extends "base.html" %}
 
 
-{% block css %}{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tools/tools.css')}}"/>
+{% endblock %}
 
-{% block scripts %}{% endblock %}
+{% block scripts %}
+<script src="/static/js/tools/projects/modify.js" defer></script>
+{% endblock %}
 
 {% block title %}PMS | Modify Project{% endblock %}
+
+{%block main%}
+<main>
+    <form autocomplete="off" method="post" action="projects/modify" >
+        <div class="top-buttons">
+            <button class = "black-button" type="submit" id = "submit_button">Save changes</button>
+            <button class = "white-button" type="button" id = "cancel_button">Cancel</button>
+        </div>
+        <div class="border"></div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Project</label>
+            </div>
+            <div class="fields-group">
+                <div class="dropdown">
+                    <label class ="label-field">Code</label><br>
+                    <input name="code" class ="input-2" type="text" minlength="8" maxlength="8" required>
+                    <datalist id="projects" class="input-2"></datalist>
+                </div>
+            </div>
+
+        </div>
+        <div class="border"></div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Description</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class ="label-field">Name</label><br>
+                    <input name="name" class="input-2" type="text" minlength="5" maxlength="20" required>
+                </div>
+                <div>
+                    <label class ="label-field">Client</label><br>
+                    <input name="client" class="input-2" type="text" minlength="2" maxlength="10" required>
+                </div>
+            </div>
+
+        </div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Business</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class ="label-field">Section</label><br>
+                    <input name="section" class="input-2" minlength="2" maxlength="10" required>
+                </div>
+                <div>
+                    <label class ="label-field">Division</label><br>
+                    <input name="division" class="input-2" type="text" minlength="2" maxlength="10" required>
+                </div>
+            </div>
+
+        </div>
+        <div class="border"></div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Budget</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class ="label-field">Proejct budget</label><br>
+                    <input name="budget" class="input-2" type="number" min="0" max="100000000" step="any" required>
+                </div>
+                <div>
+                    <label class ="label-field">Margin</label><br>
+                    <input name="margin" class="input-2" type="number" min="0" max="100" step="any" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="group">
+            <div>
+                <label class = "label-title">CPT</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class ="label-field">Default</label><br>
+                    <input name="default" class="input-2" type="number" min="0" max="1000" required>
+                </div>
+                <div>
+                    <label class ="label-field">Actions</label><br>
+                    <input name="actions" class="input-2" type="number" min="0" max="100" required>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="group">
+            <div>
+                <label class = "label-title">Costs</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class ="label-field">Management</label><br>
+                    <input name="management" class="input-2" type="number" min="0" max="1" step="any" required>
+                </div>
+                <div>
+                    <label class ="label-field">Others</label><br>
+                    <input name="others" class="input-2" type="number" min="0" max="1" step="any" required>
+                </div>
+            </div>
+
+        </div>
+        <div class="border"></div>
+        <div class="top-buttons">
+            <button class = "black-button" type="button" id = "reload_button">Reload hours</button>
+        </div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Results</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class ="label-field">Working hours</label><br>
+                    <input name="work_result" id="work_result" class ="input-3" type="number" min="0" max="100000" required disabled="True">
+                </div>
+                <div>
+                    <label class ="label-field">Managing hours</label><br>
+                    <input name="management_result" id="management_result" class ="input-3" type="number" min="0" max="100000" required disabled="True">
+                </div>
+                <div>
+                    <label class ="label-field">Others hours</label><br>
+                    <input name="others_result" id="other_result" class ="input-3" type="number" min="0" max="100000" required disabled="True">
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+
+{%endblock%}

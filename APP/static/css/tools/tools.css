@@ -19,8 +19,8 @@ label{
     margin-left: 10px;
     font-size: 16px;
     font-weight: 500;
-    width: 30%;
 }
+
 .label-field{
     font-size: 12px;
     font-weight: 400;
@@ -136,4 +136,8 @@ textarea{
     color:  #57647E;
     padding-left:630px;
     width: auto;
+}
+
+:disabled{
+    background-color: white;
 }
