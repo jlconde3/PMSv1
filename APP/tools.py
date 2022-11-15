@@ -10,7 +10,7 @@ bp = Blueprint('tools', __name__, url_prefix='/tools')
 
 bp.add_url_rule('/', view_func=CustomViews.as_view('/', '/tools/home.html'))
 
-@bp.route('/projects',methods=['GET','POST'])
+@bp.route('/projects',methods=['POST'])
 @login_required
 def projects ():
     MySQL = MySQLHelper()
@@ -19,28 +19,42 @@ def projects ():
     MySQL.con.close()
     return data_to_send
 
-"""
-@bp.route('/disciplines',methods=['GET','POST'])
-@login_required
-def disciplines ():
-    data = request.get_json()
-    MySQL = MySQLHelper()
-    MySQL.cursor.execute('SELECT DISTINCT discipline FROM pms.areas WHERE project = %s',
-    (remove_spaces(format_upper_case(data['project_code'])),))
-    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
-    MySQL.con.close()
-    return data_to_send
-
-@bp.route('/phases',methods=['GET','POST'])
+@bp.route('/phases',methods=['POST'])
 @login_required
 def phases ():
     data = request.get_json()
     MySQL = MySQLHelper()
-    MySQL.cursor.execute('SELECT DISTINCT phase FROM pms.areas WHERE project = %s AND\
-    discipline = %s',
-    (remove_spaces(format_upper_case(data['project_code'])),
-    remove_spaces(format_upper_case(data['discipline_code']))
-    ))
+    MySQL.cursor.execute("SELECT DISTINCT phase FROM areas WHERE project = %s",(data['project'],))
+    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
+    MySQL.con.close()
+    return data_to_send
+
+@bp.route('/disciplines',methods=['POST'])
+@login_required
+def disciplines ():
+    data = request.get_json()
+    MySQL = MySQLHelper()
+    MySQL.cursor.execute("SELECT DISTINCT discipline FROM areas WHERE project = %s",(data['project'],))
+    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
+    MySQL.con.close()
+    return data_to_send
+
+@bp.route('/systems',methods=['POST'])
+@login_required
+def systems ():
+    data = request.get_json()
+    MySQL = MySQLHelper()
+    MySQL.cursor.execute("SELECT DISTINCT system1 FROM areas WHERE project=%s AND discipline=%s",(data['project'],data['discipline']))
+    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
+    MySQL.con.close()
+    return data_to_send
+
+@bp.route('/stations',methods=['POST'])
+@login_required
+def stations ():
+    data = request.get_json()
+    MySQL = MySQLHelper()
+    MySQL.cursor.execute("SELECT DISTINCT station FROM tasks WHERE project=%s AND line='ACTIONS'",(data['project'],))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
@@ -50,11 +64,7 @@ def phases ():
 def zones ():
     data = request.get_json()
     MySQL = MySQLHelper()
-    MySQL.cursor.execute('SELECT DISTINCT zone FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s',
-    (remove_spaces(format_upper_case(data['project_code'])),
-    remove_spaces(format_upper_case(data['discipline_code'])),
-    remove_spaces(format_upper_case(data['phase_code']))
-    ))
+    MySQL.cursor.execute("SELECT DISTINCT zone FROM areas WHERE project = %s AND discipline = %s AND system=%s",(data['project'],data['discipline'],data['system']))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
@@ -64,16 +74,15 @@ def zones ():
 def areas ():
     data = request.get_json()
     MySQL = MySQLHelper()
-    MySQL.cursor.execute('SELECT DISTINCT area FROM pms.areas WHERE project = %s AND discipline = %s AND phase = %s AND zone = %s',
-    (remove_spaces(format_upper_case(data['project_code'])),
-    remove_spaces(format_upper_case(data['discipline_code'])),
-    remove_spaces(format_upper_case(data['phase_code'])),
-    remove_spaces(format_upper_case(data['zone_code']))
-    ))
+    MySQL.cursor.execute("SELECT DISTINCT area FROM areas WHERE project = %s AND discipline = %s AND system=%s AND zone = %s",(data['project'],data['discipline'],data['system'],data['zone']))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
 
+
+
+
+"""
 @bp.route('/actions',methods=['GET','POST'])
 @login_required
 def actions ():
