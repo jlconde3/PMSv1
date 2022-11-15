@@ -133,3 +133,8 @@ class InputClass():
             return False
 
 
+def format_mysql_list(list:list)->list:
+    empty_list = []
+    for i in list:
+        empty_list.append(i[0])
+    return empty_list

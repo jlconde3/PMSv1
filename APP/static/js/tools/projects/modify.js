@@ -2,9 +2,19 @@ document.getElementById('cancel_button').addEventListener('click',() => {
     window.location.replace("/tools");
 });
 
+document.getElementById('code').addEventListener('click',()=>{
+    retrive_data_actions(
+        data = {},
+        url = '/tools/projects',
+        input_id = 'code',
+        id_list = ['name','client','section','division','budget','margin','default','actions',
+        'management','others','work_result','management_result','others_result'],
+        name_list = []
+    )
+});
+
 document.getElementById('retrive_button').addEventListener('click',function retrive_data(){
     const code = document.getElementById('code').value 
-
     fetch('/projects/retrive_data',{
         credentials: 'include',
         method: 'POST',
@@ -27,7 +37,7 @@ document.getElementById('reload_button').addEventListener('click',function reloa
 
     document.getElementById('work_result').value = Math.round((usefull_hours-management_hours-other_hours)/cpt[0].value)
     document.getElementById('management_result').value = Math.round(management_hours/cpt[0].value)
-    document.getElementById('other_result').value = Math.round(other_hours/cpt[0].value)
+    document.getElementById('others_result').value = Math.round(other_hours/cpt[0].value)
 
 });
 

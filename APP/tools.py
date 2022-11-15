@@ -1,5 +1,5 @@
 from hashlib import sha256
-from common import MySQLHelper
+from common import MySQLHelper, InputClass, format_mysql_list
 from auth import login_required, CustomViews
 from flask import render_template, Blueprint, request,g, make_response
 
@@ -10,18 +10,16 @@ bp = Blueprint('tools', __name__, url_prefix='/tools')
 
 bp.add_url_rule('/', view_func=CustomViews.as_view('/', '/tools/home.html'))
 
-"""
-
 @bp.route('/projects',methods=['GET','POST'])
 @login_required
 def projects ():
     MySQL = MySQLHelper()
-    MySQL.cursor.execute('SELECT DISTINCT project FROM pms.areas')
+    MySQL.cursor.execute('SELECT DISTINCT code FROM projects')
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
 
-
+"""
 @bp.route('/disciplines',methods=['GET','POST'])
 @login_required
 def disciplines ():
