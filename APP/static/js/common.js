@@ -253,3 +253,7 @@ function retrive_data_actions(data,url,input_id,id_list,name_list){
     })
     .then(()=>{display_select_input(input_id,list.id,id_list,name_list)})
 };
+
+function isEmpty(str) {
+    return !str.trim().length;
+}

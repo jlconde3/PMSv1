@@ -1,7 +1,10 @@
+import json
+
 from flask import render_template, Blueprint, request,g, make_response, redirect, url_for, flash
 from common import MySQLHelper, InputClass
 from auth import login_required, CustomViews
 from datetime import datetime
+from decimal import Decimal
 
 
 bp = Blueprint('actions', __name__, url_prefix='/actions')
@@ -126,4 +129,73 @@ def create_action():
 
 
 
+@bp.route('/retrive_action', methods=['POST'])
+@login_required
+def retrive_actions():
+    data = request.get_json()
+    project = InputClass(data['project'])
+    action = InputClass(data['action'])
+    print(data)
+    MySQL = MySQLHelper()
 
+    if not project.check_input_project(MySQL=MySQL):
+        MySQL.con.close()
+        return make_response(f'Project {project.value} not found',401)
+
+    if not action.check_for_sensitive_chars():
+        MySQL.con.close()
+        return make_response(f'Value {action.value} has special chars not allowed',402)
+    
+    if not action.check_input_value(MySQL=MySQL,field='action_code',table='actions',project=project.value):
+        MySQL.con.close()
+        return make_response(f'Value {action.value} not found',403)
+    
+    MySQL.cursor.execute("SELECT * FROM actions WHERE project=%s AND action_code=%s ORDER BY date DESC LIMIT 1",(project.value,action.value))
+    response = MySQL.cursor.fetchone()
+    MySQL.con.close()
+
+    row_data = []
+    for value in response:
+        if type(value) is Decimal:
+            row_data.append(float(value))
+        else:
+            row_data.append(str(value))
+
+    return json.dumps({'response':row_data})
+
+@bp.route('/retrive_subaction', methods=['POST'])
+@login_required
+def retrive_subactions():
+    data = request.get_json()
+    project = InputClass(data['project'])
+    subaction = InputClass(data['subaction'])
+
+    MySQL = MySQLHelper()
+    
+    if not project.check_input_project(MySQL=MySQL):
+        MySQL.con.close()
+        return make_response(f'Project {project.value} not found',401)
+
+    if not subaction.check_for_sensitive_chars():
+        MySQL.con.close()
+        return make_response(f'Value {subaction.value} has special chars not allowed',402)
+    
+    MySQL = MySQLHelper()
+
+    if not subaction.check_input_value(MySQL=MySQL,field='subaction_code',table='actions',project=project.value):
+        MySQL.con.close()
+        return make_response(f'Value {subaction.value} not found',403)
+    
+    MySQL.cursor.execute("SELECT * FROM actions WHERE project=%s AND subaction_code=%s ORDER BY date DESC LIMIT 1",(project.value,subaction.value))
+    response = MySQL.cursor.fetchone()
+
+    MySQL.con.close()
+
+    row_data = []
+    for value in response:
+        if type(value) is Decimal:
+            row_data.append(float(value))
+        else:
+            row_data.append(str(value))
+
+    return json.dumps({'response':row_data})

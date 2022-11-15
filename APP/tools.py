@@ -59,7 +59,7 @@ def stations ():
     MySQL.con.close()
     return data_to_send
 
-@bp.route('/zones',methods=['GET','POST'])
+@bp.route('/zones',methods=['POST'])
 @login_required
 def zones ():
     data = request.get_json()
@@ -69,7 +69,7 @@ def zones ():
     MySQL.con.close()
     return data_to_send
 
-@bp.route('/areas',methods=['GET','POST'])
+@bp.route('/areas',methods=['POST'])
 @login_required
 def areas ():
     data = request.get_json()
@@ -79,6 +79,27 @@ def areas ():
     MySQL.con.close()
     return data_to_send
 
+
+@bp.route('/actions',methods=['POST'])
+@login_required
+def actions ():
+    data = request.get_json()
+    MySQL = MySQLHelper()
+    MySQL.cursor.execute("SELECT DISTINCT action_code FROM actions WHERE project = %s",(data['project'],))
+    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
+    MySQL.con.close()
+    print(data_to_send)
+    return data_to_send
+
+@bp.route('/subactions',methods=['POST'])
+@login_required
+def subactions ():
+    data = request.get_json()
+    MySQL = MySQLHelper()
+    MySQL.cursor.execute("SELECT DISTINCT subaction_code FROM actions WHERE project = %s",(data['project'],))
+    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
+    MySQL.con.close()
+    return data_to_send
 
 
 
