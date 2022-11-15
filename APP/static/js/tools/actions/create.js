@@ -57,36 +57,36 @@ document.getElementById('type').addEventListener('click',()=>{
     )
 });
 
-/*
-document.getElementById('zone').addEventListener('click',()=>{
+
+document.getElementById('zone_0').addEventListener('click',()=>{
     retrive_data_actions(
         data = {
-            code:document.getElementById('project').value,
+            project:document.getElementById('project').value,
             discipline:document.getElementById('discipline').value,
             system:document.getElementById('system').value
         },
-        url = '/tools/stations',
-        input_id = 'type',
+        url = '/tools/zones',
+        input_id = 'zone_0',
         id_list = [],
         name_list = []
     )
 });
 
-document.getElementById('area').addEventListener('click',()=>{
+document.getElementById('area_0').addEventListener('click',()=>{
     retrive_data_actions(
         data = {
-            code:document.getElementById('project').value,
+            project:document.getElementById('project').value,
             discipline:document.getElementById('discipline').value,
             system:document.getElementById('system').value,
-            zone:document.getElementById('zone').value
+            zone:document.getElementById('zone_0').value
         },
         url = '/tools/areas',
-        input_id = 'area',
+        input_id = 'area_0',
         id_list = [],
         name_list = []
     )
 });
-*/
+
 
 document.getElementById('cancel_button').addEventListener('click',() => {
     window.location.replace("/tools");
@@ -94,8 +94,6 @@ document.getElementById('cancel_button').addEventListener('click',() => {
 
 document.getElementById('more_button').addEventListener('click',() => {
     let i = j;
-    console.log("Hola")
-
     add_more('subactions',
     `
     <div>
@@ -122,6 +120,35 @@ document.getElementById('more_button').addEventListener('click',() => {
         </div>
     </div>
     `);
+
+    document.getElementById(`zone_${i}`).addEventListener('click',()=>{
+        retrive_data_actions(
+            data = {
+                project:document.getElementById('project').value,
+                discipline:document.getElementById('discipline').value,
+                system:document.getElementById('system').value,
+            },
+            url = '/tools/zones',
+            input_id = `zone_${i}`,
+            id_list = [],
+            name_list = []
+        )
+    })
+
+    document.getElementById(`area_${i}`).addEventListener('click',()=>{
+        retrive_data_actions(
+            data = {
+                project:document.getElementById('project').value,
+                discipline:document.getElementById('discipline').value,
+                system:document.getElementById('system').value,
+                zone:document.getElementById(`zone_${i}`).value
+            },
+            url = '/tools/areas',
+            input_id = `area_${i}`,
+            id_list = [],
+            name_list = []
+        )
+    })
     j++;
 });
 
