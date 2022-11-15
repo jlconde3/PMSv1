@@ -114,9 +114,9 @@ def create_action():
                 """
                 INSERT INTO actions (action_code,project,customer_code,type,date_recived,
                 discipline,phase,description,subaction_code,custom_code,zone,area,time,
-                user,date, status)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+                user,date,system,status)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
                 (action_code,project.value,customer.value,type.value,date.value,discipline.value,phase.value,description.value,
-                generate_subaction_code(MySQL),code,zone,area,time, g.user, datetime.today(),'Not assigned'))
+                generate_subaction_code(MySQL),code,zone,area,time, g.user, datetime.today(),system.value,'Not assigned'))
             MySQL.con.commit()
             
         MySQL.con.close()

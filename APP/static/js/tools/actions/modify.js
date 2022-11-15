@@ -43,10 +43,10 @@ document.getElementById('cancel_button').addEventListener('click',() => {
 function display_data_project (response){
     document.getElementById('action').value = response[1];
     document.getElementById('client').value = response[3];
-    document.getElementById('custom').value = response[9];
+    document.getElementById('custom').value = response[10];
     document.getElementById('phase').value = response[7];
     document.getElementById('discipline').value = response[6];
-    document.getElementById('system').value = response[0];
+    document.getElementById('system').value = response[16];
     document.getElementById('type').value = response[4];
     document.getElementById('zone').value = response[11];
     document.getElementById('area').value = response[12];
