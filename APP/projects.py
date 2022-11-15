@@ -4,6 +4,7 @@ from flask import render_template, Blueprint, request,g, make_response, redirect
 from common import MySQLHelper,InputClass
 from auth import login_required, CustomViews
 from decimal import Decimal
+from datetime import datetime
 
 bp = Blueprint('projects', __name__, url_prefix='/projects')
 
@@ -47,12 +48,22 @@ def create ():
 
         MySQL = MySQLHelper()
 
-        MySQL.cursor.execute('SELECT DISTINCT code FROM projects WHERE code=%s',(code,))
-        project = MySQL.cursor.fetchall()
+        MySQL.cursor.execute('SELECT DISTINCT code FROM projects')
+        values = MySQL.cursor.fetchall()
 
-        if project is None:
-            #MySQL.cursor.execute()
-            #MySQL.con.commit()
+        projects = []
+        for i in values:projects.append(i[0])
+        
+        if not code.value in projects:
+            MySQL.cursor.execute("""
+                INSERT INTO projects(code,date,name,client,section,
+                division,budget,profit_margin,cpt_default,cpt_actions,
+                management,extra,user,execution_budget,execution_hours)
+                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+                (code.value,datetime.today(),name.value,client.value,section.value,
+                division.value,budget.value,margin.value,default.value,action.value,
+                management.value,others.value,g.user,exc_budget,work_hours))
+            MySQL.con.commit()
             MySQL.con.close()
             return redirect(url_for('tools./'))
 
@@ -78,13 +89,9 @@ def retrive_data():
     projects = []
     for i in projects_sql:projects.append(i[0])
 
-    print(projects)
-
     if code.value in projects:
         MySQL.cursor.execute("SELECT * FROM projects WHERE code =%s ORDER BY date DESC LIMIT 1",(code.value,))
         response = MySQL.cursor.fetchone()
-
-        MySQL.con.close()
 
         row_data = []
         for value in response:
@@ -93,6 +100,7 @@ def retrive_data():
             else:
                 row_data.append(str(value))
 
+        MySQL.con.close()    
         return json.dumps({'response':row_data})
 
     MySQL.con.close()    
