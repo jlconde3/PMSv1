@@ -58,11 +58,11 @@ def create ():
             MySQL.cursor.execute("""
                 INSERT INTO projects(code,date,name,client,section,
                 division,budget,profit_margin,cpt_default,cpt_actions,
-                management,extra,user,execution_budget,execution_hours)
-                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+                management,extra,user,execution_budget,execution_hours,management_hours,others_hours)
+                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
                 (code.value,datetime.today(),name.value,client.value,section.value,
                 division.value,budget.value,margin.value,default.value,action.value,
-                management.value,others.value,g.user,exc_budget,work_hours))
+                management.value,others.value,g.user,exc_budget,work_hours,management_hours,others_hours))
             MySQL.con.commit()
             MySQL.con.close()
             return redirect(url_for('tools./'))
@@ -145,12 +145,18 @@ def modify ():
         work_hours = (exc_budget/float(default.value)-management_hours-others_hours)
 
         MySQL = MySQLHelper()
-
-
-        #MySQL.cursor.execute()
-        #MySQL.con.commit()
+        MySQL.cursor.execute("""
+            INSERT INTO projects(code,date,name,client,section,
+            division,budget,profit_margin,cpt_default,cpt_actions,
+            management,extra,user,execution_budget,execution_hours,management_hours,others_hours)
+            VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+            (code.value,datetime.today(),name.value,client.value,section.value,
+            division.value,budget.value,margin.value,default.value,action.value,
+            management.value,others.value,g.user,exc_budget,work_hours,management_hours,others_hours))
+        MySQL.con.commit()
         MySQL.con.close()
-        error = redirect(url_for('tools./'))
+        
+        return redirect(url_for('tools./'))
 
     return error
 
