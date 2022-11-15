@@ -11,10 +11,10 @@
 {%block main%}
 <main>
     <div class="top-buttons">
-        <button class = "black-button"type = "submit" id = "submit_button"  form="action" >Save changes</button>
+        <button class = "black-button"type = "submit" id = "submit_button"  form="modify" >Save changes</button>
         <button class = "white-button"type = "submit" id = "cancel_button">Cancel</button>
     </div>
-    <form autocomplete="off" method="post" action="/actions/modify" >
+    <form autocomplete="off" method="post" action="/actions/modify" id="modify" >
         <div class="border"></div>    
         <div class="group">
             <div>
@@ -44,7 +44,7 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Action code</label><br>
-                    <input name="action" id="action" class="input-3" type="text" minlength="2" maxlength="20" required disabled="True">
+                    <input name="action" id="action" class="input-3" type="text" disabled="True">
                 </div>
                 <div>
                     <label class = "label-field">Client code</label><br>
@@ -52,7 +52,7 @@
                 </div>
                 <div>
                     <label class = "label-field">Custom code</label><br>
-                    <input name="custom" id="custom" class="input-3" type="text" minlength="2" maxlength="20" required disabled="True">
+                    <input name="custom" id="custom" class="input-3" type="text" disabled="True">
                 </div>
             </div>
         </div>

@@ -36,6 +36,10 @@ document.getElementById('retrive_button').addEventListener('click',()=>{
     }
 });
 
+document.getElementById('cancel_button').addEventListener('click',() => {
+    window.location.replace("/tools");
+});
+
 function display_data_project (response){
     document.getElementById('action').value = response[1];
     document.getElementById('client').value = response[3];

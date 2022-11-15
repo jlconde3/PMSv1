@@ -54,8 +54,6 @@ def create_action():
     areas = request.form.getlist('subaction_area')
     times = request.form.getlist('subaction_time')
 
-
-
     error = None
     MySQL = MySQLHelper()
 
@@ -120,48 +118,13 @@ def create_action():
                 (action_code,project.value,customer.value,type.value,date.value,discipline.value,phase.value,description.value,
                 generate_subaction_code(MySQL),code,zone,area,time, g.user, datetime.today(),'Not assigned'))
             MySQL.con.commit()
-
+            
         MySQL.con.close()
         return make_response('Success',201)
     
     MySQL.con.close()
     return error
 
-
-
-@bp.route('/retrive_action', methods=['POST'])
-@login_required
-def retrive_actions():
-    data = request.get_json()
-    project = InputClass(data['project'])
-    action = InputClass(data['action'])
-    print(data)
-    MySQL = MySQLHelper()
-
-    if not project.check_input_project(MySQL=MySQL):
-        MySQL.con.close()
-        return make_response(f'Project {project.value} not found',401)
-
-    if not action.check_for_sensitive_chars():
-        MySQL.con.close()
-        return make_response(f'Value {action.value} has special chars not allowed',402)
-    
-    if not action.check_input_value(MySQL=MySQL,field='action_code',table='actions',project=project.value):
-        MySQL.con.close()
-        return make_response(f'Value {action.value} not found',403)
-    
-    MySQL.cursor.execute("SELECT * FROM actions WHERE project=%s AND action_code=%s ORDER BY date DESC LIMIT 1",(project.value,action.value))
-    response = MySQL.cursor.fetchone()
-    MySQL.con.close()
-
-    row_data = []
-    for value in response:
-        if type(value) is Decimal:
-            row_data.append(float(value))
-        else:
-            row_data.append(str(value))
-
-    return json.dumps({'response':row_data})
 
 @bp.route('/retrive_subaction', methods=['POST'])
 @login_required
@@ -199,3 +162,8 @@ def retrive_subactions():
             row_data.append(str(value))
 
     return json.dumps({'response':row_data})
+
+@bp.route('/modify', methods=['POST'])
+@login_required
+def modify ():
+    pass
