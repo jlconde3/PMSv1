@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tools/tools.css')}}"/>
+{% endblock %}
+
+{% block scripts %}<script src="/static/js/tools/actions/modify_subaction.js" defer></script>{% endblock %}
+
+{% block title %}PMS | Modify action{% endblock %}
+
+{%block main%}
+<main>
+    <div class="top-buttons">
+        <button class = "black-button"type = "submit" id = "submit_button"  form="modify_subaction" >Save changes</button>
+        <button class = "white-button"type = "submit" id = "cancel_button">Cancel</button>
+    </div>
+    <form autocomplete="off" method="post" action="/actions/modify_subaction" id="modify_subaction" >
+        <div class="border"></div>    
+        <div class="group">
+            <div>
+                <label>Action</label>
+            </div>
+            <div class="fields-group">
+                <div class="dropdown">
+                    <label class="label-field">Project Code</label><br>
+                    <input name="project" id="project" class="input-2" type="text" minlength="2" maxlength="8" required>
+                    <datalist id="projects" class = "input-2"></datalist>
+                </div>
+                <div class="dropdown">
+                    <label class = "label-field">Subaction code</label><br>
+                    <input name="subaction" id="subaction" class="input-2" type="text" minlength="2" maxlength="20" required>
+                    <datalist id="subactions" class = "input-2"></datalist>
+                </div>
+            </div>
+        </div>
+        <div class="top-buttons">
+            <button class="black-button" type="button" id="retrive_button">Retrive data</button>
+        </div>
+        <div class="border"></div>
+        <div class="group">
+            <div>
+                <label class = "label-title">Code</label>
+            </div>
+            <div class="fields-group">
+                <div>
+                    <label class = "label-field">Action code</label><br>
+                    <input name="action" id="action" class="input-3" type="text">
+                </div>
+                <div>
+                    <label class = "label-field">Client code</label><br>
+                    <input name="client" id="client" class="input-3" type="text">
+                </div>
+                <div>
+                    <label class = "label-field">Custom code</label><br>
+                    <input name="custom" id="custom" class="input-3" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="border"></div>
+        <div id = "subactions">
+            <div class="group">
+                <div>
+                    <label class = "label-title">Details</label>
+                </div>
+                <div class="fields-group">
+                    <div>
+                        <label class = "label-field">Zone</label><br>
+                        <input name = "zone" id= "zone" class = "input-4" type="text" minlength="2" maxlength="20" required>
+                    </div>
+                    <div>
+                        <label class = "label-field">Area</label><br>
+                        <input name = "area" id= "area" class = "input-4" type="text" minlength="2" maxlength="20" required>
+                    </div>
+                    <div>
+                        <label class = "label-field">Time</label><br>
+                        <input name = "time" id ="time" class = "input-4" type="number"  min="0" max="1000" required>
+                    </div>
+                    <div>
+                        <label class = "label-field">Status</label><br>
+                        <input name = "status" id ="status" class = "input-4" type="text" minlength="2" maxlength="20" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</main>
+{%endblock%}

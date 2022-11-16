@@ -257,3 +257,16 @@ function retrive_data_actions(data,url,input_id,id_list,name_list){
 function isEmpty(str) {
     return !str.trim().length;
 }
+
+function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+}
+
+function get_date (input){
+    const date = new Date(input)
+    return [
+        date.getFullYear(),
+        padTo2Digits(date.getMonth()+1),
+        padTo2Digits(date.getDate())
+    ].join('-')
+}
