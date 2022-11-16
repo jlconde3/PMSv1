@@ -48,11 +48,11 @@
                 </div>
                 <div>
                     <label class = "label-field">Phase</label><br>
-                    <input name="phase" id="phase" class="input-3" type="text"  minlength="2" maxlength="10" required>
+                    <input id="phase" class="input-3" type="text" disabled="True">
                 </div>
                 <div>
                     <label class = "label-field">Input date</label><br>
-                    <input name="date" id="date" class = "input-3" type="date" minlength="2" maxlength="8" required>
+                    <input id="date" class = "input-3" type="date" disabled="True">
                 </div>
             </div>
         </div>
@@ -64,15 +64,15 @@
             <div class="fields-group">
                 <div>
                     <label class = "label-field">Discipline</label><br>
-                    <input name="discipline" id="discipline" class="input-3" type="text"  minlength="2" maxlength="10" required>
+                    <input id="discipline" class="input-3" type="text" disabled="True">
                 </div>
                 <div>
                     <label class = "label-field">System</label><br>
-                    <input name="system" id="system" class = "input-3" type="text" minlength="2" maxlength="8" required>
+                    <input id="system" class = "input-3" type="text" disabled="True">
                 </div>
                 <div>
                     <label class = "label-field">Type</label><br>
-                    <input name="type" id="type" class = "input-3" type="text" minlength="2" maxlength="8" required>
+                    <input id="type" class = "input-3" type="text" disabled="True">
                 </div>
             </div>
         </div>
@@ -85,9 +85,12 @@
                 <label class = "label-field">Description</label><br>
                 <div class = "description">
                     <textarea id="description" name="description" class = "input-text"  type="text" maxlength="200"></textarea>
+                    <div id="the-count">
+                        <span id="current">0</span>
+                        <span id="maximum">/ 200</span>
+                    </div>
                 </div>
             </div>
-        </div>
     </form>
 </main>
 {%endblock%}

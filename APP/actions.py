@@ -1,7 +1,7 @@
 import json
 
 from flask import render_template, Blueprint, request,g, make_response, redirect, url_for, flash
-from common import MySQLHelper, InputClass
+from common import MySQLHelper, InputClass, format_mysql_list
 from auth import login_required, CustomViews
 from datetime import datetime
 from decimal import Decimal
@@ -208,12 +208,7 @@ def modify_action ():
     project = InputClass(request.form['project'])
     action = InputClass(request.form['action'])
     client = InputClass(request.form['client'])
-    phase = InputClass(request.form['phase'])
-    discipline = InputClass(request.form['discipline'])
-    system = InputClass(request.form['system'])
-    type = InputClass(request.form['type'])
     description = InputClass(request.form['description'])
-    date = InputClass(request.form['date'])
 
     MySQL = MySQLHelper()
 
@@ -226,18 +221,16 @@ def modify_action ():
             MySQL.con.close()
             return make_response(f'Value {i.value} has special chars not allowed',402)
 
-    for i,field,table in zip([action,phase,discipline,system,type],
-    ['action_code','phase','discipline','system1','station'],
-    ['actions','areas','areas','areas','tasks']):
-        if not i.check_input_value(MySQL=MySQL,field=field,table=table,project=project.value):
-            MySQL.con.close()
-            return make_response(f'Value {i.value} not found',403)
+
+    if not action.check_input_value(MySQL=MySQL,field='action_code',table='actions',project=project.value):
+        MySQL.con.close()
+        return make_response(f'Value {action.value} not found',403)
 
     MySQL.cursor.execute("SELECT DISTINCT subaction_code FROM actions WHERE project=%s AND action_code=%s",(project.value,action.value))
-    db_response = MySQL.cursor.fetchall()
+    subactions = format_mysql_list( MySQL.cursor.fetchall())
 
-    subactions = []
-    for i in db_response:subactions.append(i[0])
+    MySQL.cursor.execute("SELECT type,date_recived,discipline,phase,system FROM actions WHERE project=%s AND action_code=%s ORDER BY date DESC LIMIT 1",(project.value,action.value))
+    actions = format_mysql_list( MySQL.cursor.fetchone())
 
     for i in subactions:
         MySQL.cursor.execute("SELECT custom_code,zone,area,time,status FROM actions WHERE project=%s AND subaction_code=%s ORDER BY date DESC LIMIT 1",(project.value,i))
@@ -247,8 +240,8 @@ def modify_action ():
             INSERT INTO actions (action_code,project,customer_code,type,date_recived,
             discipline,phase,description,subaction_code,custom_code,zone,area,time,
             user,date,system1,status)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
-            (action.value,project.value,client.value,type.value,date.value,discipline.value,phase.value,description.value,
-            i,subaction_values[0],subaction_values[1],subaction_values[2],subaction_values[3], g.user, datetime.today(),system.value,subaction_values[4]))
+            (action.value,project.value,client.value,actions[0],actions[1],actions[2],actions[3],description.value,
+            i,subaction_values[0],subaction_values[1],subaction_values[2],subaction_values[3], g.user, datetime.today(),actions[4],subaction_values[4]))
         MySQL.con.commit()
 
     MySQL.con.close()

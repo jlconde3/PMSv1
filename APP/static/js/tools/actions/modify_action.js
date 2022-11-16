@@ -51,3 +51,10 @@ function display_data_project (response){
     document.getElementById('type').value = response[1];
     document.getElementById('description').value = response[4];
 }
+
+document.getElementById('description').addEventListener('keyup',()=>{
+    var characterCount = document.getElementById('description').value.length;
+    current = document.getElementById('current');
+    current.innerText = characterCount;
+
+});
