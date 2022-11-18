@@ -35,6 +35,8 @@ def create_app(test_config=None):
     app.register_blueprint(wps.bp)
     import user
     app.register_blueprint(user.bp)
+    import kanban
+    app.register_blueprint(kanban.bp)
 
     return app
 

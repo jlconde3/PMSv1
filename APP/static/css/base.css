@@ -20,9 +20,8 @@ body{
     justify-content: space-between;
 }
 
-
 nav{
-    background-color: #ffffff;
+    background-color:white;
     border-bottom: #EAEAEA solid 1px;
     width: 100%;
     overflow: hidden;
