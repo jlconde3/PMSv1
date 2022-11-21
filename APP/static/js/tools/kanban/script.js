@@ -1,0 +1,115 @@
+function card_template(wp_code, wp_has_meesage,description,users){
+    let users_list = "";
+    for (i of users){
+        users_list = users_list.concat(`<li>${i}</li>`);
+    }
+
+    if (wp_has_meesage){
+        const CARD =`
+        <a href="">
+            <div class="card">
+                <div class="wp-section">
+                    <div>
+                        <p class="wp-title">${wp_code}</p>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler
+                    icon-tabler-message" width="20" height="20" viewBox="0 0 24 24"
+                    stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M4 21v-13a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-9l-4 4"></path>
+                        <line x1="8" y1="9" x2="16" y2="9"></line>
+                        <line x1="8" y1="13" x2="14" y2="13"></line>
+                    </svg>
+                </div>
+                <div class="wp-info">
+                    <p>${description}</p>
+                </div>
+        
+                <div class="wp-users">
+                    <ul>
+                        ${users_list}
+                    </ul>
+                </div>
+            </div>
+        </a>`
+
+        return CARD
+    }
+
+    else {
+        const CARD =`
+        <a href="">
+            <div class="card">
+                <div class="wp-section">
+                    <div>
+                        <p class="wp-title">${wp_code}</p>
+                    </div>
+                </div>
+                <div class="wp-info">
+                    <p>${description}</p>
+                </div>
+        
+                <div class="wp-users">
+                    <ul>
+                        ${users}
+                    </ul>
+                </div>
+            </div>
+        </a>`
+        return CARD
+    }
+}
+
+function append_card(parent_element,content){
+    const container = parent_element;
+    let div = document.createElement('div');
+    div.innerHTML = content;
+    container.appendChild(div);
+}
+
+
+function display_cards(wp_status,wp_code,wp_has_meesage,description,users){
+
+    const to_do = document.getElementById('to-do');
+    const in_progress = document.getElementById('in-progress');
+    const on_hold = document.getElementById('on-hold')
+    const done = document.getElementById('done')
+    const cancel = document.getElementById('cancel')
+
+    switch(wp_status){
+        case 'To Do':
+            append_card(to_do,card_template(wp_code,wp_has_meesage,description,users));
+            break;
+        case 'In Progress':
+            append_card(in_progress,card_template(wp_code,wp_has_meesage,description,users));
+            break;
+        case 'On Hold':
+            append_card(on_hold,card_template(wp_code,wp_has_meesage,description,users));
+            break;
+        case 'Done':
+            append_card(done,card_template(wp_code,wp_has_meesage,description,users));
+            break;
+        case 'Cancel':
+            append_card(cancel,card_template(wp_code,wp_has_meesage,description,users));
+            break;
+    }
+}
+
+
+let response = {
+    card_1: ['To Do','WPXXXXX1',true,'Not assigned to any designer',['JLC','PBF']],
+    card_2: ['Done','WPXXXXX1',false,'Not assigned to any designer',['JLC']],
+    card_3: ['Cancel','WPXXXXX1',false,'Change in criteria',['PBF']]
+}
+
+for (let i in response){
+    let j = response[i]
+    display_cards(j[0],j[1],j[2],j[3],j[4])
+}
+
+//
+
+
+
+

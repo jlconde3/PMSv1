@@ -7,7 +7,40 @@ a{
     text-decoration: none;
 }
 
+.input-fields{
+    border: #EAEAEA solid 1px;
+    background-color: white;
+    padding:20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+label{
+    font-size: 14px;
+    font-weight: 100;
+}
+
+input{
+    height: 40px;
+    width: 200px;
+    padding-left: 5px;
+    font-size: 14px;
+    outline: none;
+    border: #EAEAEA solid 1px;
+    color:  #57647E;
+    margin-bottom: 5px;
+
+}
+
+.side-buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 .status-bar{
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
     position: sticky;
