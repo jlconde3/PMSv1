@@ -93,6 +93,24 @@ def stations ():
 
     return data_to_send
 
+@bp.route('/stations_kanban',methods=['POST'])
+@login_required
+def stations_kanban():
+    data = request.get_json()
+    project = InputClass(data['project'])
+
+    MySQL = MySQLHelper()
+
+    if not project.check_input_project(MySQL=MySQL):
+        MySQL.con.close()
+        return make_response(f'Project {project.value} not found',401)
+
+    MySQL.cursor.execute("SELECT DISTINCT station FROM tasks WHERE project=%s",(project.value,))
+    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
+    MySQL.con.close()
+
+    return data_to_send
+
 @bp.route('/zones',methods=['POST'])
 @login_required
 def zones ():

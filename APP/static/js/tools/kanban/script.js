@@ -1,8 +1,9 @@
 function card_template(wp_code, wp_has_meesage,description,users){
     let users_list = "";
+    console.log(users)
     for (i of users){
         users_list = users_list.concat(`<li>${i}</li>`);
-    }
+    }   
 
     if (wp_has_meesage){
         const CARD =`
@@ -52,7 +53,7 @@ function card_template(wp_code, wp_has_meesage,description,users){
         
                 <div class="wp-users">
                     <ul>
-                        ${users}
+                        ${users_list}
                     </ul>
                 </div>
             </div>
@@ -78,38 +79,62 @@ function display_cards(wp_status,wp_code,wp_has_meesage,description,users){
     const cancel = document.getElementById('cancel')
 
     switch(wp_status){
-        case 'To Do':
+        case 'TO DO':
             append_card(to_do,card_template(wp_code,wp_has_meesage,description,users));
             break;
-        case 'In Progress':
+        case 'IN PROGRESS':
             append_card(in_progress,card_template(wp_code,wp_has_meesage,description,users));
             break;
-        case 'On Hold':
+        case 'ON HOLD':
             append_card(on_hold,card_template(wp_code,wp_has_meesage,description,users));
             break;
-        case 'Done':
+        case 'DONE':
             append_card(done,card_template(wp_code,wp_has_meesage,description,users));
             break;
-        case 'Cancel':
+        case 'CANCEL':
             append_card(cancel,card_template(wp_code,wp_has_meesage,description,users));
             break;
     }
 }
+document.getElementById('project').addEventListener('click',()=>{
+    retrive_data_actions(
+        data = {},
+        url = '/tools/projects',
+        input_id = 'project',
+        id_list = [],
+        name_list = []
+    )
+});
+
+document.getElementById('value').addEventListener('click',()=>{
+    retrive_data_actions(
+        data = {project:document.getElementById('project').value},
+        url = '/tools/stations_kanban',
+        input_id = 'value',
+        id_list = [],
+        name_list = []
+    )
+});
 
 
-let response = {
-    card_1: ['To Do','WPXXXXX1',true,'Not assigned to any designer',['JLC','PBF']],
-    card_2: ['Done','WPXXXXX1',false,'Not assigned to any designer',['JLC']],
-    card_3: ['Cancel','WPXXXXX1',false,'Change in criteria',['PBF']]
-}
+document.getElementById('show_results_button').addEventListener('click',()=>{
+    fetch('/kanban/retrive_cards',{
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify({
+            project:document.getElementById('project').value,
+            field:document.getElementById('field').value,
+            value:document.getElementById('value').value,
+        }),
+        headers:{'Content-Type': 'application/json'}
+    })
+    .then(response => response.json())
+    .then((data) => {
+        for (let i in data){
+            let j = data[i]
+            console.log(j)
+            //display_cards(j[0],j[1],false,j[3],j[4])
+        }
+    });
 
-for (let i in response){
-    let j = response[i]
-    display_cards(j[0],j[1],j[2],j[3],j[4])
-}
-
-//
-
-
-
-
+});
