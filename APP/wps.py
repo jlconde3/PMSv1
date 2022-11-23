@@ -10,6 +10,11 @@ bp.add_url_rule('/modify_wp', view_func=CustomViews.as_view('/modify_wp','/tools
 @bp.route('/info')
 @login_required
 def info ():
-    project = request.args
+    wp = request.args.get('wp')
 
-    print(project)
+    MySQL = MySQLHelper()
+    MySQL.cursor.execute('SELECT * FROM wp WHERE code = %s',(wp,))
+    reponse = MySQL.cursor.fetchone()
+    print (reponse)
+
+    return "Hola"
