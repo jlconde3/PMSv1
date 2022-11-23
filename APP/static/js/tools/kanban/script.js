@@ -5,9 +5,9 @@ function card_template(wp_code, wp_has_meesage,description,users){
         users_list = users_list.concat(`<li>${i}</li>`);
     }   
 
-    if (wp_has_meesage == 0){
+    if (wp_has_meesage == 1){
         const CARD =`
-        <a href="">
+        <a href="/wps/info?wp=${wp_code}">
             <div class="card">
                 <div class="wp-section">
                     <div>
@@ -40,7 +40,7 @@ function card_template(wp_code, wp_has_meesage,description,users){
 
     else {
         const CARD =`
-        <a href="">
+        <a href="/wps/info?wp=${wp_code}">
             <div class="card">
                 <div class="wp-section">
                     <div>
@@ -116,7 +116,6 @@ document.getElementById('field').addEventListener('click',()=>{
     )
 });
 
-
 document.getElementById('value').addEventListener('click',()=>{
     retrive_data_actions(
         data = {
@@ -131,6 +130,12 @@ document.getElementById('value').addEventListener('click',()=>{
 });
 
 document.getElementById('show_results_button').addEventListener('click',()=>{
+
+    for (i of ['to-do','in-progress','on-hold','done','cancel']){
+        console.log(i)
+        delete_childs(i)
+    }
+
     fetch('/kanban/retrive_cards',{
         credentials: 'include',
         method: 'POST',

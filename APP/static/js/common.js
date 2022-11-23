@@ -1,27 +1,3 @@
-
-function create_table(table_type){
-    switch(table_type){
-        case "projects":
-            //Statements
-            break;
-
-        case "actions":
-            //Statements
-            break;
-        
-        case "wps":
-            //Statements
-            break;
-
-        case "users":
-            //Statements
-            break;
-        case "users-activity":
-            //Statements
-            break;
-    }
-}
-
 function transform_data_table (table_id,response){
     for (let i in response){
         let tr = document.createElement('tr');
@@ -55,7 +31,6 @@ function delete_value(id_fields){
         document.getElementById(i).value=null;
     }
 };
-
 
 function delete_value_by_name(name_fields){
     for (i of name_fields){
