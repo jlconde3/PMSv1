@@ -75,6 +75,8 @@ def systems ():
 
     return data_to_send
 
+
+
 @bp.route('/stations',methods=['POST'])
 @login_required
 def stations ():
@@ -93,11 +95,24 @@ def stations ():
 
     return data_to_send
 
-@bp.route('/stations_kanban',methods=['POST'])
+@bp.route('/fields_kanban',methods=['POST'])
+@login_required
+def fields_kanban ():
+    return ['DISCIPLINE','SYSTEM','PHASE','ZONE','AREA','LINE','STATION']
+
+@bp.route('/values_kanban',methods=['POST'])
 @login_required
 def stations_kanban():
     data = request.get_json()
     project = InputClass(data['project'])
+    field = InputClass(data['field'])
+
+    if field.value.lower() in {'discipline','system','phase','zone','area'}:
+        table = 'areas'
+    elif field.value.lower() in {'line','station'}:
+        table = 'tasks'
+    else:
+        return make_response(f'Value {field.value} not found',401)
 
     MySQL = MySQLHelper()
 
@@ -105,7 +120,7 @@ def stations_kanban():
         MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
 
-    MySQL.cursor.execute("SELECT DISTINCT station FROM tasks WHERE project=%s",(project.value,))
+    MySQL.cursor.execute(f"SELECT DISTINCT {field.value.lower()} FROM {table} WHERE project='{project.value}'")
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
 

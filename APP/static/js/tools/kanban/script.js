@@ -1,11 +1,11 @@
 function card_template(wp_code, wp_has_meesage,description,users){
     let users_list = "";
-    console.log(users)
+
     for (i of users){
         users_list = users_list.concat(`<li>${i}</li>`);
     }   
 
-    if (wp_has_meesage){
+    if (wp_has_meesage == 0){
         const CARD =`
         <a href="">
             <div class="card">
@@ -106,16 +106,29 @@ document.getElementById('project').addEventListener('click',()=>{
     )
 });
 
-document.getElementById('value').addEventListener('click',()=>{
+document.getElementById('field').addEventListener('click',()=>{
     retrive_data_actions(
-        data = {project:document.getElementById('project').value},
-        url = '/tools/stations_kanban',
-        input_id = 'value',
+        data = {},
+        url = '/tools/fields_kanban',
+        input_id = 'field',
         id_list = [],
         name_list = []
     )
 });
 
+
+document.getElementById('value').addEventListener('click',()=>{
+    retrive_data_actions(
+        data = {
+            project:document.getElementById('project').value,
+            field:document.getElementById('field').value
+        },
+        url = '/tools/values_kanban',
+        input_id = 'value',
+        id_list = [],
+        name_list = []
+    )
+});
 
 document.getElementById('show_results_button').addEventListener('click',()=>{
     fetch('/kanban/retrive_cards',{
@@ -132,9 +145,7 @@ document.getElementById('show_results_button').addEventListener('click',()=>{
     .then((data) => {
         for (let i in data){
             let j = data[i]
-            console.log(j)
-            //display_cards(j[0],j[1],false,j[3],j[4])
+            display_cards(j[0],j[1],false,j[3],j[4])
         }
     });
-
 });
