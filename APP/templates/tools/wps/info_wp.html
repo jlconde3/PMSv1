@@ -2,7 +2,7 @@
 
 {%block css%}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools/info_wp.css')}}"/>{%endblock%}
 
-{%block scripts%}{%endblock%}
+{%block scripts%}<script src="/static/js/tools/wp/info_wp.js" defer></script>{%endblock%}
 
 {%block title%}PMS | Info WP{%endblock%}
 
@@ -63,13 +63,8 @@
             <div class="card info-card">
                 <div class="field-value">
                     <p class="field">Status</p>
-                    <select>
-                        <option>To Do</option>
-                        <option>In Progress</option>
-                        <option>On Hold</option>
-                        <option>Done</option>
-                        <option>Cancel</option>
-                    </select>
+                    <input type="text" name="status" id="status" autocomplete="off" required>
+                    <datalist id="status_list"></datalist>
                 </div>
                 <div class="field-value">
                     <p class="field">Remarks</p>
@@ -78,7 +73,7 @@
             </div>
             <div class="card detail-card display-grid">
                 <div class="field-value">
-                    <p class="field">Actions</p>
+                    <p class="field table">Actions</p>
                     <ul class="list">
                         {% for action in actions %}
                             <li>{{ action }}</li>
@@ -86,7 +81,7 @@
                     </ul>
                 </div>
                 <div class="field-value">
-                    <p class="field">Areas</p>
+                    <p class="field table">Areas</p>
                     <ul class="list">
                         {% for area in areas %}
                             <li>{{ area }}</li>
@@ -94,7 +89,7 @@
                     </ul>
                 </div>
                 <div class="field-value">
-                    <p class="field">Tasks</p>
+                    <p class="field table">Tasks</p>
                     <ul class="list">
                         {% for task in tasks %}
                             <li>{{ task }}</li>

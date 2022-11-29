@@ -75,8 +75,6 @@ def systems ():
 
     return data_to_send
 
-
-
 @bp.route('/stations',methods=['POST'])
 @login_required
 def stations ():
@@ -226,6 +224,11 @@ def subactions ():
 
     return data_to_send
 
+
+@bp.route('/status_wp',methods=['POST'])
+@login_required
+def status_wp ():
+    return ['To Do','In Progress','On Hold','Done','Cancel']
 
 
 """
