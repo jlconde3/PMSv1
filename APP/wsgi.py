@@ -1,7 +1,7 @@
 import os 
 import sys
 
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, request
 
 def create_app(test_config=None):
 
@@ -15,7 +15,7 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)
 
-    sys.path.append( os.path.join(os.path.dirname(sys.path[0]),'PMSv3/PMS'))
+    sys.path.append( os.path.join(os.path.dirname(sys.path[0]),'PMSv3/APP'))
 
     @app.route("/")
     def init ():
@@ -37,6 +37,8 @@ def create_app(test_config=None):
     app.register_blueprint(user.bp)
     import kanban
     app.register_blueprint(kanban.bp)
+    import external_tools
+    app.register_blueprint(external_tools.bp)
 
     return app
 
