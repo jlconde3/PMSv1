@@ -228,7 +228,7 @@ def subactions ():
 @bp.route('/status_wp',methods=['POST'])
 @login_required
 def status_wp ():
-    return ['To Do','In Progress','On Hold','Done','Cancel']
+    return ['TO DO','IN PROGRESS','ON HOLD','DONE','CANCEL']
 
 
 """

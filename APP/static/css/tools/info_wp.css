@@ -17,12 +17,12 @@ li{
 textarea{
     outline: none;
     font-size: 14px;
-    height: 35px;
+    height: 27px;
     width: 99.3%;
     resize: none;
     border:  #EAEAEA solid 1px;
     padding-left: 5px;
-    padding-top: 5px;
+    padding-top: 12px;
 }
 
 
@@ -62,8 +62,6 @@ textarea{
     margin: 10px;
     margin-left: 10px;
 }
-
-
 
 .value,li{
     margin: 5px 0 5px 0;
@@ -125,7 +123,6 @@ option{
     height: 40px;
     padding-left: 5px;
     outline: none;
-    color:  #57647E;
     cursor: pointer;
     border-bottom:#EAEAEA solid 1px;
     width: 200px;
@@ -137,4 +134,13 @@ option:hover{
 
 .dropdown{
     display: inline-block;
+}
+
+input{
+    height: 40px;
+    width: 200px;
+    padding-left: 5px;
+    font-size: 14px;
+    outline: none;
+    border: #EAEAEA solid 1px;
 }

@@ -9,129 +9,140 @@
 {%block main%}
 
 <div class="wp-card">
-    <div class="card top-card">
-        <div class="field-value">
-            <p class="wp-code">{{wp_code}}</p>
-        </div>
-        <div class="dates-fields">
-            <div class="field-value">
-                <p class="field dates">Date creation</p>
-                <p class="value dates">{{ date_1 }}</p>
-            </div>
-            <div class="field-value">
-                <p class="field dates">Last modification</p>
-                <p class="value dates">{{ date_2 }}</p>
-            </div>
-        </div>
-    </div>
-    <div class="wrapper">
-        <div class="card side-card column-1">
-            <div class="field-value">
-                <p class="field">Project</p>
-                <p class="value">{{ project }}</p>
-            </div>
-            <div class="field-value">
-                <p class="field">Discipline</p>
-                <p class="value">{{ discipline }}</p>
-            </div>
-            <div class="field-value">
-                <p class="field">Phase</p>
-                <p class="value">{{ phase }}</p>
-            </div>
-            <div class="field-value">
-                <p class="field">System</p>
-                <p class="value">{{ system }}</p>
-            </div>
-            <div class="field-value">
-                <p class="field">Line</p>
-                <p class="value">{{ line }}</p>
-            </div>
-            <div class="field-value">
-                <p class="field">Station</p>
-                <p class="value">{{ station }}</p>
-            </div>
-            <div class="field-value">
-                <p class="field">Zone</p>
-                <p class="value">{{ zone }}</p>
-            </div>
-            <div class="field-value">
-                <p class="field">Custom code</p>
-                <p class="value">{{ custom_code }}</p>
-            </div>
-        </div>
-        <div class="column-2">
-            <div class="card info-card">
-                <div class="field-value">
-                    <p class="field">Status</p>
-                    <input type="text" name="status" id="status" autocomplete="off" required>
-                    <datalist id="status_list"></datalist>
-                </div>
-                <div class="field-value">
-                    <p class="field">Remarks</p>
-                    <textarea name="additional_info" id="additional_info" maxlength="100">{{ remark }}</textarea>
-                </div>
-            </div>
-            <div class="card detail-card display-grid">
-                <div class="field-value">
-                    <p class="field table">Actions</p>
-                    <ul class="list">
-                        {% for action in actions %}
-                            <li>{{ action }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="field-value">
-                    <p class="field table">Areas</p>
-                    <ul class="list">
-                        {% for area in areas %}
-                            <li>{{ area }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="field-value">
-                    <p class="field table">Tasks</p>
-                    <ul class="list">
-                        {% for task in tasks %}
-                            <li>{{ task }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            <div class="column">
-                <div class="card numeric-card">
-                    <div class="display-grid">
-                        <div class="field-value">
-                            <p class="field">Difficulty</p>
-                            <p class="value">{{ dif_value }}</p>
-                        </div>
-                        <div class="field-value">
-                            <p class="field">Volumn</p>
-                            <p class="value">{{ volumn_value }}</p>
-                        </div>
-                        <div class="field-value">
-                            <p class="field">Complexity</p>
-                            <p class="value">{{ complexity_value }}</p>
-                        </div>
+    <form action="/wps/info_save?project={{ project }}&wp={{ wp_code }}" method="post">
 
+        <div class="card top-card">
+            <div class="field-value">
+                <p class="wp-code" name="wp_code">{{wp_code}}</p>
+            </div>
+            <div class="dates-fields">
+                <div class="field-value">
+                    <p class="field dates">Date creation</p>
+                    <p class="value dates">{{ date_1 }}</p>
+                </div>
+                <div class="field-value">
+                    <p class="field dates">Last modification</p>
+                    <p class="value dates">{{ date_2 }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="wrapper">
+            <div class="card side-card column-1">
+                <div class="field-value">
+                    <p class="field" name="project">Project</p>
+                    <p class="value">{{ project }}</p>
+                </div>
+                <div class="field-value">
+                    <p class="field">Discipline</p>
+                    <p class="value">{{ discipline }}</p>
+                </div>
+                <div class="field-value">
+                    <p class="field">Phase</p>
+                    <p class="value">{{ phase }}</p>
+                </div>
+                <div class="field-value">
+                    <p class="field">System</p>
+                    <p class="value">{{ system }}</p>
+                </div>
+                <div class="field-value">
+                    <p class="field">Line</p>
+                    <p class="value">{{ line }}</p>
+                </div>
+                <div class="field-value">
+                    <p class="field">Station</p>
+                    <p class="value">{{ station }}</p>
+                </div>
+                <div class="field-value">
+                    <p class="field">Zone</p>
+                    <p class="value">{{ zone }}</p>
+                </div>
+                <div class="field-value">
+                    <p class="field">Custom code</p>
+                    <p class="value">{{ custom_code }}</p>
+                </div>
+            </div>
+
+            <div class="column-2">
+                <div class="card info-card">
+                    <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+                        <div class="field-value">
+                            <p class="field">Status</p>
+                            <input type="text" name="status" id="status" autocomplete="off" value="{{ status}}" required>
+                            <datalist id="status_list"></datalist>
+                        </div>
+                        <div class="field-value">
+                            <button type="submit" class="black-button">Save changes</button>
+                        </div>
                     </div>
-                    <div class="display-grid">
-                        <div class="field-value">
-                            <p class="field">Contracted time</p>
-                            <p class="value">{{ contracted_time_value }}</p>
-                        </div>
-                        <div class="field-value">
-                            <p class="field">Planned time</p>
-                            <p class="value">{{ planned_time_value }}</p>
-                        </div>
-                        <div class="field-value">
-                            <p class="field">Scheduled time</p>
-                            <p class="value">{{ scheduled_time_value }}</p>
-                        </div>
+                    <div class="field-value">
+                        <p class="field">Remarks</p>
+                        <textarea name="remark" maxlength="100">{{ remark }}</textarea>
                     </div>
                 </div>
-            </div>                    
+
+                <div class="card detail-card display-grid">
+                    <div class="field-value">
+                        <p class="field table">Actions</p>
+                        <ul class="list">
+                            {% for action in actions %}
+                                <li>{{ action }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="field-value">
+                        <p class="field table">Areas</p>
+                        <ul class="list">
+                            {% for area in areas %}
+                                <li>{{ area }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="field-value">
+                        <p class="field table">Tasks</p>
+                        <ul class="list">
+                            {% for task in tasks %}
+                                <li>{{ task }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card numeric-card">
+                        <div class="display-grid">
+                            <div class="field-value">
+                                <p class="field">Difficulty</p>
+                                <p class="value">{{ dif_value }}</p>
+                            </div>
+                            <div class="field-value">
+                                <p class="field">Volume</p>
+                                <p class="value">{{ volume_value }}</p>
+                            </div>
+                            <div class="field-value">
+                                <p class="field">Complexity</p>
+                                <p class="value">{{ complexity_value }}</p>
+                            </div>
+
+                        </div>
+                        <div class="display-grid">
+                            <div class="field-value">
+                                <p class="field">Contracted time</p>
+                                <p class="value">{{ contracted_time_value }}</p>
+                            </div>
+                            <div class="field-value">
+                                <p class="field">Planned time</p>
+                                <p class="value">{{ planned_time_value }}</p>
+                            </div>
+                            <div class="field-value">
+                                <p class="field">Scheduled time</p>
+                                <p class="value">{{ scheduled_time_value }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>                    
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 
 {%endblock%}

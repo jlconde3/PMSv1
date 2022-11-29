@@ -1,4 +1,4 @@
-function card_template(wp_code, wp_has_meesage,description,users){
+function card_template(project,wp_code, wp_has_meesage,description,users){
     let users_list = "";
 
     for (i of users){
@@ -7,7 +7,7 @@ function card_template(wp_code, wp_has_meesage,description,users){
 
     if (wp_has_meesage == 1){
         const CARD =`
-        <a href="/wps/info?wp=${wp_code}">
+        <a href="/wps/info?project=${project}&wp=${wp_code}">
             <div class="card">
                 <div class="wp-section">
                     <div>
@@ -40,7 +40,7 @@ function card_template(wp_code, wp_has_meesage,description,users){
 
     else {
         const CARD =`
-        <a href="/wps/info?wp=${wp_code}">
+        <a href="/wps/info?project=${project}&wp=${wp_code}">
             <div class="card">
                 <div class="wp-section">
                     <div>
@@ -70,7 +70,7 @@ function append_card(parent_element,content){
 }
 
 
-function display_cards(wp_status,wp_code,wp_has_meesage,description,users){
+function display_cards(wp_status,project,wp_code,wp_has_meesage,description,users){
 
     const to_do = document.getElementById('to-do');
     const in_progress = document.getElementById('in-progress');
@@ -80,19 +80,19 @@ function display_cards(wp_status,wp_code,wp_has_meesage,description,users){
 
     switch(wp_status){
         case 'TO DO':
-            append_card(to_do,card_template(wp_code,wp_has_meesage,description,users));
+            append_card(to_do,card_template(wp_code,project,wp_has_meesage,description,users));
             break;
         case 'IN PROGRESS':
-            append_card(in_progress,card_template(wp_code,wp_has_meesage,description,users));
+            append_card(in_progress,card_template(wp_code,project,wp_has_meesage,description,users));
             break;
         case 'ON HOLD':
-            append_card(on_hold,card_template(wp_code,wp_has_meesage,description,users));
+            append_card(on_hold,card_template(wp_code,project,wp_has_meesage,description,users));
             break;
         case 'DONE':
-            append_card(done,card_template(wp_code,wp_has_meesage,description,users));
+            append_card(done,card_template(wp_code,project,wp_has_meesage,description,users));
             break;
         case 'CANCEL':
-            append_card(cancel,card_template(wp_code,wp_has_meesage,description,users));
+            append_card(cancel,card_template(wp_code,project,wp_has_meesage,description,users));
             break;
     }
 }
@@ -132,7 +132,6 @@ document.getElementById('value').addEventListener('click',()=>{
 document.getElementById('show_results_button').addEventListener('click',()=>{
 
     for (i of ['to-do','in-progress','on-hold','done','cancel']){
-        console.log(i)
         delete_childs(i)
     }
 
@@ -150,7 +149,8 @@ document.getElementById('show_results_button').addEventListener('click',()=>{
     .then((data) => {
         for (let i in data){
             let j = data[i]
-            display_cards(j[0],j[1],false,j[3],j[4])
+            console.log(j)
+            display_cards(j[0],j[1],j[2],j[3],j[4],j[5])
         }
     });
 });
