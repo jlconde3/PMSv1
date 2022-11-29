@@ -41,7 +41,7 @@ def retrive_cards():
         return make_response(f'Value {value.value} not found',403)
     
 
-    MySQL.cursor.execute(f"SELECT status,code,has_message,description,users FROM wp WHERE project = '{project.value}' AND {field.value.lower()} = '{value.value}'")
+    MySQL.cursor.execute(f"SELECT status,code,has_message,remark,users FROM wp WHERE project = '{project.value}' AND {field.value.lower()} = '{value.value}'")
     query = MySQL.cursor.fetchall()
     MySQL.con.close()
     query_list = []

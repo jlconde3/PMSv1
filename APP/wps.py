@@ -14,7 +14,34 @@ def info ():
 
     MySQL = MySQLHelper()
     MySQL.cursor.execute('SELECT * FROM wp WHERE code = %s',(wp,))
-    reponse = MySQL.cursor.fetchone()
-    print (reponse)
+    response = MySQL.cursor.fetchone()
+    print (response)
 
-    return "Hola"
+    return render_template('/tools/wps/info_wp.html', 
+        wp_code = response[1],
+        date_1 = response[3],
+        date_2 = response[4],
+        project = response[5],
+        discipline = response[6],
+        phase = response[7],
+        system = response[8],
+        line = response[9],
+        station = response[10],
+        zone = response[11],
+        actions = split_data(response[12]),
+        areas = split_data(response[13]),
+        tasks = split_data(response[14]),
+        dif_value = response[15],
+        volumn_value = response[16],
+        complexity_value = response[17],
+        contracted_time_value = response[18],
+        planned_time_value = response[19],
+        scheduled_time_value = response[20],
+        remark = response[22],
+        custom_code = response[25]
+    )
+
+def split_data (data:str):
+    if data is None:
+        return []
+    return data.split(",")

@@ -1,0 +1,137 @@
+main{
+    background-color: #fafafa;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+li{
+    list-style-type: none;
+}
+
+textarea{
+    outline: none;
+    font-size: 14px;
+    height: 35px;
+    width: 99.3%;
+    resize: none;
+    border:  #EAEAEA solid 1px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+
+.wp-card{
+    margin: auto;
+    width: 90vw;
+}
+.card{
+    background-color: white;
+    margin: 10px 10px 10px 10px;
+    border:  #EAEAEA solid 1px;
+    border-radius: 20px;
+}
+
+.wrapper{
+    display: grid;
+    grid-template-columns: 250px auto;
+    grid-auto-rows: auto;
+}
+
+.display-grid{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto auto;
+}
+
+.column-1{
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.column-2{
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.field-value{
+    margin: 10px;
+    margin-left: 10px;
+}
+
+.field{
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.value,li{
+    margin: 5px 0 5px 0;
+}
+.top-card,.side-card,.info-card,.users-card,.detail-card,.numeric-card{
+    padding: 10px;
+}
+
+.flex{
+    display:flex
+}
+.top-card{
+    height: 100px;
+    background-color: #30475E;
+    color: white;
+}
+.wp-code{
+    font-size: 25px;
+}
+
+.dates-fields{
+    display: flex;
+    position: absolute;
+    right: 15vh;
+}
+
+.dates{
+    font-size: 12px;
+}
+
+button{
+    background-color: transparent;
+    border: none;
+    width: 140px;
+    color: #b4b3b3;
+}
+
+button:hover{
+    cursor: pointer;
+    opacity: 50%;
+}
+
+select{
+    height:42px ;
+    outline: none;
+    border:  #EAEAEA solid 1px;
+}
+
+.border{
+    border-bottom:#EAEAEA  solid 1px;
+}
+
+.add-user{
+    text-align: left;
+}
+
+.info-card,.detail-card,.numeric-card{
+    min-height: 180px;
+}
+
+
+
+
+.side-card{
+    display: flex;
+    flex-direction: column;
+    min-height: 600px;
+    justify-content: space-between;
+}
