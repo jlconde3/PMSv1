@@ -12,6 +12,10 @@ bp = Blueprint('kanban', __name__, url_prefix='/kanban')
 def main():
     return render_template('/tools/kanban/home.html')
 
+def split_data (data:str):
+    if data is None:
+        return []
+    return data.split(",")
 
 @bp.route('/retrive_cards', methods=['POST'])
 @login_required
@@ -41,7 +45,7 @@ def retrive_cards():
         return make_response(f'Value {value.value} not found',403)
     
 
-    MySQL.cursor.execute(f"SELECT status,project,code,has_message,remark,users FROM wp WHERE project = '{project.value}' AND {field.value.lower()} = '{value.value}'")
+    MySQL.cursor.execute(f"SELECT status,project,code,has_message,remark,users FROM wp WHERE project = '{project.value}' AND {field.value.lower()} = '{value.value}' ORDER BY ")
     query = MySQL.cursor.fetchall()
     MySQL.con.close()
     query_list = []
@@ -49,7 +53,7 @@ def retrive_cards():
         query_list.append(list(i))
     
     for i in query_list:
-        i[5] = i[5].split(',')
+        i[5] = split_data(i[5])
     
     
     

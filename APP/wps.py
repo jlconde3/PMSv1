@@ -14,16 +14,17 @@ def info ():
     project = InputClass(request.args.get('project')) 
     wp = InputClass(request.args.get('wp'))
 
-    if not project.check_input_project():
+    MySQL = MySQLHelper()
+
+    if not project.check_input_project(MySQL=MySQL):
+        MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
 
-    MySQL = MySQLHelper()
-    
     if not wp.check_input_value(MySQL=MySQL,field='code',table='wp', project=project.value):
         MySQL.con.close()
         return make_response(f'Value {wp.value} not found',401)
 
-    MySQL.cursor.execute('SELECT * FROM wp WHERE proejct = %s AND code = %s',(project,wp))
+    MySQL.cursor.execute('SELECT * FROM wp WHERE project = %s AND code = %s',(project.value,wp.value))
     response = MySQL.cursor.fetchone()
     MySQL.con.close()
 
@@ -84,7 +85,6 @@ def info_save():
         return make_response(f'Value {wp_code.value} not found',401)
     
     MySQL.cursor.execute('INSERT INTO ')
-
 
 
     return "Hola"
