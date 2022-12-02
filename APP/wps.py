@@ -91,8 +91,6 @@ def info_save():
     response = MySQL.cursor.fetchone()
     MySQL.con.close()
 
-
-
     return "Hola"
 
 
