@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint, request,g, make_response
 from common import MySQLHelper,InputClass
 from auth import login_required, CustomViews
+from datetime import datetime
 
 bp = Blueprint('wps', __name__, url_prefix='/wps')
 
@@ -65,7 +66,7 @@ def split_data (data:str):
 def info_save():
 
     project = InputClass(request.args.get('project')) 
-    wp_code = InputClass(request.args.get('wp')) 
+    wp = InputClass(request.args.get('wp')) 
     status = InputClass(request.form['status'])
     remark = InputClass(request.form['remark'])
 
@@ -80,11 +81,16 @@ def info_save():
 
     MySQL = MySQLHelper()
 
-    if not wp_code.check_input_value(MySQL=MySQL,field='code',table='wp', project=project.value):
+    if not wp.check_input_value(MySQL=MySQL,field='code',table='wp', project=project.value):
         MySQL.con.close()
-        return make_response(f'Value {wp_code.value} not found',401)
+        return make_response(f'Value {wp.value} not found',401)
     
-    MySQL.cursor.execute('INSERT INTO ')
+
+
+    MySQL.cursor.execute('SELECT * FROM wp WHERE project = %s AND code = %s',(project.value,wp.value))
+    response = MySQL.cursor.fetchone()
+    MySQL.con.close()
+
 
 
     return "Hola"
