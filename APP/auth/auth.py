@@ -5,7 +5,7 @@ from flask.views import View
 from hashlib import sha256
 from common import MySQLHelper, InputClass
 
-bp = Blueprint('auth', __name__, url_prefix='/auth')
+bp = Blueprint('auth', __name__, url_prefix='/auth', template_folder='templates', static_folder='static')
 
 def check_password_hash (user_password:str,input_password:str):
     if user_password == sha256(input_password.encode()).hexdigest():
