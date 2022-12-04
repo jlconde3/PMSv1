@@ -21,24 +21,9 @@ def create_app(test_config=None):
     def init ():
         return redirect(url_for('tools./'))
 
-    import auth
-    app.register_blueprint(auth.bp)
-    import data
-    app.register_blueprint(data.bp)
-    import tools
-    app.register_blueprint(tools.bp)
-    import projects
-    app.register_blueprint(projects.bp)
     import actions
     app.register_blueprint(actions.bp)
-    import wps
-    app.register_blueprint(wps.bp)
-    import user
-    app.register_blueprint(user.bp)
-    import kanban
-    app.register_blueprint(kanban.bp)
-    import external_tools
-    app.register_blueprint(external_tools.bp)
+
 
     return app
 

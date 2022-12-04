@@ -2,7 +2,7 @@ import json
 
 from flask import render_template, Blueprint, request,g, make_response, redirect, url_for, flash
 from common import MySQLHelper, InputClass, format_mysql_list
-from auth import login_required, CustomViews
+from APP.auth import login_required, CustomViews
 from datetime import datetime
 from decimal import Decimal
 
