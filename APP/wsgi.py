@@ -1,7 +1,7 @@
 import os 
 import sys
 
-from flask import Flask, redirect, url_for, request
+from flask import Flask
 
 def create_app(test_config=None):
 
@@ -17,12 +17,34 @@ def create_app(test_config=None):
 
     sys.path.append( os.path.join(os.path.dirname(sys.path[0]),'PMSv3/APP'))
 
-    @app.route("/")
-    def init ():
-        return redirect(url_for('tools./'))
 
-    import actions
+    from auth import auth
+    app.register_blueprint(auth.bp)
+
+    from general import general
+
+    from tools import tools
+    app.register_blueprint(tools.bp)
+
+    from projects import projects
+    app.register_blueprint(projects.bp)
+
+    from actions import actions
     app.register_blueprint(actions.bp)
+
+    from wps import wps 
+    app.register_blueprint(wps.bp)
+
+    from kanban import kanban
+    app.register_blueprint(kanban.bp)
+
+    from data import data
+    app.register_blueprint(data.bp)
+
+    from user import user
+    app.register_blueprint(user.bp)
+
+
 
 
     return app

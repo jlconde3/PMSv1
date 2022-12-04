@@ -1,7 +1,7 @@
 import json
 
 from flask import render_template, Blueprint, request, make_response
-from auth import login_required
+from auth.auth import login_required, CustomViews
 from common import MySQLHelper, InputClass
 
 

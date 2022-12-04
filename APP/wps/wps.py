@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, request,g, make_response
 from common import MySQLHelper,InputClass
-from auth import login_required, CustomViews
+from auth.auth import login_required, CustomViews
 from datetime import datetime
 
 bp = Blueprint('wps', __name__, url_prefix='/wps')

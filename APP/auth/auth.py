@@ -1,9 +1,11 @@
 import functools
 
-from flask import render_template, Blueprint, redirect, url_for, request, session, g
-from flask.views import View
 from hashlib import sha256
 from common import MySQLHelper, InputClass
+
+from flask.views import View
+from flask import render_template, Blueprint, redirect, url_for, request, session, g
+
 
 bp = Blueprint('auth', __name__, url_prefix='/auth', template_folder='templates', static_folder='static')
 
