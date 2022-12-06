@@ -9,8 +9,14 @@ from flask import render_template, Blueprint, redirect, url_for, request, sessio
 
 bp = Blueprint('auth', __name__, url_prefix='/auth', template_folder='templates', static_folder='static')
 
+def check_password_hash (user_password:str,input_password:str):
+    if user_password == sha256(input_password.encode()).hexdigest():
+        return True
+    else:
+        return False
 
-def login_user ():
+@bp.route('/login', methods=('GET', 'POST'))
+def login_user():
     if request.method == 'POST':
 
         username = InputClass(request.form['username'])
@@ -39,7 +45,7 @@ def login_user ():
         else: 
             return 'Special chars'
         
-    return render_template('public/login.html')
+    return render_template('login.html')
 
 @bp.route('/logout', methods=('GET', 'POST'))
 def logout ():

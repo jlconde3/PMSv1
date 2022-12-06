@@ -7,13 +7,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/public/login.css')}}"/> 
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth/style.css')}}"/> 
     <title>PMS</title>
 </head>
 <body>
     <main>
-        <img src="/static/images/pms-logo-transparent-black.png" alt="pms-logo">
+        <img src="/static/general/images/pms-logo-transparent-black.png" alt="pms-logo">
         <form method="post" autocomplete="off" action="/auth/login" id="login-form">
             <input type="text" class = "login-input" name = "username" id = "username" placeholder="Username">
             <input type="password" class = "login-input" name = "password" id = "password" placeholder="Password">

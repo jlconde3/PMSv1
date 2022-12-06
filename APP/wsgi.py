@@ -1,7 +1,8 @@
 import os 
 import sys
 
-from flask import Flask
+from flask import Flask, redirect, url_for
+from auth.auth import login_required
 
 def create_app(test_config=None):
 
@@ -17,6 +18,10 @@ def create_app(test_config=None):
 
     sys.path.append( os.path.join(os.path.dirname(sys.path[0]),'PMSv3/APP'))
 
+    @app.route('/')
+    @login_required
+    def index():
+        return redirect(url_for('auth.client'))
 
     from auth import auth
     app.register_blueprint(auth.bp)
@@ -43,9 +48,6 @@ def create_app(test_config=None):
 
     from user import user
     app.register_blueprint(user.bp)
-
-
-
 
     return app
 
