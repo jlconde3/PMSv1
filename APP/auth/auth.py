@@ -10,8 +10,6 @@ from flask import render_template, Blueprint, redirect, url_for, request, sessio
 bp = Blueprint('auth', __name__, url_prefix='/auth', template_folder='templates', static_folder='static')
 
 
-
-
 def login_user ():
     if request.method == 'POST':
 
@@ -22,7 +20,7 @@ def login_user ():
             error = None
 
             MySQL = MySQLHelper()
-            MySQL.cursor.execute('SELECT user,password FROM users WHERE user = %s ORDER BY id DESC LIMIT 1', (username.value,))
+            MySQL.cursor.execute('SELECT user,password FROM `pms-users`.users WHERE user = %s ORDER BY id DESC LIMIT 1', (username.value,))
             user = MySQL.cursor.fetchone()
             MySQL.con.close()
 

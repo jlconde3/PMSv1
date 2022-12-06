@@ -1,10 +1,7 @@
 {% extends "base.html" %}
 
-{% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/tools/tools.css')}}"/>
-{% endblock %}
-
-{% block scripts %}<script src="/static/js/tools/actions/modify_subaction.js" defer></script>{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='actions/style.css')}}"/>{% endblock %}
+{% block scripts %}<script src="/static/actions/modify_subaction.js" defer></script>{% endblock %}
 
 {% block title %}PMS | Modify action{% endblock %}
 
