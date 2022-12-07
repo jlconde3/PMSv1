@@ -4,87 +4,102 @@ let q = 1;
 document.getElementById('project_code').addEventListener('click',()=>{
     retrive_data(
         data = {},
-        url = '/tools/projects',
+        url = '/data/projects',
         input_id = 'project_code',
-        id_list = ['discipline_code','phase_code','wp_line','wp_station','wp_zone'],
+        id_list = ['phase_code','system_code','zone_code','discipline_code','line_code','station_code'],
+        name_list = ['task_action','task_area','task_code']
+    )
+});
+document.getElementById('phase_code').addEventListener('click',()=>{
+    retrive_data(
+        data = {
+            project: document.getElementById('project_code').value,
+            discipline: document.getElementById('discipline_code').value
+        },
+        url = '/data/phases',
+        input_id = 'phase_code',
+        id_list = ['system_code','zone_code'],
+        name_list = ['task_action','task_area','task_code']
+    )
+});
+
+document.getElementById('system_code').addEventListener('click',()=>{
+    retrive_data(
+        data = {
+            project: document.getElementById('project_code').value,
+            phase:document.getElementById('phase_code').value,
+        },
+        url = '/data/systems',
+        input_id = 'system_code',
+        id_list = ['zone_code'],
+        name_list = ['task_action','task_area','task_code']
+    )
+});
+
+document.getElementById('zone_code').addEventListener('click',()=>{
+    retrive_data(
+        data = {
+            project: document.getElementById('project_code').value,
+            phase:document.getElementById('phase_code').value,
+            system: document.getElementById('system_code').value,
+        },
+        url = '/data/zones',
+        input_id = 'zone_code',
+        id_list = [],
         name_list = ['task_action','task_area','task_code']
     )
 });
 
 document.getElementById('discipline_code').addEventListener('click',()=>{
     retrive_data(
-        data = {project_code: document.getElementById('project_code').value},
-        url = '/tools/disciplines',
+        data = {project: document.getElementById('project_code').value},
+        url = '/data/disciplines',
         input_id = 'discipline_code',
-        id_list = ['phase_code','wp_line','wp_station','wp_zone'],
+        id_list = ['line_code','station_code'],
         name_list = ['task_action','task_area','task_code']
     )
 });
 
-document.getElementById('phase_code').addEventListener('click',()=>{
-    retrive_data(
-        data = {
-            project_code: document.getElementById('project_code').value,
-            discipline_code: document.getElementById('discipline_code').value
-        },
-        url = '/tools/phases',
-        input_id = 'phase_code',
-        id_list = ['wp_line','wp_station','wp_zone'],
-        name_list = ['task_action','task_area','task_code']
-    )
-});
-
-document.getElementById('wp_line').addEventListener('click', async ()=>{
+document.getElementById('line_code').addEventListener('click', async ()=>{
     await retrive_data(
         data = {
-        project_code: document.getElementById('project_code').value,
-        discipline_code: document.getElementById('discipline_code').value,
+        project: document.getElementById('project_code').value,
+        discipline: document.getElementById('discipline_code').value,
         },
-        url = '/tools/lines',
-        input_id = 'wp_line',
-        id_list = ['wp_station','wp_zone'],
+        url = '/data/lines',
+        input_id = 'line_code',
+        id_list = ['station_code'],
         name_list = ['task_action','task_area','task_code']
     )
     await disabled_fields()
 });
 
-document.getElementById("wp_station").addEventListener('click',()=>{
+document.getElementById('station_code').addEventListener('click',()=>{
     retrive_data(
         data = {
-            project_code: document.getElementById('project_code').value,
-            discipline_code: document.getElementById('discipline_code').value,
-            wp_line: document.getElementById('wp_line').value
+            project: document.getElementById('project_code').value,
+            line: document.getElementById('line_code').value
         },
-        url = '/tools/stations',
-        input_id ="wp_station",
-        id_list = ['wp_zone'],
-        name_list = ['task_action','task_area','task_code']
-    )
-});
-
-document.getElementById('wp_zone').addEventListener('click',()=>{
-    retrive_data(
-        data = {
-            project_code: document.getElementById('project_code').value,
-            discipline_code: document.getElementById('discipline_code').value,
-            phase_code:document.getElementById('phase_code').value,
-        },
-        url = '/tools/zones',
-        input_id = 'wp_zone',
+        url = '/data/stations',
+        input_id ="station_code",
         id_list = [],
         name_list = ['task_action','task_area','task_code']
     )
 });
 
+
 document.getElementById(`action_0`).addEventListener('click', async ()=>{
     retrive_data(
         data = {
-            project_code:document.getElementById('project_code').value,
-            discipline_code:document.getElementById('discipline_code').value,
-            phase_code:document.getElementById('phase_code').value,
-            zone_code:document.getElementById('wp_zone').value
+            project:document.getElementById('project_code').value,
+            phase:document.getElementById('phase_code').value,
+            system:document.getElementById('system_code').value,
+            zone:document.getElementById('zone_code').value,
+            discipline: document.getElementById('discipline_code').value,
+            line: document.getElementById('line_code').value,
+            station:document.getElementById('station_code').value
         },
-        url = '/tools/actions',
+        url = '/data/actions',
         input_id = `action_0`,
         id_list = [],
         name_list = ['task_area_0','task_code_0']
@@ -94,12 +109,12 @@ document.getElementById(`action_0`).addEventListener('click', async ()=>{
 document.getElementById(`area_0`).addEventListener('click',()=>{
     retrive_data(
         data = {
-            project_code:document.getElementById('project_code').value,
-            discipline_code:document.getElementById('discipline_code').value,
-            phase_code:document.getElementById('phase_code').value,
-            zone_code:document.getElementById('wp_zone').value
+            project:document.getElementById('project_code').value,
+            phase:document.getElementById('phase_code').value,
+            system:document.getElementById('system_code').value,
+            zone:document.getElementById('zone_code').value
         },
-        url = '/tools/areas',
+        url = '/data/areas',
         input_id = `area_0`,
         id_list = [],
         name_list = []
@@ -109,12 +124,12 @@ document.getElementById(`area_0`).addEventListener('click',()=>{
 document.getElementById(`task_0`).addEventListener('click',()=>{
     retrive_data(
         data = {
-            project_code: document.getElementById('project_code').value,
-            discipline_code: document.getElementById('discipline_code').value,
-            wp_line: document.getElementById('wp_line').value,
-            station_code:document.getElementById('wp_station').value
+            project: document.getElementById('project_code').value,
+            discipline: document.getElementById('discipline_code').value,
+            line: document.getElementById('line_code').value,
+            station:document.getElementById('station_code').value
         },
-        url = '/tools/tasks',
+        url = '/data/tasks',
         input_id = `task_0`,
         id_list = [],
         name_list = []
@@ -151,12 +166,12 @@ document.getElementById('more_button').addEventListener('click',() => {
     document.getElementById(`action_${i}`).addEventListener('click',()=>{
         retrive_data(
             data = {
-                project_code:document.getElementById('project_code').value,
-                discipline_code:document.getElementById('discipline_code').value,
-                phase_code:document.getElementById('phase_code').value,
-                zone_code:document.getElementById('wp_zone').value
+                project:document.getElementById('project_code').value,
+                discipline:document.getElementById('discipline_code').value,
+                phase:document.getElementById('phase_code').value,
+                zone:document.getElementById('zone_code').value
             },
-            url = '/tools/actions',
+            url = '/data/actions',
             input_id = `action_${i}`,
             id_list = [],
             name_list = [`task_area_${i}`,`task_code_${i}`]
@@ -166,12 +181,12 @@ document.getElementById('more_button').addEventListener('click',() => {
     document.getElementById(`area_${i}`).addEventListener('click',()=>{
         retrive_data(
             data = {
-                project_code: document.getElementById('project_code').value,
-                discipline_code: document.getElementById('discipline_code').value,
-                phase_code:document.getElementById('phase_code').value,
-                zone_code:document.getElementById('wp_zone').value
+                project:document.getElementById('project_code').value,
+                discipline:document.getElementById('discipline_code').value,
+                phase:document.getElementById('phase_code').value,
+                zone:document.getElementById('zone_code').value
             },
-            url = '/tools/areas',
+            url = '/data/areas',
             input_id = `area_${i}`,
             id_list = [],
             name_list = []
@@ -181,13 +196,13 @@ document.getElementById('more_button').addEventListener('click',() => {
     document.getElementById(`task_${i}`).addEventListener('click',()=>{
         retrive_data(
             data = {
-                project_code: document.getElementById('project_code').value,
-                discipline_code: document.getElementById('discipline_code').value,
-                phase_code:document.getElementById('phase_code').value,
-                wp_line: document.getElementById('wp_line').value,
-                station_code:document.getElementById('wp_station').value
+                project: document.getElementById('project_code').value,
+                discipline: document.getElementById('discipline_code').value,
+                phase:document.getElementById('phase_code').value,
+                line: document.getElementById('line_code').value,
+                station:document.getElementById('station_code').value
             },
-            url = '/tools/tasks',
+            url = '/data/tasks',
             input_id = `task_${i}`,
             id_list = [],
             name_list = []
@@ -317,14 +332,14 @@ document.getElementById('submit_button').addEventListener('click',() => {
             project: document.getElementById('project_code').value,
             discipline: document.getElementById('discipline_code').value,
             phase: document.getElementById('phase_code').value,
-            zone: document.getElementById('wp_zone').value,
-            wp_line: document.getElementById('wp_line').value,
-            station:document.getElementById('wp_station').value,
+            zone: document.getElementById('zone_code').value,
+            wp_line: document.getElementById('line_code').value,
+            station:document.getElementById('station_code').value,
             actions:element_name_value('task_action'),
             areas:element_name_value('task_area'),
             tasks:element_name_value('task_code'),
         };
-        fetch("/tools/generate_wp",{
+        fetch("/data/generate_wp",{
             credentials: 'include',
             method: 'POST',
             body: JSON.stringify(data),
@@ -351,7 +366,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
                             data = {
                                 'project_code': document.getElementById('project_code').value
                             },
-                            url = '/tools/users_projects',
+                            url = '/data/users_projects',
                             input_id = `user_0`,
                             id_list = ['user_level_0'],
                             name_list = []
@@ -364,7 +379,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
                             user: document.getElementById('user_0').value,
                             tasks:element_name_value('task_code')
                         }
-                        fetch("/tools/user_level",{
+                        fetch("/data/user_level",{
                             credentials: 'include',
                             method: 'POST',
                             body: JSON.stringify(data),
@@ -400,7 +415,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
                                 data = {
                                     'project_code': document.getElementById('project_code').value,
                                 },
-                                url = '/tools/users_projects',
+                                url = '/data/users_projects',
                                 input_id = `user_${k}`,
                                 id_list = [`user_level_${k}`],
                                 name_list = []
@@ -414,7 +429,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
                                 user: document.getElementById(`user_${k}`).value,
                                 tasks:element_name_value('task_code')
                             }
-                            fetch("/tools/user_level",{
+                            fetch("/data/user_level",{
                                 credentials: 'include',
                                 method: 'POST',
                                 body: JSON.stringify(data),
@@ -450,9 +465,9 @@ document.getElementById('submit_button').addEventListener('click',() => {
                                 project_code: element_id_value('project_code'),
                                 discipline_code: element_id_value('discipline_code'),
                                 phase_code: element_id_value('phase_code'),
-                                wp_line: element_id_value('wp_line'),
-                                wp_station: element_id_value('wp_station'),
-                                wp_zone: element_id_value('wp_zone'),
+                                wp_line: element_id_value('line_code'),
+                                station_code: element_id_value('station_code'),
+                                wp_zone: element_id_value('zone_code'),
                                 task_action: element_name_value('task_action'),
                                 task_area: element_name_value('task_area'),
                                 task_code: element_name_value('task_code'),
@@ -467,7 +482,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
                                 user_level: element_name_value('user_level')
                             };
                     
-                            fetch('/tools/validate_wp', {
+                            fetch('/data/validate_wp', {
                                 credentials: 'include',
                                 method: 'POST',
                                 body: JSON.stringify(data),
@@ -490,7 +505,7 @@ document.getElementById('submit_button').addEventListener('click',() => {
 });
 
 function disabled_fields(){
-    if (document.getElementById('wp_line').value == 'DESIGN'){
+    if (document.getElementById('line_code').value == 'DESIGN'){
         for (i of document.getElementsByName('task_area')){
             i.disabled = false;
         }

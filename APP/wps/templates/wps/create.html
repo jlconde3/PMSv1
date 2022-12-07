@@ -26,41 +26,48 @@
     <div class="border"></div>
     <div class="group">
         <div>
-            <label class = "label-title">Situation</label>
+            <label class = "label-title">Situtaion</label>
         </div>
         <div class="fields-group">
             <div class="dropdown">
-                <label class = "label-field">Discipline</label><br>
-                <input class = "input-2" id = "discipline_code" autocomplete="off">
-                <datalist id="disciplines"></datalist>
+                <label class = "label-field">Phase</label><br>
+                <input class = "input-3" id = "phase_code" autocomplete="off">
+                <datalist id="phases"></datalist>
             </div>
             <div class="dropdown">
-                <label class = "label-field">Phase</label><br>
-                <input class = "input-2" id = "phase_code" autocomplete="off">
-                <datalist id="phases"></datalist>
+                <label class = "label-field">System</label><br>
+                <input class = "input-3" id = "system_code" autocomplete="off">
+                <datalist id="systems"></datalist>
+            </div>
+            <div class="dropdown">
+                <label class = "label-field">Zone</label><br>
+                <input class = "input-3" id = "zone_code" autocomplete="off">
+                <datalist id="zones" class = "input-3" ></datalist>
             </div>
         </div>
     </div>
+
     <div class="group">
         <div>
             <label class = "label-title">Workspace</label>
         </div>
         <div class="fields-group">
             <div class="dropdown">
+                <label class = "label-field">Discipline</label><br>
+                <input class = "input-3" id = "discipline_code" autocomplete="off">
+                <datalist id="disciplines"></datalist>
+            </div>
+            <div class="dropdown">
                 <label class = "label-field">Fabrication line</label><br>
-                <input class = "input-3" id = "wp_line" autocomplete="off">
+                <input class = "input-3" id = "line_code" autocomplete="off">
                 <datalist id="types" class = "input-3" ></datalist>
             </div>
             <div class="dropdown">
                 <label class = "label-field">Station</label><br>
-                <input class = "input-3" type="text" id = "wp_station" autocomplete="off">
+                <input class = "input-3" type="text" id = "station_code" autocomplete="off">
                 <datalist id="stations" class = "input-3"></datalist>
             </div>
-            <div class="dropdown">
-                <label class = "label-field">Zone</label><br>
-                <input class = "input-3" id = "wp_zone" autocomplete="off">
-                <datalist id="zones" class = "input-3" ></datalist>
-            </div>
+
         </div>
     </div>
     <div class="border"></div>

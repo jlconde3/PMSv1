@@ -26,6 +26,49 @@ def phases ():
     MySQL.con.close()
     return data_to_send
 
+@bp.route('/systems',methods=['POST'])
+@login_required
+def systems ():
+    data = request.get_json()
+    project = InputClass(data['project'])
+    phase = InputClass(data['phase'])
+    MySQL = MySQLHelper()
+    if not project.check_input_project(MySQL=MySQL):
+        MySQL.con.close()
+        return make_response(f'Project {project.value} not found',401)
+    if not phase.check_input_value(MySQL=MySQL,field='phase',table='areas',project=project.value):
+        MySQL.con.close()
+        return make_response(f'Value {phase.value} not found',402)
+    MySQL.cursor.execute("SELECT DISTINCT system1 FROM areas WHERE project=%s AND phase=%s",(project.value,phase.value))
+    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
+    MySQL.con.close()
+    return data_to_send
+    
+@bp.route('/zones',methods=['POST'])
+@login_required
+def zones ():
+    data = request.get_json()
+    project = InputClass(data['project'])
+    phase = InputClass(data['phase'])
+    system = InputClass(data['system'])
+
+    MySQL = MySQLHelper()
+    if not project.check_input_project(MySQL=MySQL):
+        MySQL.con.close()
+        return make_response(f'Project {project.value} not found',401)
+    if not phase.check_input_value(MySQL=MySQL,field='phase',table='areas',project=project.value):
+        MySQL.con.close()
+        return make_response(f'Value {phase.value} not found',402)
+    if not system.check_input_value(MySQL=MySQL,field='system1',table='areas',project=project.value):
+        MySQL.con.close()
+        return make_response(f'Value {system.value} not found',402)
+    MySQL.cursor.execute("SELECT DISTINCT zone FROM areas WHERE\
+        project=%s AND phase=%s AND system1=%s",(project.value, phase.value, system.value))
+    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
+    MySQL.con.close()
+
+    return data_to_send
+
 @bp.route('/disciplines',methods=['POST'])
 @login_required
 def disciplines ():
@@ -40,9 +83,10 @@ def disciplines ():
     MySQL.con.close()
     return data_to_send
 
-@bp.route('/systems',methods=['POST'])
+
+@bp.route('/lines',methods=['POST'])
 @login_required
-def systems ():
+def lines ():
     data = request.get_json()
     project = InputClass(data['project'])
     discipline = InputClass(data['discipline'])
@@ -53,81 +97,37 @@ def systems ():
     if not discipline.check_input_value(MySQL=MySQL,field='discipline',table='areas',project=project.value):
         MySQL.con.close()
         return make_response(f'Value {discipline.value} not found',402)
-    MySQL.cursor.execute("SELECT DISTINCT system1 FROM areas WHERE project=%s AND discipline=%s",(project.value,discipline.value))
+    MySQL.cursor.execute("SELECT DISTINCT line FROM tasks WHERE project=%s",(project.value,))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
+
 
 @bp.route('/stations',methods=['POST'])
 @login_required
 def stations ():
     data = request.get_json()
     project = InputClass(data['project'])
+    line = InputClass(data['line'])
     MySQL = MySQLHelper()
     if not project.check_input_project(MySQL=MySQL):
         MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
-    MySQL.cursor.execute("SELECT DISTINCT station FROM tasks WHERE project=%s AND line='ACTIONS'",(project.value,))
+    if not line.check_input_value(MySQL=MySQL,field='line',table='tasks',project=project.value):
+        MySQL.con.close()
+        return make_response(f'Value {line.value} not found',402)
+    MySQL.cursor.execute("SELECT DISTINCT station FROM tasks WHERE project=%s AND line=%s",(project.value,line.value))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
 
-@bp.route('/fields_kanban',methods=['POST'])
-@login_required
-def fields_kanban ():
-    return ['DISCIPLINE','SYSTEM','PHASE','ZONE','AREA','LINE','STATION']
-
-@bp.route('/values_kanban',methods=['POST'])
-@login_required
-def stations_kanban():
-    data = request.get_json()
-    project = InputClass(data['project'])
-    field = InputClass(data['field'])
-    if field.value.lower() in {'discipline','system','phase','zone','area'}:
-        table = 'areas'
-    elif field.value.lower() in {'line','station'}:
-        table = 'tasks'
-    else:
-        return make_response(f'Value {field.value} not found',401)
-    MySQL = MySQLHelper()
-    if not project.check_input_project(MySQL=MySQL):
-        MySQL.con.close()
-        return make_response(f'Project {project.value} not found',401)
-    MySQL.cursor.execute(f"SELECT DISTINCT {field.value.lower()} FROM {table} WHERE project='{project.value}'")
-    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
-    MySQL.con.close()
-    return data_to_send
-
-@bp.route('/zones',methods=['POST'])
-@login_required
-def zones ():
-    data = request.get_json()
-    project = InputClass(data['project'])
-    discipline = InputClass(data['discipline'])
-    system = InputClass(data['system'])
-    MySQL = MySQLHelper()
-    if not project.check_input_project(MySQL=MySQL):
-        MySQL.con.close()
-        return make_response(f'Project {project.value} not found',401)
-    if not discipline.check_input_value(MySQL=MySQL,field='discipline',table='areas',project=project.value):
-        MySQL.con.close()
-        return make_response(f'Value {discipline.value} not found',402)
-    if not system.check_input_value(MySQL=MySQL,field='system1',table='areas',project=project.value):
-        MySQL.con.close()
-        return make_response(f'Value {system.value} not found',402)
-    MySQL.cursor.execute("SELECT DISTINCT zone FROM areas WHERE\
-        project=%s AND discipline=%s AND system1=%s",(project.value, discipline.value, system.value))
-    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
-    MySQL.con.close()
-
-    return data_to_send
 
 @bp.route('/areas',methods=['POST'])
 @login_required
 def areas ():
     data = request.get_json()
     project = InputClass(data['project'])
-    discipline = InputClass(data['discipline'])
+    phase = InputClass(data['phase'])
     system = InputClass(data['system'])
     zone = InputClass(data['zone'])
 
@@ -137,9 +137,9 @@ def areas ():
         MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
 
-    if not discipline.check_input_value(MySQL=MySQL,field='discipline',table='areas',project=project.value):
+    if not phase.check_input_value(MySQL=MySQL,field='phase',table='areas',project=project.value):
         MySQL.con.close()
-        return make_response(f'Value {discipline.value} not found',402)
+        return make_response(f'Value {phase.value} not found',402)
 
     if not system.check_input_value(MySQL=MySQL,field='system1',table='areas',project=project.value):
         MySQL.con.close()
@@ -150,8 +150,44 @@ def areas ():
         return make_response(f'Value {zone.value} not found',402)
 
 
-    MySQL.cursor.execute("""SELECT DISTINCT area FROM areas WHERE project = %s AND discipline = %s
-    AND system1=%s AND zone=%s""",(project.value,discipline.value,system.value,zone.value))
+    MySQL.cursor.execute("""SELECT DISTINCT area FROM areas WHERE project = %s AND phase = %s
+    AND system1=%s AND zone=%s""",(project.value,phase.value,system.value,zone.value))
+    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
+    MySQL.con.close()
+
+    return data_to_send
+
+
+@bp.route('/tasks',methods=['POST'])
+@login_required
+def tasks ():
+    data = request.get_json()
+    project = InputClass(data['project'])
+    discipline = InputClass(data['discipline'])
+    line = InputClass(data['line'])
+    station = InputClass(data['station'])
+
+    MySQL = MySQLHelper()
+
+    if not project.check_input_project(MySQL=MySQL):
+        MySQL.con.close()
+        return make_response(f'Project {project.value} not found',401)
+
+    if not discipline.check_input_value(MySQL=MySQL,field='discipline',table='areas',project=project.value):
+        MySQL.con.close()
+        return make_response(f'Value {discipline.value} not found',402)
+
+    if not line.check_input_value(MySQL=MySQL,field='line',table='tasks',project=project.value):
+        MySQL.con.close()
+        return make_response(f'Value {line.value} not found',402)
+
+    if not station.check_input_value(MySQL=MySQL,field='station',table='tasks',project=project.value):
+        MySQL.con.close()
+        return make_response(f'Value {station.value} not found',402)
+
+
+    MySQL.cursor.execute("""SELECT DISTINCT task FROM tasks WHERE project = %s AND 
+    line=%s AND station=%s""",(project.value,line.value,station.value))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
 
@@ -163,6 +199,7 @@ def areas ():
 def actions ():
     data = request.get_json()
     project = InputClass(data['project'])
+    
 
     MySQL = MySQLHelper()
 
@@ -199,6 +236,33 @@ def subactions ():
 def status_wp ():
     return ['TO DO','IN PROGRESS','ON HOLD','DONE','CANCEL']
 
+
+@bp.route('/fields_kanban',methods=['POST'])
+@login_required
+def fields_kanban ():
+    return ['DISCIPLINE','SYSTEM','PHASE','ZONE','AREA','LINE','STATION']
+
+
+@bp.route('/values_kanban',methods=['POST'])
+@login_required
+def stations_kanban():
+    data = request.get_json()
+    project = InputClass(data['project'])
+    field = InputClass(data['field'])
+    if field.value.lower() in {'discipline','system','phase','zone','area'}:
+        table = 'areas'
+    elif field.value.lower() in {'line','station'}:
+        table = 'tasks'
+    else:
+        return make_response(f'Value {field.value} not found',401)
+    MySQL = MySQLHelper()
+    if not project.check_input_project(MySQL=MySQL):
+        MySQL.con.close()
+        return make_response(f'Project {project.value} not found',401)
+    MySQL.cursor.execute(f"SELECT DISTINCT {field.value.lower()} FROM {table} WHERE project='{project.value}'")
+    data_to_send = format_mysql_list(MySQL.cursor.fetchall())
+    MySQL.con.close()
+    return data_to_send
 
 """
 
