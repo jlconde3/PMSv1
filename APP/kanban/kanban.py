@@ -7,10 +7,8 @@ from general.general import MySQLHelper, InputClass
 
 bp = Blueprint('kanban', __name__, url_prefix='/kanban', template_folder='templates')
 
-@bp.route('/', methods=['GET'])
-@login_required
-def main():
-    return render_template('kanban/index.html')
+bp.add_url_rule('/', view_func=CustomViews.as_view('/','kanban/base.html'))
+
 
 def split_data (data:str):
     if data is None:

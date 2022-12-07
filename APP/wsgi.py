@@ -41,8 +41,8 @@ def create_app(test_config=None):
     from kanban import kanban
     app.register_blueprint(kanban.bp)
 
-    from data import data
-    app.register_blueprint(data.bp)
+    from table import table
+    app.register_blueprint(table.bp)
 
     from user import user
     app.register_blueprint(user.bp)
