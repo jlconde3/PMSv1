@@ -1,146 +1,102 @@
 main{
-    background-color: #fafafa;
-}
-
-* {
-    padding: 0;
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-}
-
-li{
-    list-style-type: none;
-}
-
-
-
-textarea{
-    outline: none;
-    font-size: 14px;
-    height: 27px;
-    width: 99.3%;
-    resize: none;
-    border:  #EAEAEA solid 1px;
-    padding-left: 5px;
-    padding-top: 12px;
-}
-
-
-.wp-card{
-    margin: auto;
-    width: 90vw;
-}
-.card{
-    background-color: white;
-    margin: 10px 10px 10px 10px;
-    border:  #EAEAEA solid 1px;
-}
-
-.wrapper{
-    display: grid;
-    grid-template-columns: 250px auto;
-    grid-auto-rows: auto;
-}
-
-.display-grid{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: auto auto;
-}
-
-.column-1{
-    grid-column: 1;
-    grid-row: 1;
-}
-
-.column-2{
-    grid-column: 2;
-    grid-row: 1;
-}
-
-.field-value{
-    margin: 10px;
-    margin-left: 10px;
-}
-
-.value,li{
-    margin: 5px 0 5px 0;
-}
-
-.top-card,.side-card,.info-card,.users-card,.detail-card,.numeric-card{
-    padding: 10px;
-}
-
-.flex{
-    display:flex
-}
-.top-card{
-    height: 100px;
-    background-color: white;
-}
-.wp-code{
-    font-size: 25px;
-}
-
-.dates-fields{
-    display: flex;
-}
-
-.dates{
-    font-size: 12px;
-}
-
-.add-user{
-    text-align: left;
-}
-
-.info-card{
-    min-height: 180px;
-}
-
-
-.side-card{
-    display: flex;
-    flex-direction: column;
-    min-height: 600px;
-    justify-content: space-between;
-}
-
-
-datalist{
-    position: absolute;
-    overflow-y: auto;
+    max-width: 50%;
+    min-width: 1000px;
     background-color: white;
     border: #EAEAEA solid 1px;
-    display: none;
-    z-index: 1;
+    padding: 20px;
 }
 
-option{
+form{
     display: flex;
-    align-items: center;
-    font-size: 14px;
-    height: 40px;
-    padding-left: 5px;
-    outline: none;
-    cursor: pointer;
-    border-bottom:#EAEAEA solid 1px;
-    width: 200px;
+    flex-direction: column;
 }
 
-option:hover{
-    background-color: #fafafa;
-}
-
-.dropdown{
-    display: inline-block;
+label{
+    font-size: 16px;
 }
 
 input{
     height: 40px;
-    width: 200px;
     padding-left: 5px;
-    font-size: 14px;
+    margin-top: 10px;
     outline: none;
     border: #EAEAEA solid 1px;
+    color:  #57647E;
+}
+
+.black-button{
+    border :black solid 2px ;
+    background-color: black;
+    color: white;
+    width: 120px;
+    height: 40px;
+}
+
+.black-button:hover{
+    opacity: 70%;
+    color: #EAEAEA;
+    cursor: pointer;
+}
+
+.white-button{
+    border:black solid 1px ;
+    background-color: white;
+    color: black;
+    width: 120px;
+    height: 40px;
+}
+
+.white-button:hover{
+    background-color: #EEEEEE;
+    opacity: 70%;
+    cursor: pointer;
+}
+
+.group{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.fields-group{
+    min-width: 70%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.label-field{
+    font-size: 12px;
+    font-weight: 400;
+    color:  #57647E;
+}
+
+.input-3{
+    width: 200px;
+}
+
+.input-2{
+    min-width: 300px;
+}
+
+.border{
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border-bottom: #EAEAEA solid 1px;
+}
+
+.more-tasks{
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    color: #d5d5d5;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+dialog{
+    min-width: 700px;
 }

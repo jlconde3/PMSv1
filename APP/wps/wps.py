@@ -5,10 +5,10 @@ from auth.auth import login_required, CustomViews
 from flask import render_template, Blueprint, request,g, make_response
 from datetime import datetime
 
-bp = Blueprint('wps', __name__, url_prefix='/wps')
+bp = Blueprint('wps', __name__, url_prefix='/wps', template_folder='templates')
 
-bp.add_url_rule('/create_wp', view_func=CustomViews.as_view('/create_wp','/tools/wps/create_wp.html'))
-bp.add_url_rule('/modify_wp', view_func=CustomViews.as_view('/modify_wp','/tools/wps/modify_wp.html'))
+bp.add_url_rule('/create', view_func=CustomViews.as_view('/create','wps/create.html'))
+bp.add_url_rule('/modify', view_func=CustomViews.as_view('/modify','wps/modify.html'))
 
 @bp.route('/info')
 @login_required
@@ -32,7 +32,7 @@ def info ():
     MySQL.con.close()
 
 
-    return render_template('/tools/wps/info_wp.html', 
+    return render_template('wps/info.html', 
         wp_code = response[1],
         date_1 = response[3],
         date_2 = response[4],

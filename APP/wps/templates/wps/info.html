@@ -1,9 +1,6 @@
 {%extends "base.html"%}
-
-{%block css%}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools/info_wp.css')}}"/>{%endblock%}
-
-{%block scripts%}<script src="/static/js/tools/wp/info_wp.js" defer></script>{%endblock%}
-
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='/wps/style.css')}}"/>{% endblock %}
+{% block scripts %}<script src="/static/wps/info.js" defer></script>{% endblock %}
 {%block title%}PMS | Info WP{%endblock%}
 
 {%block main%}
