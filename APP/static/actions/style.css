@@ -1,0 +1,126 @@
+main{
+    max-width: 50%;
+    min-width: 1000px;
+    background-color: white;
+    border: #EAEAEA solid 1px;
+    padding: 20px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+label{
+    font-size: 16px;
+}
+
+input{
+    height: 40px;
+    padding-left: 5px;
+    margin-top: 10px;
+    outline: none;
+    border: #EAEAEA solid 1px;
+    color:  #57647E;
+}
+
+
+textarea{
+    outline: none;
+    border: none;
+    color:  #57647E;
+    height: 90px;
+    resize: none;
+    width: calc(700px - 10px);
+    padding: 5px;
+}
+
+.black-button{
+    border :black solid 2px ;
+    background-color: black;
+    color: white;
+    width: 120px;
+    height: 40px;
+}
+
+.black-button:hover{
+    opacity: 70%;
+    color: #EAEAEA;
+    cursor: pointer;
+}
+
+.white-button{
+    border:black solid 1px ;
+    background-color: white;
+    color: black;
+    width: 120px;
+    height: 40px;
+}
+
+.white-button:hover{
+    background-color: #EEEEEE;
+    opacity: 70%;
+    cursor: pointer;
+}
+
+.group{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.fields-group{
+    min-width: 70%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.label-field{
+    font-size: 12px;
+    font-weight: 400;
+    color:  #57647E;
+}
+.input-4{
+    width: 130px;
+}
+
+.input-3{
+    width: 200px;
+}
+
+.input-2{
+    min-width: 300px;
+}
+
+.border{
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border-bottom: #EAEAEA solid 1px;
+}
+
+.description{
+    border:  #EAEAEA solid 1px;
+    width: 700px;
+}
+
+#the-count {
+    font-size: 12px;
+    color:  #57647E;
+    padding-left:640px;
+    width: auto;
+}
+
+
+.more-tasks{
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    color: #d5d5d5;
+    font-weight: 400;
+    cursor: pointer;
+}
+

@@ -7,11 +7,11 @@ from datetime import datetime
 from decimal import Decimal
 
 
-bp = Blueprint('actions', __name__, url_prefix='/actions', template_folder='template')
+bp = Blueprint('actions', __name__, url_prefix='/actions', template_folder='templates')
 
-bp.add_url_rule('/create_action', view_func=CustomViews.as_view('/create_action','actions/create.html'))
-bp.add_url_rule('/modify_action', view_func=CustomViews.as_view('/modify_action','/tools/actions/modify_action.html'))
-bp.add_url_rule('/modify_subaction', view_func=CustomViews.as_view('/modify_subaction','/tools/actions/modify_subaction.html'))
+bp.add_url_rule('/create', view_func=CustomViews.as_view('/create','actions/create.html'))
+bp.add_url_rule('/modify', view_func=CustomViews.as_view('/modify','actions/modify.html'))
+bp.add_url_rule('/subaction', view_func=CustomViews.as_view('/subaction','actions/subaction.html'))
 
 def generate_action_code (MySQL) -> str:
     MySQL.cursor.execute('SELECT action_code FROM actions ORDER BY id DESC LIMIT 1')

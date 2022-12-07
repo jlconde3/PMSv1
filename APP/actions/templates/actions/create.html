@@ -6,130 +6,122 @@
 {% block title %}PMS | Action{% endblock %}
 
 {%block main%}
-<main>
-    <div class="top-buttons">
-        <button class = "black-button"type = "submit" id = "submit_button"  form="action" >Submit</button>
-        <button class = "white-button"type = "submit" id = "cancel_button">Cancel</button>
+
+<div class="top-buttons">
+    <button class = "black-button"type = "submit" id = "submit_button"  form="action" >Submit</button>
+    <button class = "white-button"type = "submit" id = "cancel_button">Cancel</button>
+</div>
+<form id="action" autocomplete="off" method="post" action="/actions/create" >
+    <div class="border"></div>    
+    <div class="group">
+        <div>
+            <label>Project</label>
+        </div>
+        <div class="fields-group">
+            <div class="dropdown">
+                <label class="label-field">Code</label><br>
+                <input name="project" id="project" class="input-2" type="text" minlength="2" maxlength="8" required>
+                <datalist id="projects" class = "input-2"></datalist>
+            </div>
+            <div class="dropdown">
+                <label class="label-field">Phase</label><br>
+                <input name="phase" id="phase" class="input-2" type="text" minlength="2" maxlength="5" required>
+                <datalist id="phases" class = "input-2"></datalist>
+            </div>
+        </div>
     </div>
-    <form id="action" autocomplete="off" method="post" action="/actions/create" >
-        <div class="border"></div>    
-        <div class="group">
+    <div class="border"></div>
+    <div class="group">
+        <div>
+            <label class = "label-title">Customer</label>
+        </div>
+        <div class="fields-group">
             <div>
-                <label>Project</label>
+                <label class = "label-field">Customer code</label><br>
+                <input name="customer" class = "input-2" type="text" minlength="2" maxlength="20">
             </div>
-            <div class="fields-group">
-                <div class="dropdown">
-                    <label class="label-field">Code</label><br>
-                    <input name="project" id="project" class="input-2" type="text" minlength="2" maxlength="8" required>
-                    <datalist id="projects" class = "input-2"></datalist>
-                </div>
-                <div class="dropdown">
-                    <label class="label-field">Phase</label><br>
-                    <input name="phase" id="phase" class="input-2" type="text" minlength="2" maxlength="5" required>
-                    <datalist id="phases" class = "input-2"></datalist>
-                </div>
+            <div>
+                <label class = "label-field">Input date</label><br>
+                <input name="date" class = "input-2" type="date" minlength="8" maxlength="8" required>
             </div>
         </div>
-        <div class="border"></div>
+    </div>
+    <div class="border"></div>
+    <div class="group">
+        <div>
+            <label class = "label-title">Action</label>
+        </div>
+        <div class="fields-group">
+            <div class="dropdown">
+                <label class = "label-field">Discipline</label><br>
+                <input name="discipline" id="discipline" class="input-3" type="text"  minlength="2" maxlength="10" required>
+                <datalist id="disciplines" class="input-3"></datalist>
+            </div>
+            <div class="dropdown">
+                <label class = "label-field">System</label><br>
+                <input name="system" id="system" class = "input-3" type="text" minlength="2" maxlength="8" required>
+                <datalist id="systems" class = "input-3"></datalist>
+            </div>
+            <div class="dropdown">
+                <label class = "label-field">Type</label><br>
+                <input name="type" id="type" class = "input-3" type="text" minlength="2" maxlength="8" required>
+                <datalist id="types" class = "input-3"></datalist>
+            </div>
+        </div>
+    </div>
+    <div class="group">
+        <div>
+            <label class = "label-title">Description</label>
+        </div>
+        <div class = "description">
+            <textarea id="description" name="description" class = "input-text"  type="text" maxlength="200"></textarea>
+            <div id="the-count">
+                <span id="current">0</span>
+                <span id="maximum">/ 200</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="border"></div>
+    <div id = "subactions">
         <div class="group">
             <div>
-                <label class = "label-title">Customer</label>
+                <label class = "label-title">Subaction</label>
             </div>
             <div class="fields-group">
                 <div>
-                    <label class = "label-field">Customer code</label><br>
-                    <input name="customer" class = "input-2" type="text" minlength="2" maxlength="20">
+                    <label class = "label-field">Custom code</label><br>
+                    <input name = "custom" class = "input-4" type="text" minlength="2" maxlength="20">
+                </div>
+                <div class="dropdown">
+                    <label class = "label-field">Zone</label><br>
+                    <input name = "subaction_zone" id= "zone_0" class = "input-4" type="text" minlength="2" maxlength="20" required>
+                    <datalist id="zones_0" class = "input-4"></datalist>
+                </div>
+                <div class="dropdown">
+                    <label class = "label-field">Area</label><br>
+                    <input name = "subaction_area" id= "area_0" class = "input-4" type="text" minlength="2" maxlength="20" required>
+                    <datalist id="areas_0" class = "input-4"></datalist>
                 </div>
                 <div>
-                    <label class = "label-field">Input date</label><br>
-                    <input name="date" class = "input-2" type="date" minlength="8" maxlength="8" required>
+                    <label class = "label-field">Time</label><br>
+                    <input name = "subaction_time" class = "input-4" type="number"  min="0" max="1000" required>
                 </div>
             </div>
         </div>
-        <div class="border"></div>
-
-        <div class="group">
-            <div>
-                <label class = "label-title">Action</label>
-            </div>
-            <div class="fields-group">
-                <div class="dropdown">
-                    <label class = "label-field">Discipline</label><br>
-                    <input name="discipline" id="discipline" class="input-3" type="text"  minlength="2" maxlength="10" required>
-                    <datalist id="disciplines" class="input-3"></datalist>
-                </div>
-                <div class="dropdown">
-                    <label class = "label-field">System</label><br>
-                    <input name="system" id="system" class = "input-3" type="text" minlength="2" maxlength="8" required>
-                    <datalist id="systems" class = "input-3"></datalist>
-                </div>
-                <div class="dropdown">
-                    <label class = "label-field">Type</label><br>
-                    <input name="type" id="type" class = "input-3" type="text" minlength="2" maxlength="8" required>
-                    <datalist id="types" class = "input-3"></datalist>
-                </div>
-            </div>
-        </div>
-
-        <div class="group">
-            <div>
-                <label class = "label-title">Description</label>
-            </div>
-            <div>
-                <label class = "label-field">Description</label><br>
-                <div class = "description">
-                    <textarea id="description" name="description" class = "input-text"  type="text" maxlength="200"></textarea>
-                    <div id="the-count">
-                        <span id="current">0</span>
-                        <span id="maximum">/ 200</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="border"></div>
-        <div id = "subactions">
-            <div class="group">
-                <div>
-                    <label class = "label-title">Subaction</label>
-                </div>
-                <div class="fields-group">
-                    <div>
-                        <label class = "label-field">Custom code</label><br>
-                        <input name = "custom" class = "input-4" type="text" minlength="2" maxlength="20">
-                    </div>
-                    <div class="dropdown">
-                        <label class = "label-field">Zone</label><br>
-                        <input name = "subaction_zone" id= "zone_0" class = "input-4" type="text" minlength="2" maxlength="20" required>
-                        <datalist id="zones_0" class = "input-4"></datalist>
-                    </div>
-                    <div class="dropdown">
-                        <label class = "label-field">Area</label><br>
-                        <input name = "subaction_area" id= "area_0" class = "input-4" type="text" minlength="2" maxlength="20" required>
-                        <datalist id="areas_0" class = "input-4"></datalist>
-                    </div>
-                    <div>
-                        <label class = "label-field">Time</label><br>
-                        <input name = "subaction_time" class = "input-4" type="number"  min="0" max="1000" required>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="group">
-            <button type="button" id = "more_button" class="more-tasks">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus"
-                width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
-                fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <line x1="9" y1="12" x2="15" y2="12"></line>
-                    <line x1="12" y1="9" x2="12" y2="15"></line>
-                </svg>
-                <p>Click here to add new action...</p>
-            </button>
-        </div>
-    </form>
-</main>
+    </div>
+    <div class="group">
+        <button type="button" id = "more_button" class="more-tasks">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus"
+            width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <circle cx="12" cy="12" r="9"></circle>
+                <line x1="9" y1="12" x2="15" y2="12"></line>
+                <line x1="12" y1="9" x2="12" y2="15"></line>
+            </svg>
+            <p>Click here to add new action...</p>
+        </button>
+    </div>
+</form>
 {%endblock%}
