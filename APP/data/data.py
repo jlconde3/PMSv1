@@ -166,24 +166,10 @@ def tasks ():
     discipline = InputClass(data['discipline'])
     line = InputClass(data['line'])
     station = InputClass(data['station'])
+    phase = InputClass(data['phase'])
+    system = InputClass(data['system'])
 
     MySQL = MySQLHelper()
-
-    if not project.check_input_project(MySQL=MySQL):
-        MySQL.con.close()
-        return make_response(f'Project {project.value} not found',401)
-
-    if not discipline.check_input_value(MySQL=MySQL,field='discipline',table='areas',project=project.value):
-        MySQL.con.close()
-        return make_response(f'Value {discipline.value} not found',402)
-
-    if not line.check_input_value(MySQL=MySQL,field='line',table='tasks',project=project.value):
-        MySQL.con.close()
-        return make_response(f'Value {line.value} not found',402)
-
-    if not station.check_input_value(MySQL=MySQL,field='station',table='tasks',project=project.value):
-        MySQL.con.close()
-        return make_response(f'Value {station.value} not found',402)
 
 
     MySQL.cursor.execute("""SELECT DISTINCT task FROM tasks WHERE project = %s AND 
@@ -199,6 +185,10 @@ def tasks ():
 def actions ():
     data = request.get_json()
     project = InputClass(data['project'])
+    project = InputClass(data['project'])
+    discipline = InputClass(data['discipline'])
+    line = InputClass(data['line'])
+    station = InputClass(data['station'])
     
 
     MySQL = MySQLHelper()

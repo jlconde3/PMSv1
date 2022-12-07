@@ -15,7 +15,20 @@ document.getElementById('phase').addEventListener('click',()=>{
         data = {project:document.getElementById('project').value},
         url = '/data/phases',
         input_id = 'phase',
-        id_list = ['discipline','system','type'],
+        id_list = ['system','discipline','type'],
+        name_list = ['zone','area','time']
+    )
+});
+
+document.getElementById('system').addEventListener('click',()=>{
+    retrive_data_actions(
+        data = {
+            project:document.getElementById('project').value,
+            phase: document.getElementById('phase').value
+        },
+        url = '/data/systems',
+        input_id = 'system',
+        id_list = ['discipline','type'],
         name_list = ['zone','area','time']
     )
 });
@@ -27,28 +40,18 @@ document.getElementById('discipline').addEventListener('click',()=>{
         },
         url = '/data/disciplines',
         input_id = 'discipline',
-        id_list = ['system','type'],
+        id_list = ['type'],
         name_list = ['zone','area','time']
     )
 });
 
-document.getElementById('system').addEventListener('click',()=>{
-    retrive_data_actions(
-        data = {
-            project:document.getElementById('project').value,
-            discipline:document.getElementById('discipline').value
-        },
-        url = '/data/systems',
-        input_id = 'system',
-        id_list = [],
-        name_list = ['zone','area','time']
-    )
-});
 
 document.getElementById('type').addEventListener('click',()=>{
     retrive_data_actions(
         data = {
             project:document.getElementById('project').value,
+            discipline:document.getElementById('discipline').value,
+            line:'ACTIONS'
         },
         url = '/data/stations',
         input_id = 'type',
@@ -62,7 +65,7 @@ document.getElementById('zone_0').addEventListener('click',()=>{
     retrive_data_actions(
         data = {
             project:document.getElementById('project').value,
-            discipline:document.getElementById('discipline').value,
+            phase: document.getElementById('phase').value,
             system:document.getElementById('system').value
         },
         url = '/data/zones',
@@ -76,7 +79,7 @@ document.getElementById('area_0').addEventListener('click',()=>{
     retrive_data_actions(
         data = {
             project:document.getElementById('project').value,
-            discipline:document.getElementById('discipline').value,
+            phase: document.getElementById('phase').value,
             system:document.getElementById('system').value,
             zone:document.getElementById('zone_0').value
         },
@@ -125,8 +128,8 @@ document.getElementById('more_button').addEventListener('click',() => {
         retrive_data_actions(
             data = {
                 project:document.getElementById('project').value,
-                discipline:document.getElementById('discipline').value,
-                system:document.getElementById('system').value,
+                phase: document.getElementById('phase').value,
+                system:document.getElementById('system').value
             },
             url = '/data/zones',
             input_id = `zone_${i}`,
@@ -139,9 +142,9 @@ document.getElementById('more_button').addEventListener('click',() => {
         retrive_data_actions(
             data = {
                 project:document.getElementById('project').value,
-                discipline:document.getElementById('discipline').value,
+                phase: document.getElementById('phase').value,
                 system:document.getElementById('system').value,
-                zone:document.getElementById(`zone_${i}`).value
+                zone:document.getElementById('zone_0').value
             },
             url = '/data/areas',
             input_id = `area_${i}`,
