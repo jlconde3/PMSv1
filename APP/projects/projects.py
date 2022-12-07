@@ -6,10 +6,10 @@ from auth.auth import login_required, CustomViews
 from decimal import Decimal
 from datetime import datetime
 
-bp = Blueprint('projects', __name__, url_prefix='/projects')
+bp = Blueprint('projects', __name__, url_prefix='/projects', template_folder='templates')
 
-bp.add_url_rule('/create_project', view_func=CustomViews.as_view('/create_proejct','/tools/projects/create_project.html'))
-bp.add_url_rule('/modify_project', view_func=CustomViews.as_view('/modify_project','/tools/projects/modify_project.html'))
+bp.add_url_rule('/create', view_func=CustomViews.as_view('/create','projects/create.html'))
+bp.add_url_rule('/modify', view_func=CustomViews.as_view('/modify','projects/modify.html'))
 
 @bp.route('/create', methods=['POST'])
 @login_required
@@ -157,7 +157,6 @@ def modify ():
         MySQL.con.close()
         
         return redirect(url_for('tools./'))
-
     return error
 
 
