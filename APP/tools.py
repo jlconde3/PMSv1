@@ -1,6 +1,6 @@
 from hashlib import sha256
-from common import MySQLHelper, InputClass, format_mysql_list
-from APP.auth import login_required, CustomViews
+from general.general import MySQLHelper, InputClass, format_mysql_list
+from auth.auth import login_required, CustomViews
 from flask import render_template, Blueprint, request,g, make_response
 
 bp = Blueprint('tools', __name__, url_prefix='/tools')
