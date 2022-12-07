@@ -1,0 +1,27 @@
+.black-button{
+    border :black solid 2px ;
+    background-color: black;
+    color: white;
+    width: 120px;
+    height: 40px;
+}
+
+.black-button:hover{
+    opacity: 70%;
+    color: #EAEAEA;
+    cursor: pointer;
+}
+
+.white-button{
+    border:black solid 1px ;
+    background-color: white;
+    color: black;
+    width: 120px;
+    height: 40px;
+}
+
+.white-button:hover{
+    background-color: #EEEEEE;
+    opacity: 70%;
+    cursor: pointer;
+}

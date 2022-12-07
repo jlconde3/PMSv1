@@ -1,0 +1,11 @@
+body{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 100px);
+}
+
+main{
+    margin: 0 auto 0 auto;
+}

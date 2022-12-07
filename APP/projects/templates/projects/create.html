@@ -1,115 +1,93 @@
 {% extends "base.html" %}
-
-{% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/tools/tools.css')}}"/>
-{% endblock %}
-
-{% block scripts %}
-<script src="/static/js/tools/projects/create.js" defer></script>
-{% endblock %}
-
-
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='/projects/style.css')}}"/>{% endblock %}
+{% block scripts %}<script src="/static/projects/create.js" defer></script>{% endblock %}
 {% block title%}PMS | Project{% endblock %}
-
-
 {%block main%}
-<main>
-    <form autocomplete="off" method="post" action="/projects/create">
-        <div class="top-buttons">
-            <button class = "black-button" type="submit" id = "submit_button">Submit</button>
-            <button class = "white-button" type="button" id = "cancel_button">Cancel</button>
+<form autocomplete="off" method="post" action="/projects/create">
+    <div class="top-buttons">
+        <button class = "black-button" type="submit" id = "submit_button">Submit</button>
+        <button class = "white-button" type="button" id = "cancel_button">Cancel</button>
+    </div>
+    <div class="border"></div>
+    <div class="group">
+        <div>
+            <label class = "label-title">Description</label>
         </div>
-        <div class="border"></div>
-        <div class="group">
+        <div class="fields-group">
             <div>
-                <label class = "label-title">Description</label>
+                <label class = "label-field">Code</label><br>
+                <input name="code" class="input-3"  placeholder="e.g. P22NP001" type="text" minlength="8" maxlength="8" required>
             </div>
-
-            <div class="fields-group">
-                <div>
-                    <label class = "label-field">Code</label><br>
-                    <input name="code" class="input-3"  placeholder="e.g. P22NP001" type="text" minlength="8" maxlength="8" required>
-                </div>
-
-                <div>
-                    <label class = "label-field">Name</label><br>
-                    <input name="name" class="input-3" placeholder="e.g. Project01 Design" type="text" minlength="5" maxlength="20" required>
-                </div>
-
-                <div>
-                    <label class = "label-field">Client</label><br>
-                    <input name="client" class="input-3" placeholder="e.g. FCT" type="text" minlength="2" maxlength="10" required>
-                </div>
-            </div>
-        </div>
-        <div class="group">
             <div>
-                <label class = "label-title">Business</label>
+                <label class = "label-field">Name</label><br>
+                <input name="name" class="input-3" placeholder="e.g. Project01 Design" type="text" minlength="5" maxlength="20" required>
             </div>
-
-            <div class="fields-group">
-                <div>
-                    <label class = "label-field">Section</label><br>
-                    <input name="section" class="input-2"  placeholder="e.g.GHN" type="text" minlength="2" maxlength="10" required>
-                </div>
-                <div>
-                    <label class = "label-field">Division</label><br>
-                    <input name="division" class="input-2" placeholder="e.g.NAVAL"  type="text" minlength="2" maxlength="10" required>
-                </div>
-            </div>
-        </div>
-
-        <div class="border"></div>
-
-        <div class="group">
             <div>
-                <label class = "label-title">Budget</label>
-            </div>
-
-            <div class="fields-group">
-                <div>
-                    <label class = "label-field">Project budget</label><br>
-                    <input name="budget" class="input-2" placeholder="e.g. 1000000.000"  type="number"  min="0" max="100000000" step="any" required>
-                </div>
-                <div>
-                    <label class = "label-field">Margin</label><br>
-                    <input name="margin" class="input-2" placeholder="e.g. 0.30" type="number" type="number" minh="0" max="1" step="any" step="any" required>
-                </div>
+                <label class = "label-field">Client</label><br>
+                <input name="client" class="input-3" placeholder="e.g. FCT" type="text" minlength="2" maxlength="10" required>
             </div>
         </div>
-        <div class="group">
+    </div>
+    <div class="group">
+        <div>
+            <label class = "label-title">Business</label>
+        </div>
+        <div class="fields-group">
             <div>
-                <label class = "label-title">CPT</label>
+                <label class = "label-field">Section</label><br>
+                <input name="section" class="input-2"  placeholder="e.g.GHN" type="text" minlength="2" maxlength="10" required>
             </div>
-
-            <div class="fields-group">
-                <div>
-                    <label class = "label-field">Default</label><br>
-                    <input name="default" class="input-2" placeholder="e.g. 30.25" type="number" minh="0" max="100" step="any" required>
-                </div>
-                <div>
-                    <label class = "label-field">Actions</label><br>
-                    <input name="actions" class="input-2" placeholder="e.g. 40.25" type="number" minh="0" max="100" step="any" required>
-                </div>
-            </div>
-        </div>
-        <div class="group">
             <div>
-                <label class = "label-title">Costs</label>
+                <label class = "label-field">Division</label><br>
+                <input name="division" class="input-2" placeholder="e.g.NAVAL"  type="text" minlength="2" maxlength="10" required>
             </div>
-
-            <div class="fields-group">
-                <div>
-                    <label class = "label-field">Management</label><br>
-                    <input name="management" class="input-2" placeholder="e.g. 0.30" type="number" min="0" max="1" step="any" required>
-                </div>
-                <div>
-                    <label class = "label-field">Others</label><br>
-                    <input name="others" class="input-2" placeholder="e.g. 0.30" type="number" min="0" max="1" step="any" required>
-                </div>
-            </div>  
         </div>
-    </form>
-</main>
-
+    </div>
+    <div class="border"></div>
+    <div class="group">
+        <div>
+            <label class = "label-title">Budget</label>
+        </div>
+        <div class="fields-group">
+            <div>
+                <label class = "label-field">Project budget</label><br>
+                <input name="budget" class="input-2" placeholder="e.g. 1000000.000"  type="number"  min="0" max="100000000" step="any" required>
+            </div>
+            <div>
+                <label class = "label-field">Margin</label><br>
+                <input name="margin" class="input-2" placeholder="e.g. 0.30" type="number" type="number" minh="0" max="1" step="any" step="any" required>
+            </div>
+        </div>
+    </div>
+    <div class="group">
+        <div>
+            <label class = "label-title">CPT</label>
+        </div>
+        <div class="fields-group">
+            <div>
+                <label class = "label-field">Default</label><br>
+                <input name="default" class="input-2" placeholder="e.g. 30.25" type="number" minh="0" max="100" step="any" required>
+            </div>
+            <div>
+                <label class = "label-field">Actions</label><br>
+                <input name="actions" class="input-2" placeholder="e.g. 40.25" type="number" minh="0" max="100" step="any" required>
+            </div>
+        </div>
+    </div>
+    <div class="group">
+        <div>
+            <label class = "label-title">Costs</label>
+        </div>
+        <div class="fields-group">
+            <div>
+                <label class = "label-field">Management</label><br>
+                <input name="management" class="input-2" placeholder="e.g. 0.30" type="number" min="0" max="1" step="any" required>
+            </div>
+            <div>
+                <label class = "label-field">Others</label><br>
+                <input name="others" class="input-2" placeholder="e.g. 0.30" type="number" min="0" max="1" step="any" required>
+            </div>
+        </div>  
+    </div>
+</form>
 {%endblock%}

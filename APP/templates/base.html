@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='general/style.css')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='general/navbar/style.css')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='general/body/style.css')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='general/footer/style.css')}}"/>
+    {% block css %}{% endblock %}
+    <script  type="text/javascript" src="/static/general/scripts.js" defer></script>
+    {% block scripts %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title> 
+</head>
+
+
+<body>
+    <nav>
+        {% include 'navbar.html' %}
+    </nav>
+    <main>
+        {%block main %}{% endblock %}
+    </main>
+    <footer>
+        {% include 'footer.html' %}
+    </footer>
+</body>
+</html>

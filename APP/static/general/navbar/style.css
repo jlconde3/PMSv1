@@ -1,0 +1,43 @@
+nav{
+    background-color:white;
+    border-bottom: #EAEAEA solid 1px;
+    width: 100%;
+    overflow: hidden;
+    position:fixed;
+    top: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.nav-elements{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+.pms-logo{
+    height:50px;
+}
+
+.pms-logo:hover{
+    opacity:50% ;
+}
+
+.nav-elements-buttons{
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tools-button{
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.tools-button:hover{
+    opacity: 50%;
+}
