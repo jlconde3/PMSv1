@@ -26,6 +26,9 @@ def create_app(test_config=None):
     from auth import auth
     app.register_blueprint(auth.bp)
 
+    from data import data
+    app.register_blueprint(data.bp)
+
     from tools import tools
     app.register_blueprint(tools.bp)
 

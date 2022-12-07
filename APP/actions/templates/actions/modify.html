@@ -4,93 +4,92 @@
 {% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='actions/style.css')}}"/>{% endblock %}
 
 
-{% block scripts %}<script src="/static/js/tools/actions/modify_action.js" defer></script>{% endblock %}
+{% block scripts %}<script src="/static/actions/modify.js" defer></script>{% endblock %}
 
 {% block title %}PMS | Modify action{% endblock %}
 
 {%block main%}
-<main>
-    <div class="top-buttons">
-        <button class = "black-button"type = "submit" id = "submit_button"  form="modify" >Save changes</button>
-        <button class = "white-button"type = "submit" id = "cancel_button">Cancel</button>
-    </div>
-    <form autocomplete="off" method="post" action="/actions/modify_action" id="modify" >
-        <div class="border"></div>    
-        <div class="group">
-            <div>
-                <label>Action</label>
-            </div>
-            <div class="fields-group">
-                <div class="dropdown">
-                    <label class="label-field">Project Code</label><br>
-                    <input name="project" id="project" class="input-2" type="text" minlength="2" maxlength="8" required>
-                    <datalist id="projects" class = "input-2"></datalist>
-                </div>
-                <div class="dropdown">
-                    <label class = "label-field">Action code</label><br>
-                    <input name="action" id="action" class="input-2" type="text" minlength="2" maxlength="20" required>
-                    <datalist id="actions" class = "input-2"></datalist>
-                </div>
-            </div>
-        </div>
-        <div class="top-buttons">
-            <button class="black-button" type="button" id="retrive_button">Retrive data</button>
-        </div>
-        <div class="border"></div>
-        <div class="group">
-            <div>
-                <label class = "label-title">Details</label>
-            </div>
-            <div class="fields-group">
-                <div>
-                    <label class = "label-field">Client code</label><br>
-                    <input name="client" id="client" class="input-3" type="text" required>
-                </div>
-                <div>
-                    <label class = "label-field">Phase</label><br>
-                    <input id="phase" class="input-3" type="text" disabled="True">
-                </div>
-                <div>
-                    <label class = "label-field">Input date</label><br>
-                    <input id="date" class = "input-3" type="date" disabled="True">
-                </div>
-            </div>
-        </div>
 
-        <div class="group">
-            <div>
-                <label class = "label-title"></label>
+<div class="top-buttons">
+    <button class = "black-button"type = "submit" id = "submit_button"  form="modify" >Save changes</button>
+    <button class = "white-button"type = "submit" id = "cancel_button">Cancel</button>
+</div>
+<form autocomplete="off" method="post" action="/actions/modify_action" id="modify" >
+    <div class="border"></div>    
+    <div class="group">
+        <div>
+            <label>Action</label>
+        </div>
+        <div class="fields-group">
+            <div class="dropdown">
+                <label class="label-field">Project Code</label><br>
+                <input name="project" id="project" class="input-2" type="text" minlength="2" maxlength="8" required>
+                <datalist id="projects" class = "input-2"></datalist>
             </div>
-            <div class="fields-group">
-                <div>
-                    <label class = "label-field">Discipline</label><br>
-                    <input id="discipline" class="input-3" type="text" disabled="True">
-                </div>
-                <div>
-                    <label class = "label-field">System</label><br>
-                    <input id="system" class = "input-3" type="text" disabled="True">
-                </div>
-                <div>
-                    <label class = "label-field">Type</label><br>
-                    <input id="type" class = "input-3" type="text" disabled="True">
+            <div class="dropdown">
+                <label class = "label-field">Action code</label><br>
+                <input name="action" id="action" class="input-2" type="text" minlength="2" maxlength="20" required>
+                <datalist id="actions" class = "input-2"></datalist>
+            </div>
+        </div>
+    </div>
+    <div class="top-buttons">
+        <button class="black-button" type="button" id="retrive_button">Retrive data</button>
+    </div>
+    <div class="border"></div>
+    <div class="group">
+        <div>
+            <label class = "label-title">Details</label>
+        </div>
+        <div class="fields-group">
+            <div>
+                <label class = "label-field">Client code</label><br>
+                <input name="client" id="client" class="input-3" type="text" required>
+            </div>
+            <div>
+                <label class = "label-field">Phase</label><br>
+                <input id="phase" class="input-3" type="text" disabled="True">
+            </div>
+            <div>
+                <label class = "label-field">Input date</label><br>
+                <input id="date" class = "input-3" type="date" disabled="True">
+            </div>
+        </div>
+    </div>
+    <div class="group">
+        <div>
+            <label class = "label-title"></label>
+        </div>
+        <div class="fields-group">
+            <div>
+                <label class = "label-field">Discipline</label><br>
+                <input id="discipline" class="input-3" type="text" disabled="True">
+            </div>
+            <div>
+                <label class = "label-field">System</label><br>
+                <input id="system" class = "input-3" type="text" disabled="True">
+            </div>
+            <div>
+                <label class = "label-field">Type</label><br>
+                <input id="type" class = "input-3" type="text" disabled="True">
+            </div>
+        </div>
+    </div>
+    <div class="border"></div>
+    <div class="group">
+        <div>
+            <label class = "label-title">Description</label>
+        </div>
+        <div>
+            <label class = "label-field">Description</label><br>
+            <div class = "description">
+                <textarea id="description" name="description" class = "input-text"  type="text" maxlength="200"></textarea>
+                <div id="the-count">
+                    <span id="current">0</span>
+                    <span id="maximum">/ 200</span>
                 </div>
             </div>
         </div>
-        <div class="border"></div>
-        <div class="group">
-            <div>
-                <label class = "label-title">Description</label>
-            </div>
-            <div>
-                <label class = "label-field">Description</label><br>
-                <div class = "description">
-                    <textarea id="description" name="description" class = "input-text"  type="text" maxlength="200"></textarea>
-                    <div id="the-count">
-                        <span id="current">0</span>
-                        <span id="maximum">/ 200</span>
-                    </div>
-                </div>
-            </div>
-    </form>
-</main>
+</form>
+
 {%endblock%}

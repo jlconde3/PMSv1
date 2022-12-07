@@ -3,7 +3,7 @@ let j = 1;
 document.getElementById('project').addEventListener('click',()=>{
     retrive_data_actions(
         data = {},
-        url = '/tools/projects',
+        url = '/data/projects',
         input_id = 'project',
         id_list = ['phase','discipline','system','type'],
         name_list = ['zone','area','time']
@@ -13,7 +13,7 @@ document.getElementById('project').addEventListener('click',()=>{
 document.getElementById('phase').addEventListener('click',()=>{
     retrive_data_actions(
         data = {project:document.getElementById('project').value},
-        url = '/tools/phases',
+        url = '/data/phases',
         input_id = 'phase',
         id_list = ['discipline','system','type'],
         name_list = ['zone','area','time']
@@ -25,7 +25,7 @@ document.getElementById('discipline').addEventListener('click',()=>{
         data = {
             project:document.getElementById('project').value,
         },
-        url = '/tools/disciplines',
+        url = '/data/disciplines',
         input_id = 'discipline',
         id_list = ['system','type'],
         name_list = ['zone','area','time']
@@ -38,7 +38,7 @@ document.getElementById('system').addEventListener('click',()=>{
             project:document.getElementById('project').value,
             discipline:document.getElementById('discipline').value
         },
-        url = '/tools/systems',
+        url = '/data/systems',
         input_id = 'system',
         id_list = [],
         name_list = ['zone','area','time']
@@ -50,7 +50,7 @@ document.getElementById('type').addEventListener('click',()=>{
         data = {
             project:document.getElementById('project').value,
         },
-        url = '/tools/stations',
+        url = '/data/stations',
         input_id = 'type',
         id_list = [],
         name_list = []
@@ -65,7 +65,7 @@ document.getElementById('zone_0').addEventListener('click',()=>{
             discipline:document.getElementById('discipline').value,
             system:document.getElementById('system').value
         },
-        url = '/tools/zones',
+        url = '/data/zones',
         input_id = 'zone_0',
         id_list = [],
         name_list = []
@@ -80,7 +80,7 @@ document.getElementById('area_0').addEventListener('click',()=>{
             system:document.getElementById('system').value,
             zone:document.getElementById('zone_0').value
         },
-        url = '/tools/areas',
+        url = '/data/areas',
         input_id = 'area_0',
         id_list = [],
         name_list = []
@@ -128,7 +128,7 @@ document.getElementById('more_button').addEventListener('click',() => {
                 discipline:document.getElementById('discipline').value,
                 system:document.getElementById('system').value,
             },
-            url = '/tools/zones',
+            url = '/data/zones',
             input_id = `zone_${i}`,
             id_list = [],
             name_list = []
@@ -143,7 +143,7 @@ document.getElementById('more_button').addEventListener('click',() => {
                 system:document.getElementById('system').value,
                 zone:document.getElementById(`zone_${i}`).value
             },
-            url = '/tools/areas',
+            url = '/data/areas',
             input_id = `area_${i}`,
             id_list = [],
             name_list = []
