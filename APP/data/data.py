@@ -166,8 +166,7 @@ def tasks ():
     discipline = InputClass(data['discipline'])
     line = InputClass(data['line'])
     station = InputClass(data['station'])
-    phase = InputClass(data['phase'])
-    system = InputClass(data['system'])
+
 
     MySQL = MySQLHelper()
 
@@ -185,19 +184,15 @@ def tasks ():
 def actions ():
     data = request.get_json()
     project = InputClass(data['project'])
-    project = InputClass(data['project'])
+    phase = InputClass(data['phase'])
+    system = InputClass(data['system'])
     discipline = InputClass(data['discipline'])
-    line = InputClass(data['line'])
     station = InputClass(data['station'])
-    
-
     MySQL = MySQLHelper()
-
-    if not project.check_input_project(MySQL=MySQL):
-        MySQL.con.close()
-        return make_response(f'Project {project.value} not found',401)
-
-    MySQL.cursor.execute("SELECT DISTINCT action_code FROM actions WHERE project = %s",(project.value,))
+    
+    MySQL.cursor.execute("""SELECT DISTINCT action_code FROM actions WHERE project = %s
+    AND phase =%s AND system1=%s AND discipline=%s AND station=%s""",
+    (project.value,phase.value,system.value,discipline.value,station.value))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
 

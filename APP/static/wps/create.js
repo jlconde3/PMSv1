@@ -96,7 +96,6 @@ document.getElementById(`action_0`).addEventListener('click', async ()=>{
             system:document.getElementById('system_code').value,
             zone:document.getElementById('zone_code').value,
             discipline: document.getElementById('discipline_code').value,
-            line: document.getElementById('line_code').value,
             station:document.getElementById('station_code').value
         },
         url = '/data/actions',
@@ -167,9 +166,11 @@ document.getElementById('more_button').addEventListener('click',() => {
         retrive_data(
             data = {
                 project:document.getElementById('project_code').value,
-                discipline:document.getElementById('discipline_code').value,
                 phase:document.getElementById('phase_code').value,
-                zone:document.getElementById('zone_code').value
+                system:document.getElementById('system_code').value,
+                zone:document.getElementById('zone_code').value,
+                discipline: document.getElementById('discipline_code').value,
+                station:document.getElementById('station_code').value
             },
             url = '/data/actions',
             input_id = `action_${i}`,
@@ -198,7 +199,6 @@ document.getElementById('more_button').addEventListener('click',() => {
             data = {
                 project: document.getElementById('project_code').value,
                 discipline: document.getElementById('discipline_code').value,
-                phase:document.getElementById('phase_code').value,
                 line: document.getElementById('line_code').value,
                 station:document.getElementById('station_code').value
             },
