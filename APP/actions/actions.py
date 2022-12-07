@@ -1,15 +1,15 @@
 import json
 
 from flask import render_template, Blueprint, make_response,request,g
-from common import MySQLHelper, InputClass, format_mysql_list
+from general.general import MySQLHelper, InputClass, format_mysql_list
 from auth.auth import login_required, CustomViews
 from datetime import datetime
 from decimal import Decimal
 
 
-bp = Blueprint('actions', __name__, url_prefix='/actions', template_folder='template', static_folder='static')
+bp = Blueprint('actions', __name__, url_prefix='/actions', template_folder='template')
 
-bp.add_url_rule('/create_action', view_func=CustomViews.as_view('/create_action','/tools/actions/create_action.html'))
+bp.add_url_rule('/create_action', view_func=CustomViews.as_view('/create_action','actions/create.html'))
 bp.add_url_rule('/modify_action', view_func=CustomViews.as_view('/modify_action','/tools/actions/modify_action.html'))
 bp.add_url_rule('/modify_subaction', view_func=CustomViews.as_view('/modify_subaction','/tools/actions/modify_subaction.html'))
 

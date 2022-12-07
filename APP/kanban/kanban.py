@@ -2,7 +2,7 @@ import json
 
 from flask import render_template, Blueprint, request, make_response
 from auth.auth import login_required, CustomViews
-from common import MySQLHelper, InputClass
+from general.general import MySQLHelper, InputClass
 
 
 bp = Blueprint('kanban', __name__, url_prefix='/kanban')

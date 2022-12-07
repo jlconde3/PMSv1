@@ -1,8 +1,8 @@
 import functools
 
-from hashlib import sha256
-from common import MySQLHelper, InputClass
+from general.general import MySQLHelper, InputClass
 
+from hashlib import sha256
 from flask.views import View
 from flask import render_template, Blueprint, redirect, url_for, request, session, g
 
@@ -26,7 +26,7 @@ def login_user():
             error = None
 
             MySQL = MySQLHelper()
-            MySQL.cursor.execute('SELECT user,password FROM `pms-users`.users WHERE user = %s ORDER BY id DESC LIMIT 1', (username.value,))
+            MySQL.cursor.execute('SELECT user,password FROM `pms-users`.`users-login` WHERE user = %s ORDER BY id DESC LIMIT 1', (username.value,))
             user = MySQL.cursor.fetchone()
             MySQL.con.close()
 
@@ -45,7 +45,7 @@ def login_user():
         else: 
             return 'Special chars'
         
-    return render_template('login.html')
+    return render_template('auth/login.html')
 
 @bp.route('/logout', methods=('GET', 'POST'))
 def logout ():

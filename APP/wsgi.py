@@ -21,12 +21,10 @@ def create_app(test_config=None):
     @app.route('/')
     @login_required
     def index():
-        return redirect(url_for('auth.client'))
+        return redirect(url_for('tools./'))
 
     from auth import auth
     app.register_blueprint(auth.bp)
-
-    from general import general
 
     from tools import tools
     app.register_blueprint(tools.bp)
