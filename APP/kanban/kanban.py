@@ -5,12 +5,12 @@ from auth.auth import login_required, CustomViews
 from general.general import MySQLHelper, InputClass
 
 
-bp = Blueprint('kanban', __name__, url_prefix='/kanban')
+bp = Blueprint('kanban', __name__, url_prefix='/kanban', template_folder='templates')
 
 @bp.route('/', methods=['GET'])
 @login_required
 def main():
-    return render_template('/tools/kanban/home.html')
+    return render_template('kanban/index.html')
 
 def split_data (data:str):
     if data is None:

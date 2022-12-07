@@ -1,11 +1,37 @@
 main{
-    width: 1350px;
+    min-width: 1400px ;
+}
+label{
+    font-size: 14px;
+    font-weight: 100;
 }
 
-a{
-    color: black;
-    text-decoration: none;
+input{
+    margin-top: 10PX;
+    height: 40px;
+    width: 200px;
+    padding-left: 5px;
+    font-size: 14px;
+    outline: none;
+    border: #EAEAEA solid 1px;
+    color:  #57647E;
 }
+
+
+ul{
+    display: flex;
+}
+
+li{
+    text-align: center;
+    list-style-type:none;
+    width: 40px;
+    margin: 5px;
+    border: black solid 1px;
+    border-radius:5px ;
+}
+
+
 
 .input-fields{
     border: #EAEAEA solid 1px;
@@ -16,23 +42,7 @@ a{
     align-items:flex-end;
 }
 
-label{
-    font-size: 14px;
-    font-weight: 100;
-}
-.label{
-    padding-bottom: 5px;
-}
 
-input{
-    height: 40px;
-    width: 200px;
-    padding-left: 5px;
-    font-size: 14px;
-    outline: none;
-    border: #EAEAEA solid 1px;
-    color:  #57647E;
-}
 
 .status-bar{
     margin-top: 20px;
@@ -108,6 +118,7 @@ input{
     width: 260px;
 }
 
+
 .card{
     width:250px;
     border-radius: 5px;
@@ -123,8 +134,13 @@ input{
 .card:hover{
     cursor: pointer;
     will-change: box-shadow;
-    transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
-    box-shadow: 7px 7px 7px 0 rgba(0, 0, 0, .14), 0 3px 1px -6px rgba(0, 0, 0, .2), 7px 7px 7px 0 rgba(0, 0, 0, .12);
+    transition: box-shadow .2s 
+    cubic-bezier(.4, 0, 1, 1), 
+    background-color .2s cubic-bezier(.4, 0, .2, 1), 
+    color .2s cubic-bezier(.4, 0, .2, 1);
+    box-shadow: 7px 7px 7px 0 rgba(0, 0, 0, .14), 
+    0 3px 1px -6px rgba(0, 0, 0, .2), 
+    7px 7px 7px 0 rgba(0, 0, 0, .12);
 }
 
 .card>div{
@@ -142,49 +158,17 @@ input{
 }
 
 
-ul{
-    display: flex;
-}
-
-li{
-    text-align: center;
-    list-style-type:none;
-    width: 40px;
-    margin: 5px;
-    border: black solid 1px;
-    border-radius:5px ;
-}
-
-datalist{
-    position: absolute;
-    overflow-y: auto;
-    background-color: white;
-    border: #EAEAEA solid 1px;
-    display: none;
-    z-index: 1;
-}
-
-option{
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    height: 40px;
-    padding-left: 5px;
-    outline: none;
-    color:  #57647E;
-    cursor: pointer;
-    border-bottom:#EAEAEA solid 1px;
-    width: 200px;
-}
-
-option:hover{
-    background-color: #fafafa;
-}
-
-.dropdown{
-    display: inline-block;
-}
-
 .black-button{
+    border :black solid 2px ;
+    background-color: black;
+    color: white;
     width: 200px;
+    height: 42px;
+}
+
+.black-button:hover{
+    opacity: 70%;
+    color: #EAEAEA;
+    cursor: pointer;
+
 }
