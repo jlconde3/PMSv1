@@ -59,7 +59,7 @@ class InputClass():
         Return True if exists or False if not.
         '''
         
-        MySQL.cursor.execute("SELECT DISTINCT code FROM pms.projects")
+        MySQL.cursor.execute("SELECT DISTINCT code FROM pms.`projects-info`")
         response = MySQL.cursor.fetchall()
 
         #Create and empty list and save data to be compared.

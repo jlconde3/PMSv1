@@ -13,7 +13,7 @@ document.getElementById('project').addEventListener('click',()=>{
 document.getElementById('action').addEventListener('click',()=>{
     retrive_data_actions(
         data = {project:document.getElementById('project').value,},
-        url = '/data/actions',
+        url = '/data/modify_actions',
         input_id = 'action',
         id_list = [],
         name_list = []
@@ -48,7 +48,7 @@ function display_data_project (response){
     document.getElementById('date').value = get_date(response[6]);
     document.getElementById('discipline').value = response[2];
     document.getElementById('system').value = response[5];
-    document.getElementById('type').value = response[1];
+    document.getElementById('station').value = response[1];
     document.getElementById('description').value = response[4];
 }
 

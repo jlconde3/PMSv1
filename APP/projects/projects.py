@@ -48,7 +48,7 @@ def create ():
 
         MySQL = MySQLHelper()
 
-        MySQL.cursor.execute('SELECT DISTINCT code FROM projects')
+        MySQL.cursor.execute('SELECT DISTINCT code FROM pms.`projects-info`')
         values = MySQL.cursor.fetchall()
 
         projects = []
@@ -56,13 +56,13 @@ def create ():
         
         if not code.value in projects:
             MySQL.cursor.execute("""
-                INSERT INTO projects(code,date,name,client,section,
+                INSERT INTO pms.`projects-info`(code,date,name,client,section,
                 division,budget,profit_margin,cpt_default,cpt_actions,
                 management,extra,user,execution_budget,execution_hours,management_hours,others_hours)
                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
                 (code.value,datetime.today(),name.value,client.value,section.value,
                 division.value,budget.value,margin.value,default.value,action.value,
-                management.value,others.value,g.user,exc_budget,work_hours,management_hours,others_hours))
+                management.value,others.value,g.user_id,exc_budget,work_hours,management_hours,others_hours))
             MySQL.con.commit()
             MySQL.con.close()
             return redirect(url_for('tools./'))
@@ -83,14 +83,14 @@ def retrive_data():
         return make_response(f'Special char not allowed: {code.value}',401)
 
     MySQL = MySQLHelper()
-    MySQL.cursor.execute("SELECT DISTINCT code FROM pms.projects")
+    MySQL.cursor.execute("SELECT DISTINCT code FROM pms.`projects-info`")
     projects_sql = MySQL.cursor.fetchall()
 
     projects = []
     for i in projects_sql:projects.append(i[0])
 
     if code.value in projects:
-        MySQL.cursor.execute("SELECT * FROM pms.projects WHERE code =%s ORDER BY date DESC LIMIT 1",(code.value,))
+        MySQL.cursor.execute("SELECT * FROM pms.`projects-info` WHERE code =%s ORDER BY date DESC LIMIT 1",(code.value,))
         response = MySQL.cursor.fetchone()
 
         row_data = []
@@ -146,7 +146,7 @@ def modify ():
 
         MySQL = MySQLHelper()
         MySQL.cursor.execute("""
-            INSERT INTO pms.projects(code,date,name,client,section,
+            INSERT INTO pms.`projects-info`(code,date,name,client,section,
             division,budget,profit_margin,cpt_default,cpt_actions,
             management,extra,user,execution_budget,execution_hours,management_hours,others_hours)
             VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",

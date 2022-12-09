@@ -78,6 +78,7 @@ document.getElementById('station_code').addEventListener('click',()=>{
     retrive_data(
         data = {
             project: document.getElementById('project_code').value,
+            discipline: document.getElementById('discipline_code').value,
             line: document.getElementById('line_code').value
         },
         url = '/data/stations',

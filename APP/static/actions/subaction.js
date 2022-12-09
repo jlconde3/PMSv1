@@ -3,7 +3,7 @@ let j = 1;
 document.getElementById('project').addEventListener('click',()=>{
     retrive_data_actions(
         data = {},
-        url = '/tools/projects',
+        url = '/data/projects',
         input_id = 'project',
         id_list = [],
         name_list = []
@@ -13,7 +13,7 @@ document.getElementById('project').addEventListener('click',()=>{
 document.getElementById('subaction').addEventListener('click',()=>{
     retrive_data_actions(
         data = {project:document.getElementById('project').value,},
-        url = '/tools/subactions',
+        url = '/data/subactions',
         input_id = 'subaction',
         id_list = [],
         name_list = []
