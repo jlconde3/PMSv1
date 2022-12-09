@@ -32,36 +32,64 @@ form{
     flex-direction: column;
 }
 
-input{
-    margin: auto;
-    font-size: 14px;
-    margin-bottom: 15px;
-    outline: none;
+
+
+.input{
     border: none;
     border-bottom: black solid 1px;
-    background-color: transparent;
+    outline: none;
     width: 260px;
-    height: 40px;
+    height: 45px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom: 15px;
+    justify-content: space-between;
+}
+
+input{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 5px;
+    font-size: 15px;
 }
 
 ::placeholder{
     color: black;
 }
 
+.error-message{
+    width: 260px;
+    height: 30px;
+    color: red;
+    margin: auto;
+    font-size: 12px;
+}
+
+
 button{
     cursor: pointer;
-    margin: auto;
     border: none;
-    color: white;
+    background-color: transparent;
+}
+
+.login-button{
+    margin: auto;
     width: 264px;
-    height: 30px;
+    height: 42px;
+    color: white;
     background-color: black;
+    font-size: 14px;
+    font-weight: 100;
 }
 
 button:hover{
     opacity: 80%;
 }
-
 
 footer{
     width: 100%;
