@@ -1,5 +1,4 @@
 # PMS
-
 Software approach in project management. PMS stands for Project Management System and its core concept are Work Packages (WP).
 
 ## Features:
@@ -12,25 +11,11 @@ Software approach in project management. PMS stands for Project Management Syste
 - Collection of comments from employees.
 - Automation of the project timeline.
 - And much more...
-  
-## Condition:
 
-### Version 0.0.1
-Not for production. First version and still development version.
+## Version control
 
-### Limitations:
+Te actual version in production is 1.0.0 .In development the current version is 1.1.1
 
-- Inside a project all tasks must be uniques
-
-### Status
-
-- 211 -> Ok
-- 212 -> WP not unique
-- 213 -> WP unique
-- 214 ->  
-- 215 -> Project not unique 
-- 216 -> Incorrect input values
-
-- 411 -> Error storage in Database
+For version control we are following the rule explained in this [link](https://semver.org)
 
 
