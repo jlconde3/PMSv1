@@ -14,7 +14,7 @@ bp.add_url_rule('/modify', view_func=CustomViews.as_view('/modify','actions/modi
 bp.add_url_rule('/subaction', view_func=CustomViews.as_view('/subaction','actions/subaction.html'))
 
 def generate_action_code (MySQL) -> str:
-    MySQL.cursor.execute('SELECT action_code FROM actions ORDER BY id DESC LIMIT 1')
+    MySQL.cursor.execute('SELECT action_code FROM pms.actions ORDER BY id DESC LIMIT 1')
     action_code = MySQL.cursor.fetchone()
 
     if action_code is None:
@@ -24,7 +24,7 @@ def generate_action_code (MySQL) -> str:
     return action_code
 
 def generate_subaction_code(MySQL) -> str:
-    MySQL.cursor.execute('SELECT subaction_code FROM actions ORDER BY id DESC LIMIT 1')
+    MySQL.cursor.execute('SELECT subaction_code FROM pms.actions ORDER BY id DESC LIMIT 1')
     subaction_code = MySQL.cursor.fetchone()
 
     if subaction_code is None:
@@ -47,7 +47,7 @@ def create_action():
 
     discipline = InputClass(request.form['discipline'])
     system = InputClass(request.form['system'])
-    type = InputClass(request.form['type'])
+    station = InputClass(request.form['station'])
     description = InputClass(request.form['description'])
 
     codes = request.form.getlist('custom')
@@ -63,10 +63,10 @@ def create_action():
 
     if error is None:
         for i,field,table in zip(
-            [phase,discipline,system,type],
+            [phase,discipline,system,station],
             ['phase','discipline','system1','station'],
             ['areas','areas','areas','tasks']):
-            if not i.check_input_value(MySQL=MySQL,field=field,table=table,project=project.value):
+            if not i.check_input_value(MySQL=MySQL,field=field,table=f'pms.{table}',project=project.value):
                 error = make_response(f'Value {i.value} not found',401)
                 break
 
@@ -86,14 +86,14 @@ def create_action():
     if error is None:
         for i in zones:
             i = InputClass(i)
-            if not i.check_input_value(MySQL=MySQL,field='zone',table='areas',project=project.value):
+            if not i.check_input_value(MySQL=MySQL,field='zone',table='pms.areas',project=project.value):
                 error = make_response(f'Value {i.value} not found',401)
                 break
 
     if error is None:
         for i in areas:
             i = InputClass(i)
-            if not i.check_input_value(MySQL=MySQL,field='area',table='areas',project=project.value):
+            if not i.check_input_value(MySQL=MySQL,field='area',table='pms.areas',project=project.value):
                 error = make_response(f'Value {i.value} not found',401)
                 break
             
@@ -113,11 +113,12 @@ def create_action():
         for code,zone,area,time in zip(codes,zones,areas, times):
             MySQL.cursor.execute(
                 """
-                INSERT INTO actions (action_code,project,customer_code,type,date_recived,
+                INSERT INTO pms.actions (action_code,project,customer_code,station,date_recived,
                 discipline,phase,description,subaction_code,custom_code,zone,area,time,
                 user,date,system1,status)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
-                (action_code,project.value,customer.value,type.value,date.value,discipline.value,phase.value,description.value,
-                generate_subaction_code(MySQL),code,zone,area,time, g.user, datetime.today(),system.value,'Not assigned'))
+                (action_code,project.value,customer.value,station.value,date.value,discipline.value,
+                phase.value,description.value,generate_subaction_code(MySQL),code,zone,area,
+                time, g.user_id, datetime.today(),system.value,'Not assigned'))
             MySQL.con.commit()
             
         MySQL.con.close()
@@ -145,11 +146,12 @@ def retrive_action():
     
     MySQL = MySQLHelper()
 
-    if not action.check_input_value(MySQL=MySQL,field='action_code',table='actions',project=project.value):
+    if not action.check_input_value(MySQL=MySQL,field='action_code',table='pms.actions',project=project.value):
         MySQL.con.close()
         return make_response(f'Value {action.value} not found',403)
     
-    MySQL.cursor.execute("SELECT customer_code,type,discipline,phase,description,system1,date_recived FROM actions WHERE project=%s AND action_code=%s ORDER BY date DESC LIMIT 1",(project.value,action.value))
+    MySQL.cursor.execute("""SELECT customer_code,station,discipline,phase,description,system1,date_recived
+    FROM pms.actions WHERE project=%s AND action_code=%s ORDER BY date DESC LIMIT 1""",(project.value,action.value))
     db_response = MySQL.cursor.fetchone()
 
     print(db_response)
@@ -188,7 +190,9 @@ def retrive_subaction():
         MySQL.con.close()
         return make_response(f'Value {subaction.value} not found',403)
     
-    MySQL.cursor.execute("SELECT action_code,customer_code,custom_code,zone,area,time,status FROM actions WHERE project=%s AND subaction_code=%s ORDER BY date DESC LIMIT 1",(project.value,subaction.value))
+    MySQL.cursor.execute("""SELECT action_code,customer_code,custom_code,zone,area,
+    time,status FROM pms.actions WHERE project=%s AND subaction_code=%s
+    ORDER BY date DESC LIMIT 1""",(project.value,subaction.value))
     response = MySQL.cursor.fetchone()
 
     MySQL.con.close()
@@ -226,22 +230,26 @@ def modify_action ():
         MySQL.con.close()
         return make_response(f'Value {action.value} not found',403)
 
-    MySQL.cursor.execute("SELECT DISTINCT subaction_code FROM actions WHERE project=%s AND action_code=%s",(project.value,action.value))
+    MySQL.cursor.execute("""SELECT DISTINCT subaction_code FROM pms.actions
+    WHERE project=%s AND action_code=%s""",(project.value,action.value))
     subactions = format_mysql_list( MySQL.cursor.fetchall())
 
-    MySQL.cursor.execute("SELECT type,date_recived,discipline,phase,system FROM actions WHERE project=%s AND action_code=%s ORDER BY date DESC LIMIT 1",(project.value,action.value))
+    MySQL.cursor.execute("""SELECT station,date_recived,discipline,phase,system
+    FROM pms.actions WHERE project=%s AND action_code=%s ORDER BY date DESC LIMIT 1"""(project.value,action.value))
     actions = format_mysql_list( MySQL.cursor.fetchone())
 
     for i in subactions:
-        MySQL.cursor.execute("SELECT custom_code,zone,area,time,status FROM actions WHERE project=%s AND subaction_code=%s ORDER BY date DESC LIMIT 1",(project.value,i))
+        MySQL.cursor.execute("""SELECT custom_code,zone,area,time,status
+        FROM pms.actions WHERE project=%s AND subaction_code=%s ORDER BY date DESC LIMIT 1""",(project.value,i))
         subaction_values = MySQL.cursor.fetchone()
         MySQL.cursor.execute(
             """
-            INSERT INTO actions (action_code,project,customer_code,type,date_recived,
+            INSERT INTO actions (action_code,project,customer_code,station,date_recived,
             discipline,phase,description,subaction_code,custom_code,zone,area,time,
             user,date,system1,status)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
             (action.value,project.value,client.value,actions[0],actions[1],actions[2],actions[3],description.value,
-            i,subaction_values[0],subaction_values[1],subaction_values[2],subaction_values[3], g.user, datetime.today(),actions[4],subaction_values[4]))
+            i,subaction_values[0],subaction_values[1],subaction_values[2],
+            subaction_values[3], g.user_id, datetime.today(),actions[4],subaction_values[4]))
         MySQL.con.commit()
 
     MySQL.con.close()
@@ -287,13 +295,13 @@ def modify_subaction ():
 
 
 
-    MySQL.cursor.execute("""SELECT type,date_recived,discipline,phase,description,system1
+    MySQL.cursor.execute("""SELECT station,date_recived,discipline,phase,description,system1
     FROM actions WHERE project=%s AND action_code=%s ORDER BY date DESC LIMIT 1""",(project.value,action.value))
     response = MySQL.cursor.fetchone()
 
     MySQL.cursor.execute(
         """
-        INSERT INTO actions (action_code,project,customer_code,type,date_recived,
+        INSERT INTO actions (action_code,project,customer_code,station,date_recived,
         discipline,phase,description,subaction_code,custom_code,zone,area,time,
         user,date,system1,status)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
         (action.value,project.value,client.value,response[0],response[1],response[2],response[3],

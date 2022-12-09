@@ -5,7 +5,7 @@ document.getElementById('cancel_button').addEventListener('click',() => {
 document.getElementById('code').addEventListener('click',()=>{
     retrive_data_actions(
         data = {},
-        url = '/tools/projects',
+        url = '/data/projects',
         input_id = 'code',
         id_list = ['name','client','section','division','budget','margin','default','actions',
         'management','others','work_result','management_result','others_result'],

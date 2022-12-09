@@ -8,7 +8,7 @@ bp = Blueprint('data', __name__, url_prefix='/data')
 @login_required
 def projects ():
     MySQL = MySQLHelper()
-    MySQL.cursor.execute('SELECT DISTINCT code FROM projects')
+    MySQL.cursor.execute('SELECT DISTINCT code FROM pms.projects')
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
@@ -21,7 +21,7 @@ def phases ():
     MySQL = MySQLHelper()
     if not project.check_input_project(MySQL=MySQL):
         return make_response(f'Project {project.value} not found',401)
-    MySQL.cursor.execute("SELECT DISTINCT phase FROM areas WHERE project = %s",(project.value,))
+    MySQL.cursor.execute("SELECT DISTINCT phase FROM pms.areas WHERE project = %s",(project.value,))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
@@ -36,10 +36,10 @@ def systems ():
     if not project.check_input_project(MySQL=MySQL):
         MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
-    if not phase.check_input_value(MySQL=MySQL,field='phase',table='areas',project=project.value):
+    if not phase.check_input_value(MySQL=MySQL,field='phase',table='pms.areas',project=project.value):
         MySQL.con.close()
         return make_response(f'Value {phase.value} not found',402)
-    MySQL.cursor.execute("SELECT DISTINCT system1 FROM areas WHERE project=%s AND phase=%s",(project.value,phase.value))
+    MySQL.cursor.execute("SELECT DISTINCT system1 FROM pms.areas WHERE project=%s AND phase=%s",(project.value,phase.value))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
@@ -56,13 +56,13 @@ def zones ():
     if not project.check_input_project(MySQL=MySQL):
         MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
-    if not phase.check_input_value(MySQL=MySQL,field='phase',table='areas',project=project.value):
+    if not phase.check_input_value(MySQL=MySQL,field='phase',table='pms.areas',project=project.value):
         MySQL.con.close()
         return make_response(f'Value {phase.value} not found',402)
-    if not system.check_input_value(MySQL=MySQL,field='system1',table='areas',project=project.value):
+    if not system.check_input_value(MySQL=MySQL,field='system1',table='pms.areas',project=project.value):
         MySQL.con.close()
         return make_response(f'Value {system.value} not found',402)
-    MySQL.cursor.execute("SELECT DISTINCT zone FROM areas WHERE\
+    MySQL.cursor.execute("SELECT DISTINCT zone FROM pms.areas WHERE\
         project=%s AND phase=%s AND system1=%s",(project.value, phase.value, system.value))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
@@ -78,7 +78,7 @@ def disciplines ():
     if not project.check_input_project(MySQL=MySQL):
         MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
-    MySQL.cursor.execute("SELECT DISTINCT discipline FROM areas WHERE project = %s",(project.value,))
+    MySQL.cursor.execute("SELECT DISTINCT discipline FROM pms.areas WHERE project = %s",(project.value,))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
@@ -94,10 +94,10 @@ def lines ():
     if not project.check_input_project(MySQL=MySQL):
         MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
-    if not discipline.check_input_value(MySQL=MySQL,field='discipline',table='areas',project=project.value):
+    if not discipline.check_input_value(MySQL=MySQL,field='discipline',table='pms.areas',project=project.value):
         MySQL.con.close()
         return make_response(f'Value {discipline.value} not found',402)
-    MySQL.cursor.execute("SELECT DISTINCT line FROM tasks WHERE project=%s",(project.value,))
+    MySQL.cursor.execute("SELECT DISTINCT line FROM pms.tasks WHERE project=%s",(project.value,))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
@@ -113,10 +113,10 @@ def stations ():
     if not project.check_input_project(MySQL=MySQL):
         MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
-    if not line.check_input_value(MySQL=MySQL,field='line',table='tasks',project=project.value):
+    if not line.check_input_value(MySQL=MySQL,field='line',table='pms.tasks',project=project.value):
         MySQL.con.close()
         return make_response(f'Value {line.value} not found',402)
-    MySQL.cursor.execute("SELECT DISTINCT station FROM tasks WHERE project=%s AND line=%s",(project.value,line.value))
+    MySQL.cursor.execute("SELECT DISTINCT station FROM pms.tasks WHERE project=%s AND line=%s",(project.value,line.value))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send
@@ -137,20 +137,20 @@ def areas ():
         MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
 
-    if not phase.check_input_value(MySQL=MySQL,field='phase',table='areas',project=project.value):
+    if not phase.check_input_value(MySQL=MySQL,field='phase',table='pms.areas',project=project.value):
         MySQL.con.close()
         return make_response(f'Value {phase.value} not found',402)
 
-    if not system.check_input_value(MySQL=MySQL,field='system1',table='areas',project=project.value):
+    if not system.check_input_value(MySQL=MySQL,field='system1',table='pms.areas',project=project.value):
         MySQL.con.close()
         return make_response(f'Value {system.value} not found',402)
 
-    if not zone.check_input_value(MySQL=MySQL,field='zone',table='areas',project=project.value):
+    if not zone.check_input_value(MySQL=MySQL,field='zone',table='pms.areas',project=project.value):
         MySQL.con.close()
         return make_response(f'Value {zone.value} not found',402)
 
 
-    MySQL.cursor.execute("""SELECT DISTINCT area FROM areas WHERE project = %s AND phase = %s
+    MySQL.cursor.execute("""SELECT DISTINCT area FROM pms.areas WHERE project = %s AND phase = %s
     AND system1=%s AND zone=%s""",(project.value,phase.value,system.value,zone.value))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
@@ -166,12 +166,8 @@ def tasks ():
     discipline = InputClass(data['discipline'])
     line = InputClass(data['line'])
     station = InputClass(data['station'])
-
-
     MySQL = MySQLHelper()
-
-
-    MySQL.cursor.execute("""SELECT DISTINCT task FROM tasks WHERE project = %s AND 
+    MySQL.cursor.execute("""SELECT DISTINCT task FROM pms.tasks WHERE project = %s AND 
     line=%s AND station=%s""",(project.value,line.value,station.value))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
@@ -190,7 +186,7 @@ def actions ():
     station = InputClass(data['station'])
     MySQL = MySQLHelper()
     
-    MySQL.cursor.execute("""SELECT DISTINCT action_code FROM actions WHERE project = %s
+    MySQL.cursor.execute("""SELECT DISTINCT action_code FROM pms.actions WHERE project = %s
     AND phase =%s AND system1=%s AND discipline=%s AND station=%s""",
     (project.value,phase.value,system.value,discipline.value,station.value))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
@@ -210,7 +206,7 @@ def subactions ():
         MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
 
-    MySQL.cursor.execute("SELECT DISTINCT subaction_code FROM actions WHERE project = %s",(project.value,))
+    MySQL.cursor.execute("SELECT DISTINCT subaction_code FROM pms.actions WHERE project = %s",(project.value,))
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
 
@@ -244,7 +240,7 @@ def stations_kanban():
     if not project.check_input_project(MySQL=MySQL):
         MySQL.con.close()
         return make_response(f'Project {project.value} not found',401)
-    MySQL.cursor.execute(f"SELECT DISTINCT {field.value.lower()} FROM {table} WHERE project='{project.value}'")
+    MySQL.cursor.execute(f"SELECT DISTINCT {field.value.lower()} FROM pms.{table} WHERE project='{project.value}'")
     data_to_send = format_mysql_list(MySQL.cursor.fetchall())
     MySQL.con.close()
     return data_to_send

@@ -5,7 +5,7 @@ document.getElementById('project').addEventListener('click',()=>{
         data = {},
         url = '/data/projects',
         input_id = 'project',
-        id_list = ['phase','discipline','system','type'],
+        id_list = ['phase','discipline','system','station'],
         name_list = ['zone','area','time']
     )
 });
@@ -15,7 +15,7 @@ document.getElementById('phase').addEventListener('click',()=>{
         data = {project:document.getElementById('project').value},
         url = '/data/phases',
         input_id = 'phase',
-        id_list = ['system','discipline','type'],
+        id_list = ['system','discipline','station'],
         name_list = ['zone','area','time']
     )
 });
@@ -28,7 +28,7 @@ document.getElementById('system').addEventListener('click',()=>{
         },
         url = '/data/systems',
         input_id = 'system',
-        id_list = ['discipline','type'],
+        id_list = ['discipline','station'],
         name_list = ['zone','area','time']
     )
 });
@@ -40,13 +40,13 @@ document.getElementById('discipline').addEventListener('click',()=>{
         },
         url = '/data/disciplines',
         input_id = 'discipline',
-        id_list = ['type'],
+        id_list = ['station'],
         name_list = ['zone','area','time']
     )
 });
 
 
-document.getElementById('type').addEventListener('click',()=>{
+document.getElementById('station').addEventListener('click',()=>{
     retrive_data_actions(
         data = {
             project:document.getElementById('project').value,
@@ -54,7 +54,7 @@ document.getElementById('type').addEventListener('click',()=>{
             line:'ACTIONS'
         },
         url = '/data/stations',
-        input_id = 'type',
+        input_id = 'station',
         id_list = [],
         name_list = []
     )
@@ -105,21 +105,21 @@ document.getElementById('more_button').addEventListener('click',() => {
     <div class="fields-group">
         <div>
             <label class = "label-field">Custom code</label><br>
-            <input name="custom" class = "input-4" type="text">
+            <input name="custom" class = "input-4" station="text">
         </div>
         <div class="dropdwn">
             <label class = "label-field">Zone</label><br>
-            <input name = "subaction_zone" class = "input-4" type="text"  id = "zone_${j}">
+            <input name = "subaction_zone" class = "input-4" station="text"  id = "zone_${j}">
             <datalist id="zones_${j}" class = "input-4"></datalist>
         </div>
         <div class="dropdwn">
             <label class = "label-field">Area</label><br> 
-            <input name="subaction_area" id = "area_${j}" class = "input-4" type="text">
+            <input name="subaction_area" id = "area_${j}" class = "input-4" station="text">
             <datalist id="areas_${j}" class = "input-4" ></datalist>
         </div>
         <div>
             <label class = "label-field">Time</label><br>
-            <input name = "subaction_time" class = "input-4" type="number">
+            <input name = "subaction_time" class = "input-4" station="number">
         </div>
     </div>
     `);
