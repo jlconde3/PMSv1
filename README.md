@@ -14,7 +14,7 @@ Software approach in project management. PMS stands for Project Management Syste
 
 ## Version control
 
-Te actual version in production is 1.0.0 .In development the current version is 1.1.1
+Te actual version in production is 2.0.0 .In development the current version is 2.0.1
 
 For version control we are following the rule explained in this [link](https://semver.org)
 

@@ -1,7 +1,7 @@
 import functools
 
-from general.general import MySQLHelper, InputClass
-
+from general.general import InputClass
+from auth.data import *
 from hashlib import sha256
 from flask.views import View
 from flask import render_template, Blueprint, redirect, url_for, request, session, g
@@ -14,51 +14,6 @@ def check_password_hash (user_password:str,input_password:str):
         return True
     else:
         return False
-
-@bp.route('/login', methods=('GET', 'POST'))
-def login_user():
-    if request.method == 'POST':
-
-        username = InputClass(request.form['username'])
-        password = request.form['password']
-
-        if username.check_for_sensitive_chars():
-            error = None
-
-            MySQL = MySQLHelper()
-            MySQL.cursor.execute('SELECT user,password FROM `pms-users`.`users-login` WHERE user = %s ORDER BY id DESC LIMIT 1', (username.value,))
-            user = MySQL.cursor.fetchone()
-            MySQL.con.close()
-
-            if user is None:
-                error = 'Incorrect username'
-            elif not check_password_hash(user[1], password):
-                error = 'Incorrect password'
-
-            if error is None:
-                session.clear()
-                session['user_id'] = user[0]
-                return redirect(url_for('tools./'))
-            else:
-                return error
-        
-        else: 
-            return 'Special chars'
-        
-    return render_template('auth/login.html')
-
-@bp.route('/logout', methods=('GET', 'POST'))
-def logout ():
-    session.clear()
-    return redirect(url_for('auth.login_user'))
-
-@bp.before_app_request
-def load_logged_user ():
-    user_id = session.get('user_id')
-    if  user_id is None:
-        g.user = None
-    else: 
-        g.user = user_id
 
 def login_required(view):
     @functools.wraps(view)
@@ -79,3 +34,46 @@ class CustomViews (View):
     def dispatch_request(self):
         if request.method == "GET":
             return render_template(self.template)
+
+
+def login_model (username, password):
+
+    """
+    Check if login info is correct or not. 
+
+    :param username: username from form.
+    :param password: password from form.
+    Return True if login is correct and False if not with an error information.
+    """
+
+    username = InputClass(username)
+
+    error = None
+
+    if not username.check_for_sensitive_chars():
+        error = 'Special chars not allowed in username field'
+
+    user = login_data(username.value)
+
+    if user is None:
+        error = 'Incorrect username'
+    elif not check_password_hash(user[1], password):
+        error = 'Incorrect password'
+        return [False,error, username.value]
+
+    if error is None:
+        client = login_client(user[0])
+        session.clear()
+        session['user_id'] = user[0]
+        session['user_client'] = client[0]
+        return [True]
+    
+    return[False,error,None]
+
+
+def logout_model():
+    session['user_id'] = None
+    session['user_rol'] = None
+
+
+
